@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import { motion } from 'framer-motion';
+import CustomCursor from "@/components/CustomCursor";
+
 
 export default function Home() {
   return (
@@ -29,11 +31,12 @@ export default function Home() {
         <link rel="canonical" href="https://gom.ar" />
       </Head>
 
-      <div className="bg-black text-white min-h-screen scroll-smooth">
+      <div className="bg-black text-white min-h-screen scroll-smooth  ">
         <Navbar />
-
+        <CustomCursor />
+        
         {/* HERO */}
-        <main className="pt-24 px-6 text-center">
+        <main className="pt-24 px-6 text-center min-h-screen bg-[radial-gradient(circle_at_30%_20%,#111_0%,#000_80%)]">
           <motion.section
     initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
@@ -75,6 +78,7 @@ export default function Home() {
   <h2 className="text-2xl font-semibold mb-6">Proyectos</h2>
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {/* Proyecto 1 */}
+    <a href='https://www.behance.net/embed/project/194416801?ilo0=1' target='_blank'>
     <motion.div
           initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
@@ -88,14 +92,16 @@ export default function Home() {
         ></iframe>
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-semibold mb-1">PopMeals Rediseño UX</h3>
+        <h3 className="text-lg font-semibold mb-1">QUICKTRADE - WEB</h3>
         <p className="text-gray-400 text-sm">
-          UX/UI completo para sistema de pedidos y flujos Cashless + Precompra.
+          Diseño de sitio de productos financieros para Grupo SBS - Quicktrade.
         </p>
       </div>
-      </motion.div>
+    </motion.div>
+    </a>
 
     {/* Proyecto 2 */}
+    <a href='https://www.behance.net/embed/project/179626813?ilo0=1' target='_blank'>
     <motion.div
           initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
@@ -109,14 +115,16 @@ export default function Home() {
         ></iframe>
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-semibold mb-1">UX para ecommerce gourmet</h3>
+        <h3 className="text-lg font-semibold mb-1">QUICKTRADE - AGUINALDO</h3>
         <p className="text-gray-400 text-sm">
-          Diseño de experiencia y branding para tienda gourmet internacional.
+          Diseño de campaña digital: rrss, web y mailing para Grupo SBS - Quicktrade
         </p>
       </div>
     </motion.div>
+    </a>
 
     {/* Proyecto 3 */}
+    <a href="https://www.behance.net/embed/project/180147057?ilo0=1" target="_blank">
     <motion.div
           initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
@@ -130,14 +138,15 @@ export default function Home() {
         ></iframe>
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-semibold mb-1">Sistema de identidad</h3>
+        <h3 className="text-lg font-semibold mb-1">SHANTALA - EXPO PRESENTES</h3>
         <p className="text-gray-400 text-sm">
-          Sistema visual integral para producto digital y presencia de marca.
+          Diseño de stand 3D + gráfica para exposición para rubro Wellness.
         </p>
       </div>
-    </motion.div>
+    </motion.div></a>
 
     {/* Proyecto 4 */}
+    <a href='https://www.behance.net/embed/project/142606183?ilo0=1' target='_blank'>
     <motion.div
           initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
@@ -151,14 +160,16 @@ export default function Home() {
         ></iframe>
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-semibold mb-1">Aplicación de reservas</h3>
+        <h3 className="text-lg font-semibold mb-1">AYUDA3 - PROYECTO FINAL</h3>
         <p className="text-gray-400 text-sm">
-          UX para app de reservas con foco en claridad y accesibilidad.
+          Manual de supervivencia a la vida adulta. proyecto colaborativo.
         </p>
       </div>
     </motion.div>
+    </a>
 
     {/* Proyecto 5 */}
+    <a href='https://www.behance.net/embed/project/142604813?ilo0=1' target='_blank'>
     <motion.div
           initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
@@ -172,12 +183,13 @@ export default function Home() {
         ></iframe>
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-semibold mb-1">Landing producto wellness</h3>
+        <h3 className="text-lg font-semibold mb-1">TEA TRAVEL - INTIZEN</h3>
         <p className="text-gray-400 text-sm">
-          Diseño de interfaz y branding para producto de bienestar.
+          Nuevo producto + campaña 360. Proyecto colaborativo.
         </p>
       </div>
     </motion.div>
+    </a>
   </div>
 </section>
 

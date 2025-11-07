@@ -7,7 +7,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-black/95 text-white"> 
       <div className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
-        <h1 className="text-xl font-bold text-[#8dff5d]">Francisco Gomar</h1>
+        <h1 className="text-xl font-bold text-[#8dff5d]">Gom.ar</h1>
         <button
           onClick={() => setMenuOpen(true)}
           className="text-white text-3xl md:hidden"
