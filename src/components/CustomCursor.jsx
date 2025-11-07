@@ -4,10 +4,16 @@ import { useEffect, useState } from "react";
 export default function CustomCursor() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [hovering, setHovering] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    const move = (e) => setPos({ x: e.clientX, y: e.clientY });
+    const touchCheck =
+  window.matchMedia("(pointer: coarse)").matches ||
+  ("ontouchstart" in window && navigator.maxTouchPoints > 0);
+    setIsTouchDevice(touchCheck);
+    if (touchCheck) return;
 
+    const move = (e) => setPos({ x: e.clientX, y: e.clientY });
     const handleEnter = () => setHovering(true);
     const handleLeave = () => setHovering(false);
 
@@ -26,28 +32,31 @@ export default function CustomCursor() {
     };
   }, []);
 
+  // si es touch device, no renderiza nada
+  if (isTouchDevice) return null;
+
   return (
-  <>
-    {/* Círculo verde */}
-    <div
-      className="fixed top-0 left-0 w-10 h-10 rounded-full bg-[#92ff6b] mix-blend-difference pointer-events-none z-[9999] transition-transform duration-150 ease-out"
-      style={{
-        transform: `translate(${pos.x - 20}px, ${pos.y - 20}px) scale(${hovering ? 1.6 : 1})`,
-      }}
-    />
-    {/* Cruz blanca */}
-    <div
-      className="fixed top-0 left-0 w-px h-6 bg-white pointer-events-none z-[10000]"
-      style={{
-        transform: `translate(${pos.x}px, ${pos.y - 12}px)`,
-      }}
-    />
-    <div
-      className="fixed top-0 left-0 h-px w-6 bg-white pointer-events-none z-[10000]"
-      style={{
-        transform: `translate(${pos.x - 12}px, ${pos.y}px)`,
-      }}
-    />
-  </>
-);
+    <>
+      {/* Círculo verde */}
+      <div
+        className="fixed top-0 left-0 w-10 h-10 rounded-full bg-[#92ff6b] mix-blend-difference pointer-events-none z-[9999] transition-transform duration-150 ease-out"
+        style={{
+          transform: `translate(${pos.x - 20}px, ${pos.y - 20}px) scale(${hovering ? 1.6 : 1})`,
+        }}
+      />
+      {/* Cruz blanca */}
+      <div
+        className="fixed top-0 left-0 w-px h-6 bg-white pointer-events-none z-[10000]"
+        style={{
+          transform: `translate(${pos.x}px, ${pos.y - 12}px)`,
+        }}
+      />
+      <div
+        className="fixed top-0 left-0 h-px w-6 bg-white pointer-events-none z-[10000]"
+        style={{
+          transform: `translate(${pos.x - 12}px, ${pos.y}px)`,
+        }}
+      />
+    </>
+  );
 }
