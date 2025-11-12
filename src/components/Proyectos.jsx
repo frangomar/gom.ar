@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Proyectos() {
   const fadeIn = {
@@ -7,7 +8,7 @@ export default function Proyectos() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
-  const proyectos = [
+  const proyectosBase = [
     {
       id: 1,
       titulo: "QUICKTRADE - WEB",
@@ -45,10 +46,17 @@ export default function Proyectos() {
     },
   ];
 
+  // Mezcla aleatoria al montar el componente
+  const [proyectos, setProyectos] = useState([]);
+  useEffect(() => {
+    const mezclados = [...proyectosBase].sort(() => Math.random() - 0.5);
+    setProyectos(mezclados);
+  }, []);
+
   return (
     <motion.section
       id="proyectos"
-      className="scroll-mt-24 mt-24 max-w-6xl mx-auto px-6 text-center"
+      className="scroll-mt-24 mt-24 max-w-6xl mx-auto px-6 text-center relative h-[120vh]"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -66,48 +74,3 @@ export default function Proyectos() {
       >
         Algunos proyectos seleccionados que combinan identidad visual, diseño
         UX/UI y una mirada centrada en las personas.
-      </motion.p>
-
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        variants={{
-          visible: { transition: { staggerChildren: 0.15 } },
-        }}
-      >
-        {proyectos.map((p) => (
-          <motion.a
-            key={p.id}
-            href={p.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            variants={fadeIn}
-          >
-            <div className="bg-zinc-900 rounded overflow-hidden shadow-md hover:scale-[1.02] transition-transform">
-              <div className="aspect-video overflow-hidden">
-                <iframe
-                  src={p.link}
-                  allowFullScreen
-                  scrolling="no"
-                  className="w-full h-full border-0"
-                ></iframe>
-              </div>
-              <div className="p-4 text-left">
-                <h3 className="text-lg font-semibold mb-1">{p.titulo}</h3>
-                <p className="text-gray-400 text-sm">{p.descripcion}</p>
-              </div>
-            </div>
-          </motion.a>
-        ))}
-      </motion.div>
-
-      <motion.a
-        href="https://www.behance.net/franciscogomar"
-        target="_blank"
-        variants={fadeIn}
-        className="inline-block mt-10 text-sm uppercase tracking-wide text-[#92ff6b] hover:underline"
-      >
-        Ver todos los proyectos en Behance →
-      </motion.a>
-    </motion.section>
-  );
-}
