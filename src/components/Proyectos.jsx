@@ -74,3 +74,55 @@ export default function Proyectos() {
       >
         Algunos proyectos seleccionados que combinan identidad visual, diseño
         UX/UI y una mirada centrada en las personas.
+      </motion.p>
+
+      <div className="relative w-full h-[70vh] overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950">
+        {proyectos.map((p) => {
+          const randX = Math.random() * 60 - 30;
+          const randY = Math.random() * 60 - 30;
+
+          return (
+            <motion.a
+              key={p.id}
+              href={p.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              drag
+              dragConstraints={{ top: -200, bottom: 200, left: -200, right: 200 }}
+              dragElastic={0.5}
+              whileTap={{ scale: 1.05 }}
+              initial={{ opacity: 0, x: randX + "%", y: randY + "%" }}
+              animate={{ opacity: 1, x: randX + "%", y: randY + "%", transition: { duration: 0.8 } }}
+              className="absolute cursor-grab active:cursor-grabbing"
+            >
+              <div className="w-72 bg-zinc-900 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all">
+                <div className="aspect-video overflow-hidden">
+                  <iframe
+                    src={p.link}
+                    allowFullScreen
+                    scrolling="no"
+                    className="w-full h-full border-0"
+                  ></iframe>
+                </div>
+                <div className="p-3 text-left">
+                  <h3 className="text-base font-semibold mb-1">{p.titulo}</h3>
+                  <p className="text-gray-400 text-xs">{p.descripcion}</p>
+                </div>
+              </div>
+            </motion.a>
+          );
+        })}
+      </div>
+
+      <motion.a
+        href="https://www.behance.net/franciscogomar"
+        target="_blank"
+        variants={fadeIn}
+        className="inline-block mt-10 text-sm uppercase tracking-wide text-[#92ff6b] hover:underline"
+      >
+        Ver todos los proyectos en Behance →
+      </motion.a>
+    </motion.section>
+  );
+}
+
