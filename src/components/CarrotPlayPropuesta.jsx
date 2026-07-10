@@ -115,9 +115,7 @@ export default function CarrotPlayPropuesta() {
           <circle cx="820" cy="70" r="3.5" fill="var(--ball)" opacity="0.6" />
         </svg>
         <div className={`${styles.wrap} ${styles.heroInner}`}>
-          <p className={styles.eyebrow}>
-            Propuesta de diseño · Preparada para Nicolás
-          </p>
+          <p className={styles.eyebrow}>Propuesta de diseño, para Nicolás</p>
           <h1>
             Carrot<span>Play</span>
           </h1>
@@ -203,9 +201,9 @@ export default function CarrotPlayPropuesta() {
                   Referencia
                 </span>
                 <p>
-                  Playtomic resuelve el lado jugador (reserva, ranking,
-                  comunidad); Vola resuelve el lado club (torneos, cobros,
-                  gestión) — dos experiencias, no una mezclada.
+                  Es el mismo criterio que usan Playtomic y Vola: cada una
+                  vive del lado que le toca —reserva y ranking por acá,
+                  torneos y cobros por allá— y nunca se cruzan.
                 </p>
               </div>
             </div>
@@ -231,9 +229,9 @@ export default function CarrotPlayPropuesta() {
                   Referencia
                 </span>
                 <p>
-                  Wona, marketplace de dos lados, separa el perfil de club
-                  del de usuario final desde el primer ingreso, sin mezclar
-                  mensajes.
+                  Wona, que también le habla a dos públicos distintos,
+                  separa el perfil de club del de usuario desde el primer
+                  login. El mensaje nunca se pisa.
                 </p>
               </div>
             </div>
@@ -258,9 +256,8 @@ export default function CarrotPlayPropuesta() {
                   Referencia
                 </span>
                 <p>
-                  Playtomic siempre prioriza una única acción
-                  (&quot;Reservar ahora&quot;) por sobre cualquier otra
-                  opción de navegación.
+                  En Playtomic no hay dudas posibles: todo el peso visual
+                  cae sobre &quot;Reservar ahora&quot;. Lo demás espera.
                 </p>
               </div>
             </div>
@@ -288,8 +285,8 @@ export default function CarrotPlayPropuesta() {
                   Referencia
                 </span>
                 <p>
-                  Tournify mantiene sus cards con apenas fecha, sede y
-                  estado — el resto queda para la vista expandida.
+                  Tournify lo resuelve con tres datos por card —fecha, sede,
+                  estado— y deja todo lo demás para cuando abrís el detalle.
                 </p>
               </div>
             </div>
@@ -314,8 +311,8 @@ export default function CarrotPlayPropuesta() {
                   Referencia
                 </span>
                 <p>
-                  Vola y Wona sostienen una identidad consistente entre
-                  naming, paleta y tono en toda la plataforma.
+                  Ni Vola ni Wona improvisan acá: naming, paleta y tono se
+                  repiten idénticos en cada rincón de la plataforma.
                 </p>
               </div>
             </div>
@@ -343,8 +340,8 @@ export default function CarrotPlayPropuesta() {
                   Referencia
                 </span>
                 <p>
-                  Wona integra reservas, clases y torneos como categorías de
-                  un mismo perfil, sin tratarlas como promociones separadas.
+                  En Wona, reservas, clases y torneos conviven como
+                  categorías de un mismo menú — nunca como banners sueltos.
                 </p>
               </div>
             </div>
@@ -549,9 +546,7 @@ export default function CarrotPlayPropuesta() {
           <a className={styles.ctaBtn} href="#etapas">
             Ver las etapas de nuevo
           </a>
-          <p className={styles.footFine}>
-            CarrotPlay · Propuesta de diseño · Preparada para Nicolás
-          </p>
+          <p className={styles.footFine}>CarrotPlay · Propuesta de diseño</p>
         </div>
       </footer>
     </div>
