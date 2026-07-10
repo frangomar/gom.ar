@@ -56,7 +56,7 @@ export default function Proyectos() {
   return (
     <motion.section
       id="proyectos"
-      className="scroll-mt-24 mt-24 max-w-6xl mx-auto px-6 text-center relative h-[120vh]"
+      className="scroll-mt-24 mt-24 max-w-6xl mx-auto px-6 text-center"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -76,43 +76,36 @@ export default function Proyectos() {
         UX/UI y una mirada centrada en las personas.
       </motion.p>
 
-      <div className="relative w-full h-[70vh] overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950">
-        {proyectos.map((p) => {
-          const randX = Math.random() * 60 - 30;
-          const randY = Math.random() * 60 - 30;
-
-          return (
-            <motion.a
-              key={p.id}
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              drag
-              dragConstraints={{ top: -200, bottom: 200, left: -200, right: 200 }}
-              dragElastic={0.5}
-              whileTap={{ scale: 1.05 }}
-              initial={{ opacity: 0, x: randX + "%", y: randY + "%" }}
-              animate={{ opacity: 1, x: randX + "%", y: randY + "%", transition: { duration: 0.8 } }}
-              className="absolute cursor-grab active:cursor-grabbing"
-            >
-              <div className="w-72 bg-zinc-900 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all">
-                <div className="aspect-video overflow-hidden">
-                  <iframe
-                    src={p.link}
-                    allowFullScreen
-                    scrolling="no"
-                    className="w-full h-full border-0"
-                  ></iframe>
-                </div>
-                <div className="p-3 text-left">
-                  <h3 className="text-base font-semibold mb-1">{p.titulo}</h3>
-                  <p className="text-gray-400 text-xs">{p.descripcion}</p>
-                </div>
-              </div>
-            </motion.a>
-          );
-        })}
-      </div>
+      <motion.div
+        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        {proyectos.map((p) => (
+          <motion.a
+            key={p.id}
+            href={p.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            variants={fadeIn}
+            whileHover={{ y: -6 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="block bg-zinc-900 rounded-lg overflow-hidden shadow-md hover:shadow-xl hover:shadow-[#92ff6b]/10 border border-transparent hover:border-[#92ff6b]/30 transition-colors"
+          >
+            <div className="aspect-video overflow-hidden">
+              <iframe
+                src={p.link}
+                allowFullScreen
+                scrolling="no"
+                className="w-full h-full border-0"
+              ></iframe>
+            </div>
+            <div className="p-4 text-left">
+              <h3 className="text-base font-semibold mb-1">{p.titulo}</h3>
+              <p className="text-gray-400 text-xs">{p.descripcion}</p>
+            </div>
+          </motion.a>
+        ))}
+      </motion.div>
 
       <motion.a
         href="https://www.behance.net/franciscogomar"

@@ -86,16 +86,55 @@
     var(--court-deep);
   border-bottom: 1px solid var(--line);
 }
+.heroPhoto {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 40%;
+  z-index: 0;
+}
+.heroPhotoOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+      100deg,
+      var(--court-deep) 0%,
+      rgba(0, 0, 0, 0.78) 38%,
+      rgba(0, 0, 0, 0.4) 70%,
+      rgba(0, 0, 0, 0.55) 100%
+    ),
+    radial-gradient(
+      ellipse 900px 500px at 82% -10%,
+      rgba(0, 255, 0, 0.1),
+      transparent 60%
+    );
+}
+
+@media (max-width: 760px) {
+  .heroPhoto {
+    opacity: 0.45;
+  }
+  .heroPhotoOverlay {
+    background: linear-gradient(
+      180deg,
+      var(--court-deep) 0%,
+      rgba(0, 0, 0, 0.55) 45%,
+      rgba(0, 0, 0, 0.72) 100%
+    );
+  }
+}
 .courtLines {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   opacity: 0.5;
+  z-index: 2;
 }
 .heroInner {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 .hero h1 {
   font-size: clamp(52px, 11vw, 104px);
@@ -263,6 +302,21 @@
 .setCol:last-child {
   border-right: none;
 }
+.setColTag {
+  display: none;
+  font-family: "Satoshi", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--slate-dim);
+  margin-bottom: 12px;
+}
+.setColTag b {
+  color: var(--ball);
+  font-weight: 700;
+  margin-left: 6px;
+  letter-spacing: 0.03em;
+}
 .setCol h4 {
   font-family: "Satoshi", sans-serif;
   font-weight: 700;
@@ -285,14 +339,18 @@
 }
 
 @media (max-width: 760px) {
-  .setsStrip,
+  .setsStrip {
+    display: none;
+  }
   .setPanel {
     grid-template-columns: 1fr;
   }
-  .setTab,
   .setCol {
     border-right: none;
     border-bottom: 1px solid var(--line);
+  }
+  .setColTag {
+    display: block;
   }
 }
 
@@ -455,6 +513,28 @@
   font-size: 11.5px;
   color: var(--slate-dim);
   letter-spacing: 0.04em;
+}
+
+/* ---------- PHOTO BAND (divisores de imagen) ---------- */
+.photoBand {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.photoBandOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+}
+
+@media (max-width: 600px) {
+  .photoBand {
+    height: 160px;
+  }
 }
 
 /* ---------- reveal ---------- */

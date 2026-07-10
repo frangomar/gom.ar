@@ -2,6 +2,14 @@
 import { useEffect, useRef } from "react";
 import styles from "./CarrotPlayPropuesta.module.css";
 
+const PHOTOS = {
+  hero: "https://images.pexels.com/photos/32896996/pexels-photo-32896996/free-photo-of-estetica-del-padel.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  lineas:
+    "https://images.pexels.com/photos/33634412/pexels-photo-33634412/free-photo-of-vista-abstracta-de-las-lineas-de-la-cancha-de-padel.jpeg?auto=compress&cs=tinysrgb&w=1600",
+  pelota:
+    "https://images.pexels.com/photos/35118461/pexels-photo-35118461/free-photo-of-pelota-de-tenis-verde-sobre-superficie-de-cancha-azul.jpeg?auto=compress&cs=tinysrgb&w=1600",
+};
+
 function Reveal({ as: Tag = "div", className = "", children, ...props }) {
   const ref = useRef(null);
 
@@ -55,6 +63,12 @@ export default function CarrotPlayPropuesta() {
   return (
     <div className={styles.page}>
       <section className={styles.hero}>
+        <div
+          className={styles.heroPhoto}
+          style={{ backgroundImage: `url(${PHOTOS.hero})` }}
+          aria-hidden="true"
+        />
+        <div className={styles.heroPhotoOverlay} aria-hidden="true" />
         <svg
           className={styles.courtLines}
           viewBox="0 0 920 420"
@@ -148,6 +162,14 @@ export default function CarrotPlayPropuesta() {
           </p>
         </Reveal>
       </section>
+
+      <Reveal
+        as="div"
+        className={styles.photoBand}
+        style={{ backgroundImage: `url(${PHOTOS.lineas})` }}
+      >
+        <div className={styles.photoBandOverlay} aria-hidden="true" />
+      </Reveal>
 
       <section id="puntos">
         <Reveal className={styles.wrap}>
@@ -368,6 +390,9 @@ export default function CarrotPlayPropuesta() {
             </div>
             <div className={styles.setPanel}>
               <div className={styles.setCol}>
+                <div className={styles.setColTag}>
+                  Set 1 <b>Flujos</b>
+                </div>
                 <h4>Arquitectura de flujos</h4>
                 <p>
                   Navegación y jerarquía separadas por rol: jugador y
@@ -378,6 +403,9 @@ export default function CarrotPlayPropuesta() {
                 </div>
               </div>
               <div className={styles.setCol}>
+                <div className={styles.setColTag}>
+                  Set 2 <b>Identidad</b>
+                </div>
                 <h4>Identidad visual</h4>
                 <p>
                   Paleta, tipografía, tono e ícono de marca, coherentes con
@@ -388,6 +416,9 @@ export default function CarrotPlayPropuesta() {
                 </div>
               </div>
               <div className={styles.setCol}>
+                <div className={styles.setColTag}>
+                  Set 3 <b>Sistema UI</b>
+                </div>
                 <h4>Sistema de componentes</h4>
                 <p>
                   Tokens, componentes y estados aplicados sobre las
@@ -398,6 +429,9 @@ export default function CarrotPlayPropuesta() {
                 </div>
               </div>
               <div className={styles.setCol}>
+                <div className={styles.setColTag}>
+                  Set 4 <b>Seguimiento</b>
+                </div>
                 <h4>Revisión de implementación</h4>
                 <p>Feedback sobre lo que se va construyendo, a tu ritmo.</p>
                 <div className={styles.deliver}>
@@ -408,6 +442,14 @@ export default function CarrotPlayPropuesta() {
           </div>
         </Reveal>
       </section>
+
+      <Reveal
+        as="div"
+        className={styles.photoBand}
+        style={{ backgroundImage: `url(${PHOTOS.pelota})` }}
+      >
+        <div className={styles.photoBandOverlay} aria-hidden="true" />
+      </Reveal>
 
       <section id="inversion">
         <Reveal className={styles.wrap}>
