@@ -5,15 +5,15 @@
 
 .page {
   --court: #000000;
-  --court-light: #0a0a0a;
+  --court-light: #18181b;
   --court-deep: #000000;
   --chalk: #f2f2f2;
-  --ball: #00ff00;
-  --clay: #00ff00;
+  --ball: #92ff6b;
+  --clay: #92ff6b;
   --ink: #050505;
   --slate: #b5b5b5;
   --slate-dim: #7a7a7a;
-  --line: rgba(242, 242, 242, 0.14);
+  --line: rgba(255, 255, 255, 0.1);
   --radius: 14px;
   --maxw: 920px;
 
@@ -25,6 +25,7 @@
   -webkit-font-smoothing: antialiased;
   cursor: auto;
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 .page ::selection {
@@ -59,8 +60,19 @@
   height: 7px;
   border-radius: 50%;
   background: var(--ball);
-  box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.18);
+  box-shadow: 0 0 0 3px rgba(146, 255, 107, 0.18);
   flex-shrink: 0;
+  animation: eyebrowPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes eyebrowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(146, 255, 107, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(146, 255, 107, 0.08);
+  }
 }
 
 .page h1,
@@ -80,7 +92,7 @@
   padding: 96px 0 90px;
   background: radial-gradient(
       ellipse 900px 500px at 82% -10%,
-      rgba(0, 255, 0, 0.08),
+      rgba(146, 255, 107, 0.08),
       transparent 60%
     ),
     var(--court-deep);
@@ -88,10 +100,11 @@
 }
 .heroPhoto {
   position: absolute;
-  inset: 0;
+  inset: -10% 0 -10% 0;
   background-size: cover;
   background-position: center 40%;
   z-index: 0;
+  will-change: transform;
 }
 .heroPhotoOverlay {
   position: absolute;
@@ -106,7 +119,7 @@
     ),
     radial-gradient(
       ellipse 900px 500px at 82% -10%,
-      rgba(0, 255, 0, 0.1),
+      rgba(146, 255, 107, 0.1),
       transparent 60%
     );
 }
@@ -131,6 +144,7 @@
   height: 100%;
   opacity: 0.5;
   z-index: 2;
+  will-change: transform;
 }
 .heroInner {
   position: relative;
@@ -217,6 +231,10 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
+  transition: box-shadow 0.25s ease;
+}
+.rally:hover .rallyNum {
+  box-shadow: 0 0 0 5px rgba(146, 255, 107, 0.16);
 }
 .rallyBody h3 {
   font-family: "Satoshi", sans-serif;
@@ -263,6 +281,7 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
+  box-shadow: 0 16px 40px -20px rgba(0, 0, 0, 0.8);
 }
 .setsStrip {
   display: grid;
@@ -271,6 +290,7 @@
   font-family: "Satoshi", sans-serif;
 }
 .setTab {
+  position: relative;
   padding: 14px 10px;
   text-align: center;
   font-size: 12px;
@@ -278,6 +298,7 @@
   color: var(--slate-dim);
   border-right: 1px solid var(--line);
   text-transform: uppercase;
+  transition: background-color 0.3s ease;
 }
 .setTab:last-child {
   border-right: none;
@@ -291,6 +312,19 @@
   letter-spacing: 0.03em;
   margin-top: 2px;
 }
+.setTabActive {
+  background: rgba(146, 255, 107, 0.07);
+}
+.setTabActive::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--ball);
+  box-shadow: 0 0 10px rgba(146, 255, 107, 0.7);
+}
 .setPanel {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -298,9 +332,14 @@
 .setCol {
   padding: 24px 20px 28px;
   border-right: 1px solid var(--line);
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 .setCol:last-child {
   border-right: none;
+}
+.setColActive {
+  background: rgba(146, 255, 107, 0.04);
+  box-shadow: inset 3px 0 0 var(--ball);
 }
 .setColTag {
   display: none;
@@ -366,6 +405,13 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 24px 22px;
+  box-shadow: 0 10px 26px -18px rgba(0, 0, 0, 0.85);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.priceCard:hover {
+  border-color: rgba(146, 255, 107, 0.35);
+  box-shadow: 0 16px 34px -16px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(146, 255, 107, 0.08);
 }
 .priceCard .pk {
   font-family: "Satoshi", sans-serif;
@@ -496,10 +542,8 @@
   text-decoration: none;
   padding: 16px 30px;
   border-radius: 100px;
-  transition: transform 0.15s ease;
-}
-.ctaBtn:hover {
-  transform: translateY(-2px);
+  cursor: pointer;
+  border: none;
 }
 .page .ctaBtn:focus-visible,
 .page a:focus-visible,
@@ -520,10 +564,15 @@
   position: relative;
   height: 280px;
   overflow: hidden;
-  background-size: cover;
-  background-position: center;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+}
+.photoBandImg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
 }
 .photoBandOverlay {
   position: absolute;
@@ -537,25 +586,9 @@
   }
 }
 
-/* ---------- reveal ---------- */
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.in {
-  opacity: 1;
-  transform: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .ctaBtn {
-    transition: none;
+  .eyebrow::before {
+    animation: none;
   }
 }
 
