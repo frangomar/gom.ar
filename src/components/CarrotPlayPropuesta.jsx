@@ -259,83 +259,94 @@ export default function CarrotPlayPropuesta() {
   return (
     <div className={styles.page}>
       <section className={styles.hero} ref={heroRef}>
-        <motion.div
-          className={styles.heroPhoto}
-          style={{ backgroundImage: `url(${PHOTOS.hero})`, y: photoY }}
-          aria-hidden="true"
-        />
-        <div className={styles.heroPhotoOverlay} aria-hidden="true" />
-        <motion.svg
-          className={styles.courtLines}
-          style={{ y: linesY }}
-          viewBox="0 0 920 420"
-          preserveAspectRatio="xMidYMid slice"
-          aria-hidden="true"
-        >
-          <rect
-            x="20"
-            y="20"
-            width="880"
-            height="380"
-            fill="none"
-            stroke="var(--chalk)"
-            strokeOpacity="0.16"
-            strokeWidth="2"
-          />
-          <line
-            x1="460"
-            y1="20"
-            x2="460"
-            y2="400"
-            stroke="var(--chalk)"
-            strokeOpacity="0.16"
-            strokeWidth="2"
-          />
-          <line
-            x1="20"
-            y1="152"
-            x2="900"
-            y2="152"
-            stroke="var(--chalk)"
-            strokeOpacity="0.1"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="20"
-            y1="268"
-            x2="900"
-            y2="268"
-            stroke="var(--chalk)"
-            strokeOpacity="0.1"
-            strokeWidth="1.5"
-          />
-          <circle cx="820" cy="70" r="3.5" fill="var(--ball)" opacity="0.6" />
-        </motion.svg>
-        <RevealGroup className={`${styles.wrap} ${styles.heroInner}`}>
-          <motion.p variants={revealVariant} className={styles.eyebrow}>
-            Propuesta de diseño · CarrotPlay
-          </motion.p>
-          <motion.h1 variants={revealVariant}>
-            Carrot<span>Play</span>
-          </motion.h1>
-          <motion.p variants={revealVariant} className={styles.heroSub}>
-            CarrotPlay ya resuelve la parte técnica del juego. Esta propuesta
-            se ocupa de lo que todavía falta: que jugador y organizador
-            encuentren su cancha propia dentro del producto, y que la marca
-            se vea tan seria como el torneo que organiza.
-          </motion.p>
-          <motion.div variants={revealVariant} className={styles.heroMeta}>
-            <span>
-              <b>Sitio</b> · carrotplay.com.ar
-            </span>
-            <span>
-              <b>Estado</b> · staging
-            </span>
-            <span>
-              <b>Modelo</b> · packs de 5h por etapa
-            </span>
-          </motion.div>
-        </RevealGroup>
+        <div className={styles.heroGrid}>
+          <RevealGroup className={styles.heroText}>
+            <motion.p variants={revealVariant} className={styles.eyebrow}>
+              Propuesta de diseño · CarrotPlay
+            </motion.p>
+            <motion.h1 variants={revealVariant}>
+              Carrot<span>Play</span>
+            </motion.h1>
+            <motion.p variants={revealVariant} className={styles.heroSub}>
+              CarrotPlay ya resuelve la parte técnica del juego. Esta
+              propuesta se ocupa de lo que todavía falta: que jugador y
+              organizador encuentren su cancha propia dentro del producto, y
+              que la marca se vea tan seria como el torneo que organiza.
+            </motion.p>
+            <motion.div variants={revealVariant} className={styles.heroMeta}>
+              <span>
+                <b>Sitio</b> · carrotplay.com.ar
+              </span>
+              <span>
+                <b>Estado</b> · staging
+              </span>
+              <span>
+                <b>Modelo</b> · packs de 5h por etapa
+              </span>
+            </motion.div>
+          </RevealGroup>
+
+          <Reveal as="div" className={styles.heroVisual}>
+            <motion.div
+              className={styles.heroPhoto}
+              style={{ backgroundImage: `url(${PHOTOS.hero})`, y: photoY }}
+              aria-hidden="true"
+            />
+            <motion.svg
+              className={styles.courtLines}
+              style={{ y: linesY }}
+              viewBox="0 0 920 420"
+              preserveAspectRatio="xMidYMid slice"
+              aria-hidden="true"
+            >
+              <rect
+                x="20"
+                y="20"
+                width="880"
+                height="380"
+                fill="none"
+                stroke="var(--chalk)"
+                strokeOpacity="0.16"
+                strokeWidth="2"
+              />
+              <line
+                x1="460"
+                y1="20"
+                x2="460"
+                y2="400"
+                stroke="var(--chalk)"
+                strokeOpacity="0.16"
+                strokeWidth="2"
+              />
+              <line
+                x1="20"
+                y1="152"
+                x2="900"
+                y2="152"
+                stroke="var(--chalk)"
+                strokeOpacity="0.1"
+                strokeWidth="1.5"
+              />
+              <line
+                x1="20"
+                y1="268"
+                x2="900"
+                y2="268"
+                stroke="var(--chalk)"
+                strokeOpacity="0.1"
+                strokeWidth="1.5"
+              />
+              <circle
+                cx="820"
+                cy="70"
+                r="3.5"
+                fill="var(--ball)"
+                opacity="0.6"
+              />
+            </motion.svg>
+            <div className={styles.heroVisualOverlay} aria-hidden="true" />
+          </Reveal>
+        </div>
       </section>
 
       <section>
