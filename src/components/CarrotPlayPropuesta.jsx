@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useScroll,
@@ -145,7 +145,7 @@ function PhotoBand({ src }) {
   const scale = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    shouldReduceMotion ? [1, 1, 1] : [1.12, 1, 1.12]
+    shouldReduceMotion ? [1, 1, 1] : [1.08, 1, 1.08]
   );
 
   return (
@@ -160,25 +160,24 @@ function PhotoBand({ src }) {
   );
 }
 
-function useActiveIndex(refs) {
+// Los 4 sets se muestran apilados en mobile (entran/salen del viewport
+// uno por uno) pero lado a lado en desktop (los 4 están visibles al mismo
+// tiempo, ninguno "entra" o "sale" individualmente). Por eso el activo se
+// deriva del progreso de scroll de todo el scoreboard, no de qué columna
+// intersecta el viewport — funciona igual en ambos layouts.
+function useActiveSetFromScroll(targetRef, count) {
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start 0.75", "end 0.35"],
+  });
   const [active, setActive] = useState(0);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const idx = refs.findIndex((r) => r.current === entry.target);
-            if (idx !== -1) setActive(idx);
-          }
-        });
-      },
-      { threshold: 0.5, rootMargin: "-15% 0px -15% 0px" }
-    );
-    refs.forEach((r) => {
-      if (r.current) observer.observe(r.current);
+    const unsubscribe = scrollYProgress.on("change", (v) => {
+      const idx = Math.min(count - 1, Math.max(0, Math.floor(v * count)));
+      setActive(idx);
     });
-    return () => observer.disconnect();
-  }, [refs]);
+    return unsubscribe;
+  }, [scrollYProgress, count]);
   return active;
 }
 
@@ -232,15 +231,20 @@ export default function CarrotPlayPropuesta() {
     shouldReduceMotion ? ["0%", "0%"] : ["0%", "-12%"]
   );
 
-  const setRef0 = useRef(null);
-  const setRef1 = useRef(null);
-  const setRef2 = useRef(null);
-  const setRef3 = useRef(null);
-  const setRefs = useMemo(
-    () => [setRef0, setRef1, setRef2, setRef3],
-    []
-  );
-  const activeSet = useActiveIndex(setRefs);
+  const scoreboardRef = useRef(null);
+  const scrollActiveSet = useActiveSetFromScroll(scoreboardRef, SETS.length);
+  const [supportsHover, setSupportsHover] = useState(false);
+  const [hoveredSet, setHoveredSet] = useState(null);
+
+  useEffect(() => {
+    setSupportsHover(
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    );
+  }, []);
+
+  // En desktop (con hover real) el resaltado responde al mouse. En touch,
+  // donde no hay hover, sigue el progreso de scroll como antes.
+  const activeSet = supportsHover ? hoveredSet : scrollActiveSet;
 
   useEffect(() => {
     if (shouldReduceMotion) return;
@@ -560,11 +564,13 @@ export default function CarrotPlayPropuesta() {
             cierra, se factura, y recién ahí se abre la siguiente.
           </p>
 
-          <div className={styles.scoreboard}>
+          <div className={styles.scoreboard} ref={scoreboardRef}>
             <div className={styles.setsStrip}>
               {SETS.map((set, i) => (
                 <div
                   key={set.label}
+                  onMouseEnter={() => setHoveredSet(i)}
+                  onMouseLeave={() => setHoveredSet(null)}
                   className={`${styles.setTab} ${
                     activeSet === i ? styles.setTabActive : ""
                   }`}
@@ -578,7 +584,8 @@ export default function CarrotPlayPropuesta() {
               {SETS.map((set, i) => (
                 <div
                   key={set.title}
-                  ref={setRefs[i]}
+                  onMouseEnter={() => setHoveredSet(i)}
+                  onMouseLeave={() => setHoveredSet(null)}
                   className={`${styles.setCol} ${
                     activeSet === i ? styles.setColActive : ""
                   }`}
