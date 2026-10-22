@@ -1,0 +1,73 @@
+{
+  "Metadata": {
+    "title": "[PENDIENTE]",
+    "description": "[PENDIENTE]",
+    "siteName": "[PENDIENTE]"
+  },
+  "Nav": {
+    "brand": "[PENDIENTE]",
+    "about": "[PENDIENTE]",
+    "projects": "[PENDIENTE]",
+    "contact": "[PENDIENTE]",
+    "openMenu": "[PENDIENTE]",
+    "closeMenu": "[PENDIENTE]"
+  },
+  "Hero": {
+    "title": "[PENDIENTE]",
+    "lead": "[PENDIENTE]",
+    "cta": "[PENDIENTE]"
+  },
+  "About": {
+    "title": "[PENDIENTE]",
+    "p1": "[PENDIENTE]",
+    "p2": "[PENDIENTE]"
+  },
+  "Projects": {
+    "title": "[PENDIENTE]",
+    "lead": "[PENDIENTE]",
+    "viewProject": "[PENDIENTE]",
+    "viewAll": "[PENDIENTE]",
+    "items": {
+      "quicktradeWeb": {
+        "title": "[PENDIENTE]",
+        "description": "[PENDIENTE]"
+      },
+      "quicktradeAguinaldo": {
+        "title": "[PENDIENTE]",
+        "description": "[PENDIENTE]"
+      },
+      "shantala": {
+        "title": "[PENDIENTE]",
+        "description": "[PENDIENTE]"
+      },
+      "ayuda3": {
+        "title": "[PENDIENTE]",
+        "description": "[PENDIENTE]"
+      },
+      "teaTravel": {
+        "title": "[PENDIENTE]",
+        "description": "[PENDIENTE]"
+      }
+    }
+  },
+  "Contact": {
+    "title": "[PENDIENTE]",
+    "lead": "[PENDIENTE]",
+    "name": "[PENDIENTE]",
+    "email": "[PENDIENTE]",
+    "message": "[PENDIENTE]",
+    "submit": "[PENDIENTE]",
+    "thanks1": "[PENDIENTE]",
+    "thanks2": "[PENDIENTE]",
+    "alsoWhatsapp": "[PENDIENTE]",
+    "whatsapp": "[PENDIENTE]"
+  },
+  "Footer": {
+    "name": "[PENDIENTE]"
+  },
+  "NotFound": {
+    "title": "[PENDIENTE]",
+    "description": "[PENDIENTE]",
+    "back": "[PENDIENTE]"
+  }
+}
