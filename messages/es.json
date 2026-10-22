@@ -1,69 +1,17 @@
 {
   "Metadata": {
-    "title": "Francisco Gomar | Diseñador UX/UI",
-    "description": "Diseñador gráfico y UX/UI. Transformo ideas en diseño centrado en las personas. Pienso lateral, actúo rápido y diseño para dejar huella.",
-    "siteName": "Francisco Gomar"
+    "title": "Francisco Gomar · Diseño y desarrollo web",
+    "description": "Diseño y desarrollo sitios web y productos digitales de punta a punta: diseño, código y lanzamiento. San Isidro, Buenos Aires.",
+    "siteName": "gom.ar"
   },
-  "Nav": {
-    "brand": "Gom.ar",
-    "about": "Sobre mí",
-    "projects": "Proyectos",
-    "contact": "Contacto",
-    "openMenu": "Abrir menú",
-    "closeMenu": "Cerrar menú"
+  "Layout": {
+    "skip": "Saltar al contenido"
   },
-  "Hero": {
-    "title": "Francisco Gomar",
-    "lead": "Diseñador gráfico y UX/UI. Transformo ideas en experiencias digitales centradas en las personas. Pienso lateral, actúo rápido y diseño para dejar huella.",
-    "cta": "Escribime por WhatsApp"
-  },
-  "About": {
-    "title": "Sobre mí",
-    "p1": "Soy diseñador gráfico con enfoque UX/UI. Trabajo con marcas, emprendedores y productos digitales para crear experiencias claras, usables y con identidad.",
-    "p2": "Me motiva transformar ideas en soluciones visuales simples, funcionales y con propósito."
-  },
-  "Projects": {
-    "title": "Proyectos",
-    "lead": "Algunos proyectos seleccionados que combinan identidad visual, diseño UX/UI y una mirada centrada en las personas.",
-    "viewProject": "Ver en Behance",
-    "viewAll": "Ver todos los proyectos en Behance →",
-    "items": {
-      "quicktradeWeb": {
-        "title": "QUICKTRADE - WEB",
-        "description": "Diseño de sitio de productos financieros para Grupo SBS - Quicktrade."
-      },
-      "quicktradeAguinaldo": {
-        "title": "QUICKTRADE - AGUINALDO",
-        "description": "Campaña digital: redes, web y mailing para Grupo SBS - Quicktrade."
-      },
-      "shantala": {
-        "title": "SHANTALA - EXPO PRESENTES",
-        "description": "Diseño de stand 3D + gráfica para exposición en rubro Wellness."
-      },
-      "ayuda3": {
-        "title": "AYUDA3 - PROYECTO FINAL",
-        "description": "Manual de supervivencia a la vida adulta. Proyecto colaborativo."
-      },
-      "teaTravel": {
-        "title": "TEA TRAVEL - INTIZEN",
-        "description": "Nuevo producto + campaña 360. Proyecto colaborativo."
-      }
-    }
-  },
-  "Contact": {
-    "title": "Contacto",
-    "lead": "¿Querés hablar sobre un proyecto, colaboración o simplemente intercambiar ideas? Enviame un mensaje y te respondo personalmente.",
-    "name": "Tu nombre",
-    "email": "Tu email",
-    "message": "Contame en 2 o 3 líneas qué necesitás",
-    "submit": "Enviar mensaje",
-    "thanks1": "Gracias por tu mensaje.",
-    "thanks2": "Te voy a responder personalmente en breve.",
-    "alsoWhatsapp": "También podés escribirme directo por",
-    "whatsapp": "WhatsApp"
-  },
-  "Footer": {
-    "name": "Francisco Gomar"
+  "Home": {
+    "h1": "Diseño y desarrollo sitios web de punta a punta",
+    "lead": "Sitio en construcción. Mientras tanto, escribime y lo hablamos.",
+    "whatsapp": "Escribime por WhatsApp",
+    "email": "Mandame un email"
   },
   "NotFound": {
     "title": "Página no encontrada",

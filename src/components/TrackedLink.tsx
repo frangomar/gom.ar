@@ -1,7 +1,7 @@
 "use client";
 import { track } from "@vercel/analytics";
 import type { AnchorHTMLAttributes } from "react";
-import type { TrackEvent } from "./Reveal";
+import type { TrackEvent } from "@/lib/track";
 
 type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
   event: TrackEvent;

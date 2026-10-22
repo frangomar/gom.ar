@@ -42,3 +42,8 @@ next-env.d.ts
 
 # internal notes
 /REFERENCIAS-PORTFOLIOS.md
+
+# quality tooling
+/test-results
+/playwright-report
+/.lighthouseci

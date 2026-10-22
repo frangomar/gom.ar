@@ -1,73 +1,21 @@
 {
   "Metadata": {
-    "title": "[PENDIENTE]",
-    "description": "[PENDIENTE]",
-    "siteName": "[PENDIENTE]"
+    "title": "Francisco Gomar · Web design and development",
+    "description": "I design and build websites and digital products end to end: design, code and launch. Based in Buenos Aires, working worldwide.",
+    "siteName": "gom.ar"
   },
-  "Nav": {
-    "brand": "[PENDIENTE]",
-    "about": "[PENDIENTE]",
-    "projects": "[PENDIENTE]",
-    "contact": "[PENDIENTE]",
-    "openMenu": "[PENDIENTE]",
-    "closeMenu": "[PENDIENTE]"
+  "Layout": {
+    "skip": "Skip to content"
   },
-  "Hero": {
-    "title": "[PENDIENTE]",
-    "lead": "[PENDIENTE]",
-    "cta": "[PENDIENTE]"
-  },
-  "About": {
-    "title": "[PENDIENTE]",
-    "p1": "[PENDIENTE]",
-    "p2": "[PENDIENTE]"
-  },
-  "Projects": {
-    "title": "[PENDIENTE]",
-    "lead": "[PENDIENTE]",
-    "viewProject": "[PENDIENTE]",
-    "viewAll": "[PENDIENTE]",
-    "items": {
-      "quicktradeWeb": {
-        "title": "[PENDIENTE]",
-        "description": "[PENDIENTE]"
-      },
-      "quicktradeAguinaldo": {
-        "title": "[PENDIENTE]",
-        "description": "[PENDIENTE]"
-      },
-      "shantala": {
-        "title": "[PENDIENTE]",
-        "description": "[PENDIENTE]"
-      },
-      "ayuda3": {
-        "title": "[PENDIENTE]",
-        "description": "[PENDIENTE]"
-      },
-      "teaTravel": {
-        "title": "[PENDIENTE]",
-        "description": "[PENDIENTE]"
-      }
-    }
-  },
-  "Contact": {
-    "title": "[PENDIENTE]",
-    "lead": "[PENDIENTE]",
-    "name": "[PENDIENTE]",
-    "email": "[PENDIENTE]",
-    "message": "[PENDIENTE]",
-    "submit": "[PENDIENTE]",
-    "thanks1": "[PENDIENTE]",
-    "thanks2": "[PENDIENTE]",
-    "alsoWhatsapp": "[PENDIENTE]",
-    "whatsapp": "[PENDIENTE]"
-  },
-  "Footer": {
-    "name": "[PENDIENTE]"
+  "Home": {
+    "h1": "I design and build websites, end to end",
+    "lead": "This site is being rebuilt. In the meantime, message me and let's talk.",
+    "whatsapp": "Message me on WhatsApp",
+    "email": "Send me an email"
   },
   "NotFound": {
-    "title": "[PENDIENTE]",
-    "description": "[PENDIENTE]",
-    "back": "[PENDIENTE]"
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or has moved.",
+    "back": "Back to home"
   }
 }
