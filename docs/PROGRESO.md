@@ -399,3 +399,21 @@ Tarea de Francisco: rehacer los objetos 3D con realismo de producto y que el nú
   - la paleta muestra el cuadro 23 de 25 con el puntero a la derecha;
   - clips en `docs/capturas/b3-3d/follow-*.webp`.
 - **Sin verificar:** fps reales en una máquina lenta.
+
+## SEO e indexación · 2026-10-22 · rama `seo-indexacion`
+
+### Auditoría del sitio en vivo (curl a gom.ar)
+- Bien: `/` → 301 a `/es`; robots.txt permite todo y apunta al sitemap; sitemap con `/es` y `/en` y sus hreflang; canonical, hreflang (es, en, x-default), description y Open Graph por idioma; un solo H1.
+- Faltaba la imagen de Open Graph: al compartir el link no aparecía ninguna imagen.
+- `www.gom.ar` no existe en DNS (los nameservers son de Cloudflare).
+
+### Qué se hizo
+- `src/app/[locale]/opengraph-image.tsx`: imagen 1200×630 estática por idioma (negro, "gom.ar" con el punto violeta, título y descripción en Schibsted Grotesk). La fuente se baja de Google Fonts en el build porque next/og no lee woff2.
+- `twitter:card` pasa a `summary_large_image`.
+- JSON-LD: nodo `WebSite` (para el nombre del sitio en Google), `knowsLanguage` y `alumniOf` (UCES, Digital House) en Person, `areaServed` en ProfessionalService. Solo datos del brief.
+- `/presupuesto` sigue sin redirect, como se decidió en el Bloque 1.
+
+### Pendientes (los hace Francisco)
+- **Google Search Console:** dar de alta la propiedad de dominio `gom.ar` (verificación por TXT en Cloudflare) y enviar `https://gom.ar/sitemap.xml`. Después, pedir la indexación de `/es` y `/en`.
+- **`www.gom.ar`:** agregar el dominio en Vercel con redirect a `gom.ar` y un CNAME `www` → `cname.vercel-dns.com` en Cloudflare (sin proxy).
+- Bing Webmaster Tools: se puede importar desde Search Console.

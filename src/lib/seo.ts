@@ -57,7 +57,7 @@ export function pageMetadata({
         .map((l) => ogLocales[l]),
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
       description,
     },
