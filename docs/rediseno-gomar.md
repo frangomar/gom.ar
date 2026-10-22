@@ -10,7 +10,7 @@
 
 ## Decisiones vigentes de Francisco (reemplazan partes de este brief)
 
-Actualizado el 2026-10-22, al cerrar el Bloque 2. **Donde este brief y esta lista no coinciden, gana esta lista**: son decisiones de Francisco. El detalle y los motivos están en `docs/PROGRESO.md` (Bloque 2).
+Actualizado el 2026-10-22, al cerrar el Bloque 2 y rehacer el 3D. **Donde este brief y esta lista no coinciden, gana esta lista**: son decisiones de Francisco. El detalle y los motivos están en `docs/PROGRESO.md` (Bloque 2 y "3D de producto").
 
 **Parte B (dirección de diseño): reemplazada**
 - Identidad propia negro + neón láser, en colores planos y **sin gradientes**:
@@ -20,24 +20,22 @@ Actualizado el 2026-10-22, al cerrar el Bloque 2. **Donde este brief y esta list
 - El clima de referencia es el techno oscuro (Argy, Fred again..).
 - Queda sin efecto la paleta del brief: fondo papel, hero azul `#2440FF` a sangre, Link y Visitado.
 - Las marcas de clientes van solo como guiño: su logo y los puntos de su dominio en su color. Nunca se pintan secciones con los colores de una marca. Fiter nunca va en negro sobre amarillo.
-- **Hero vigente, "cronómetro":** el tiempo de carga real (LCP) en 3D, el H1, el CTA de WhatsApp y una franja de marcas con el rodillo por letra. El rodillo es lo único que sobrevivió del concepto "barra de direcciones".
+- **Hero vigente, "cronómetro":** el tiempo de carga real (LCP) en 3D (aparece recién cuando el LCP se conoce, ya en su estado final), el H1, el CTA de WhatsApp y una franja de marcas con el rodillo por letra. El rodillo es lo único que sobrevivió del concepto "barra de direcciones".
 - **Imágenes:**
   - nada de capturas crudas de sitios;
   - cada caso lleva una foto de marca bajada del sitio del cliente (de Megatlon, solo fotos de sedes Black+ y Black);
-  - la app y Quicktrade muestran sus diseños en mockups 3D (iPhone y MacBook);
+  - la app y Quicktrade muestran sus diseños en mockups 3D propios (smartphone y notebook sin logos ni marcas);
   - redes muestra un muro de piezas.
 - Los casos son un mazo de cards apiladas. El resto de las secciones se disuelven sin cortes.
-- El 3D se hace con estética de render: gelatina translúcida (cáscara brillante y un núcleo que brilla) con luz de estudio clara. Nada de negros brillosos con una capa roja.
+- El 3D es **realismo de producto**, no caricatura: render offline en Blender (Cycles) con materiales PBR, luz de estudio y sombra de contacto, calibrado sobre `#070708`. Sin logos ni marcas en los objetos. La estética "gelatina" quedó sin efecto.
+- Objeto por caso, arriba del título y solo en desktop (≥ 1024 px): paleta de pádel → La Estación, pelota de golf → Driving Norte, disco bumper de goma → megatlon.com, mancuerna hexagonal → Fiter. El smartphone (app) y la notebook (Quicktrade) son el visual del caso en todas las pantallas. Redes no lleva objeto.
 - Siguen prohibidos: glass, pills y eyebrows; glows decorativos; el concepto "archivo"; los layouts editoriales; el cursor custom; los preloaders; Lenis y el scroll-jacking.
 
 **Parte C (movimiento): reemplazada en parte**
 - Todos los bloques llevan animación, no solo el hero. Se usa scroll nativo, CSS scroll-driven animations y JS liviano. Siguen sin entrar librerías de smooth scroll.
-- **3D con three.js permitido** (el brief no permitía WebGL en el hero), con estas condiciones:
-  - va en un chunk aparte que carga después de `load`;
-  - un solo contexto WebGL para toda la página;
-  - fallback estático.
+- **Sin WebGL:** el 3D son imágenes pre-renderizadas (AVIF + WebP). El giro de ±15° según el puntero es una secuencia de 25 cuadros que se baja con el primer hover o foco de la card. three.js salió del proyecto. Presupuesto por objeto: still ≤ 120 KB (AVIF 2x) y secuencia ≤ 600 KB.
 - Los botones tienen mucha respuesta: imán, relleno desde el cursor, rodillo de letras y rebote. También van personalizados el scrollbar, la selección de texto y el select.
-- Los presupuestos de performance siguen siendo el objetivo, pero **no se midieron con el diseño nuevo**: medirlos es lo primero del Bloque 3.
+- Los presupuestos de performance siguen siendo el objetivo. Medidos después del 3D nuevo (Lighthouse mobile): Performance 87, TBT 270 ms, CLS 0, 345 KB; **el LCP (2,6 s) todavía no entra en el presupuesto** (ver PROGRESO).
 
 **Parte D (estructura y contacto)**
 - Sin precios en el sitio: no hay "desde USD".
