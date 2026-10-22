@@ -1,6 +1,6 @@
 import type { PublishedLocale } from "@/i18n/routing";
 
-// Casos de la home, en el orden del brief (Parte D). Solo datos de las fichas: nada inventado.
+// Casos de la home: primero Megatlon, después La Estación, Driving Norte, Fiter y Quicktrade (pedido de Francisco). Solo datos de las fichas: nada inventado.
 // shortcut: sin páginas de caso todavía (B4); cada card linkea solo al sitio en vivo.
 // "phone" y "notebook": render de Blender como visual del caso (design/3d); "photo": foto de marca; "wall": muro de piezas
 export type Media = "phone" | "photo" | "wall" | "notebook";
@@ -40,51 +40,6 @@ export const CASES: HomeCase[] = [
     },
   },
   {
-    id: "estacion",
-    title: ["laestacionfutbolpadel", ".com.ar"],
-    brand: "#4d7cff",
-    logo: { src: L + "estacion-w.png", w: 471 },
-    media: "photo",
-    img: "/home/estacion-noche.jpg",
-    obj: "paddle",
-    live: "https://www.laestacionfutbolpadel.com.ar",
-    inHero: true,
-    text: {
-      es: { d: "Una marca nueva que necesitaba vender reservas de canchas desde el primer día. Diseño y desarrollo con código propio.", f: "Diseño y desarrollo · Next.js · 2026", live: "Ver online" },
-      en: { d: "A brand-new venue that had to sell court bookings from day one. Designed and built with custom code.", f: "Design and development · Next.js · 2026", live: "See it live" },
-    },
-  },
-  {
-    id: "fiter",
-    title: ["fiter", ".com/UY"],
-    brand: "#ffda00",
-    logo: { src: L + "fiter-w.png", w: 256 },
-    media: "photo",
-    img: "/home/fiter-funcional.jpg",
-    obj: "dumbbell",
-    live: "https://fiter.com/UY",
-    inHero: true,
-    text: {
-      es: { d: "El sitio de la marca low-cost del grupo para su llegada a Uruguay, construido desde cero.", f: "Diseño y desarrollo · HubSpot CMS · desde 2025", live: "Ver online" },
-      en: { d: "The group’s low-cost gym brand, launching in Uruguay with a site built from scratch.", f: "Design and development · HubSpot CMS · since 2025", live: "See it live" },
-    },
-  },
-  {
-    id: "dn",
-    title: ["drivingnorte", ".com.ar"],
-    brand: "#35b46b",
-    logo: { src: L + "dn-w.png", w: 273 },
-    media: "photo",
-    img: "/home/dn-campo.jpg",
-    obj: "golf",
-    live: "https://drivingnorte.com.ar",
-    inHero: true,
-    text: {
-      es: { d: "Diseño y desarrollo del sitio de un espacio de golf en Costanera, con horarios y tarifas a la vista.", f: "Diseño y desarrollo · WordPress + Elementor · desde 2025", live: "Ver online" },
-      en: { d: "Design and development for a golf venue on the Buenos Aires waterfront, with hours and rates up front.", f: "Design and development · WordPress + Elementor · since 2025", live: "See it live" },
-    },
-  },
-  {
     id: "megatlon",
     title: ["megatlon", ".com"],
     brand: "#f26b21",
@@ -111,6 +66,51 @@ export const CASES: HomeCase[] = [
     text: {
       es: { d: "Piezas para redes y dirección creativa de campañas como HotMega y Megatlon Festival, en web, email, redes y señalética.", f: "Diseño y dirección creativa · desde 2025", live: "Ver en Instagram" },
       en: { d: "Social pieces and creative direction for campaigns like HotMega and Megatlon Festival, across web, email, social and signage.", f: "Design and creative direction · since 2025", live: "See on Instagram" },
+    },
+  },
+  {
+    id: "estacion",
+    title: ["laestacionfutbolpadel", ".com.ar"],
+    brand: "#4d7cff",
+    logo: { src: L + "estacion-w.png", w: 471 },
+    media: "photo",
+    img: "/home/estacion-noche.jpg",
+    obj: "paddle",
+    live: "https://www.laestacionfutbolpadel.com.ar",
+    inHero: true,
+    text: {
+      es: { d: "Una marca nueva que necesitaba vender reservas de canchas desde el primer día. Diseño y desarrollo con código propio.", f: "Diseño y desarrollo · Next.js · 2026", live: "Ver online" },
+      en: { d: "A brand-new venue that had to sell court bookings from day one. Designed and built with custom code.", f: "Design and development · Next.js · 2026", live: "See it live" },
+    },
+  },
+  {
+    id: "dn",
+    title: ["drivingnorte", ".com.ar"],
+    brand: "#35b46b",
+    logo: { src: L + "dn-w.png", w: 273 },
+    media: "photo",
+    img: "/home/dn-campo.jpg",
+    obj: "golf",
+    live: "https://drivingnorte.com.ar",
+    inHero: true,
+    text: {
+      es: { d: "Diseño y desarrollo del sitio de un espacio de golf en Costanera, con horarios y tarifas a la vista.", f: "Diseño y desarrollo · WordPress + Elementor · desde 2025", live: "Ver online" },
+      en: { d: "Design and development for a golf venue on the Buenos Aires waterfront, with hours and rates up front.", f: "Design and development · WordPress + Elementor · since 2025", live: "See it live" },
+    },
+  },
+  {
+    id: "fiter",
+    title: ["fiter", ".com/UY"],
+    brand: "#ffda00",
+    logo: { src: L + "fiter-w.png", w: 256 },
+    media: "photo",
+    img: "/home/fiter-funcional.jpg",
+    obj: "dumbbell",
+    live: "https://fiter.com/UY",
+    inHero: true,
+    text: {
+      es: { d: "El sitio de la marca low-cost del grupo para su llegada a Uruguay, construido desde cero.", f: "Diseño y desarrollo · HubSpot CMS · desde 2025", live: "Ver online" },
+      en: { d: "The group’s low-cost gym brand, launching in Uruguay with a site built from scratch.", f: "Design and development · HubSpot CMS · since 2025", live: "See it live" },
     },
   },
   {
