@@ -384,3 +384,18 @@ Tarea de Francisco: rehacer los objetos 3D con realismo de producto y que el nú
   blender -b -P design/3d/build.py -- --only glyphs,wordmark --samples 128 --out design/3d/out
   node design/3d/export.mjs
   ```
+
+### Ajuste: los objetos vuelven a seguir al mouse (2026-10-22)
+- **Lo que reportó Francisco:** los objetos ya no seguían al mouse.
+- **Causa:** la versión anterior solo giraba con el puntero dentro de la card, y recién después de bajar los 25 cuadros en el primer hover. El 3D viejo seguía al puntero en toda la ventana, en los dos ejes y con inercia.
+- **Ahora:**
+  - El número del hero, el wordmark y cada objeto visible siguen al puntero en toda la ventana, con inercia.
+  - La inclinación se hace solo con `transform`, que no repinta.
+  - Los objetos con secuencia además giran de verdad ±15° con los cuadros.
+  - La secuencia se baja en idle cuando su card se acerca a la pantalla (IntersectionObserver), no en el primer hover.
+  - Igual que antes: solo con puntero fino y sin reduced motion.
+- **Verificado en Chromium headless a 1440:**
+  - las transformaciones cambian con el mouse;
+  - la paleta muestra el cuadro 23 de 25 con el puntero a la derecha;
+  - clips en `docs/capturas/b3-3d/follow-*.webp`.
+- **Sin verificar:** fps reales en una máquina lenta.
