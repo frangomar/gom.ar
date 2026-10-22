@@ -17,6 +17,16 @@ const data = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      // Le dice a Google qué nombre de sitio mostrar en los resultados.
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "gom.ar",
+      alternateName: "Francisco Gomar",
+      url: SITE_URL,
+      inLanguage: ["es", "en"],
+      publisher: { "@id": `${SITE_URL}/#person` },
+    },
+    {
       "@type": "Person",
       "@id": `${SITE_URL}/#person`,
       name: "Francisco Gomar",
@@ -26,6 +36,11 @@ const data = {
       email: CONTACT_EMAIL,
       address,
       sameAs: [LINKEDIN_URL, BEHANCE_URL],
+      knowsLanguage: ["es", "en"],
+      alumniOf: [
+        { "@type": "CollegeOrUniversity", name: "UCES" },
+        { "@type": "EducationalOrganization", name: "Digital House" },
+      ],
     },
     {
       "@type": "ProfessionalService",
@@ -36,6 +51,7 @@ const data = {
       address,
       sameAs: [LINKEDIN_URL, BEHANCE_URL],
       founder: { "@id": `${SITE_URL}/#person` },
+      areaServed: "Worldwide",
     },
   ],
 };
