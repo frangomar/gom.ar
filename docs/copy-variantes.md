@@ -1,5 +1,25 @@
 # Variantes de copy · Bloque 2
 
+## Copy vigente (implementado en el Bloque 2, 2026-10-22)
+
+La fuente es `messages/{es,en}.json` → `Home`. Las variantes de más abajo son el registro de la primera ronda, y la que tenía ✅ ya no está publicada.
+
+| Pieza | es | en |
+|---|---|---|
+| H1 | Diseño sitios así de rápidos para marcas que necesitan clientes. | I build sites this fast for brands that need customers. |
+| Bajada del número | Es lo que tardó esta página en mostrarse en tu dispositivo. Lo midió tu navegador recién, no es un promedio. | That's how long this page took to show up on your device. Your browser just measured it; it isn't an average. |
+| CTA principal | Escribime por WhatsApp | Message me on WhatsApp |
+| CTA secundario | Ver casos | See the work |
+| Mensaje precargado de WhatsApp | Hola Francisco, vi gom.ar y quiero hablar de un proyecto. | Hi Francisco, I saw gom.ar and I'd like to talk about a project. |
+
+Por qué este H1: el número que está justo arriba (el tiempo de carga real) es la prueba, así que "así de rápidos" se apoya en un dato que el visitante acaba de medir. Cumple la fórmula del brief: qué hace (diseño sitios), para quién (marcas que necesitan clientes) y resultado (rapidez demostrada y clientes).
+
+Los titulares de casos son el dominio real (o "App Megatlon · iOS y Android" y "Landings de Quicktrade"), así que no llevan variantes.
+
+---
+
+## Registro de la primera ronda
+
 La fórmula es qué hace + para quién + qué resultado obtiene (Parte E). Ninguna variante promete cifras. La implementada está marcada con ✅. **Elige Francisco.**
 
 ## H1 del hero

@@ -8,6 +8,50 @@
 
 ---
 
+## Decisiones vigentes de Francisco (reemplazan partes de este brief)
+
+Actualizado el 2026-10-22, al cerrar el Bloque 2. **Donde este brief y esta lista no coinciden, gana esta lista**: son decisiones de Francisco. El detalle y los motivos están en `docs/PROGRESO.md` (Bloque 2).
+
+**Parte B (dirección de diseño): reemplazada**
+- Identidad propia negro + neón láser, en colores planos y **sin gradientes**:
+  - negro `#070708`; superficies `#0e0e11` y `#18181c`; texto `#ededf0`; secundario `#a6a6b0`;
+  - violeta UV `#7a5cff` como color principal;
+  - rojo láser `#ff2b4e` solo para el CTA de WhatsApp y detalles.
+- El clima de referencia es el techno oscuro (Argy, Fred again..).
+- Queda sin efecto la paleta del brief: fondo papel, hero azul `#2440FF` a sangre, Link y Visitado.
+- Las marcas de clientes van solo como guiño: su logo y los puntos de su dominio en su color. Nunca se pintan secciones con los colores de una marca. Fiter nunca va en negro sobre amarillo.
+- **Hero vigente, "cronómetro":** el tiempo de carga real (LCP) en 3D, el H1, el CTA de WhatsApp y una franja de marcas con el rodillo por letra. El rodillo es lo único que sobrevivió del concepto "barra de direcciones".
+- **Imágenes:**
+  - nada de capturas crudas de sitios;
+  - cada caso lleva una foto de marca bajada del sitio del cliente (de Megatlon, solo fotos de sedes Black+ y Black);
+  - la app y Quicktrade muestran sus diseños en mockups 3D (iPhone y MacBook);
+  - redes muestra un muro de piezas.
+- Los casos son un mazo de cards apiladas. El resto de las secciones se disuelven sin cortes.
+- El 3D se hace con estética de render: gelatina translúcida (cáscara brillante y un núcleo que brilla) con luz de estudio clara. Nada de negros brillosos con una capa roja.
+- Siguen prohibidos: glass, pills y eyebrows; glows decorativos; el concepto "archivo"; los layouts editoriales; el cursor custom; los preloaders; Lenis y el scroll-jacking.
+
+**Parte C (movimiento): reemplazada en parte**
+- Todos los bloques llevan animación, no solo el hero. Se usa scroll nativo, CSS scroll-driven animations y JS liviano. Siguen sin entrar librerías de smooth scroll.
+- **3D con three.js permitido** (el brief no permitía WebGL en el hero), con estas condiciones:
+  - va en un chunk aparte que carga después de `load`;
+  - un solo contexto WebGL para toda la página;
+  - fallback estático.
+- Los botones tienen mucha respuesta: imán, relleno desde el cursor, rodillo de letras y rebote. También van personalizados el scrollbar, la selección de texto y el select.
+- Los presupuestos de performance siguen siendo el objetivo, pero **no se midieron con el diseño nuevo**: medirlos es lo primero del Bloque 3.
+
+**Parte D (estructura y contacto)**
+- Sin precios en el sitio: no hay "desde USD".
+- El formulario no tiene rango de presupuesto.
+- El caso de redes no lleva la nota "el feed incluye trabajo de otras personas".
+- Quicktrade entra en el ciclo del hero.
+- El email de contacto es `info@gom.ar`.
+
+**Proceso**
+- Antes de implementar algo visual, primero se muestra un preview (imágenes o video).
+- Ramas: Francisco puede pedir el merge directo a `main`, como hizo en el Bloque 2. Sin ese pedido explícito, sigue la regla de no mergear a `main` antes del Bloque 7.
+
+---
+
 ## Instrucciones de trabajo para Claude Code
 
 - **Fuentes, en orden de autoridad:**
