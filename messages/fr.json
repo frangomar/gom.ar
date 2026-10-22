@@ -8,10 +8,88 @@
     "skip": "Skip to content"
   },
   "Home": {
-    "h1": "I design and build websites, end to end",
-    "lead": "This site is being rebuilt. In the meantime, message me and let's talk.",
+    "nav": {
+      "cases": "Work",
+      "services": "Services",
+      "about": "About",
+      "menu": "Menu"
+    },
     "whatsapp": "Message me on WhatsApp",
-    "email": "Send me an email"
+    "waText": "Hi Francisco, I saw gom.ar and I'd like to talk about a project.",
+    "seeCases": "See the work",
+    "h1": "I build sites this fast for brands that need customers.",
+    "cap": "That's how long this page took to show up on your device. Your browser just measured it; it isn't an average.",
+    "clockSr": "This page took {s} seconds to show up.",
+    "pause": "Pause",
+    "play": "Play",
+    "casesLabel": "Work",
+    "svcTitle": [
+      "What I can do",
+      "for your brand."
+    ],
+    "svc": [
+      {
+        "t": "Websites, end to end",
+        "p": "Design, development and launch. I pick the platform that fits: WordPress, HubSpot, Tienda Nube or custom Next.js.",
+        "l": [
+          "Strategy and structure",
+          "UX/UI design",
+          "Build and launch"
+        ]
+      },
+      {
+        "t": "Products and apps",
+        "p": "App and platform redesigns with your product team, all the way to developer handoff.",
+        "l": [
+          "Flows and prototypes",
+          "Design system",
+          "Developer handoff"
+        ]
+      },
+      {
+        "t": "Your brand on every channel",
+        "p": "So your brand looks the same on the site, social, email and in store.",
+        "l": [
+          "Social content",
+          "Integrated campaigns",
+          "Email and signage"
+        ]
+      }
+    ],
+    "ai": "I use AI to move faster, not to make your decisions.",
+    "aiLead": "I use it every day in real production work, with Claude, Higgsfield and image and video generation.",
+    "aiFastT": "What it speeds up",
+    "aiFast": [
+      "First versions in less time",
+      "More iterations in the same timeline",
+      "Images and video without a separate shoot"
+    ],
+    "aiMineT": "What I control",
+    "aiMine": [
+      "Every design and copy decision",
+      "The quality of the code that ships",
+      "That your brand looks like your brand"
+    ],
+    "photo": "[FRANCISCO PHOTO]",
+    "bio": "I'm Francisco Gomar, a designer and developer in San Isidro, Buenos Aires. Today I design the website, app and social channels for Megatlon. I work in Spanish and English, with brands here and abroad.",
+    "contact": [
+      "Tell me what",
+      "you need."
+    ],
+    "reply": "I reply within 24 hours.",
+    "fName": "Name",
+    "fEmail": "Email",
+    "fType": "Project type",
+    "fTypes": [
+      "Website",
+      "App or product",
+      "Social and campaigns",
+      "Other"
+    ],
+    "fMsg": "Message",
+    "fSend": "Send by email",
+    "fNote": "Your email app opens with the message ready to send.",
+    "mailSubject": "Project from gom.ar"
   },
   "NotFound": {
     "title": "Page not found",

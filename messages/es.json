@@ -8,10 +8,88 @@
     "skip": "Saltar al contenido"
   },
   "Home": {
-    "h1": "Diseño y desarrollo sitios web de punta a punta",
-    "lead": "Sitio en construcción. Mientras tanto, escribime y lo hablamos.",
+    "nav": {
+      "cases": "Casos",
+      "services": "Servicios",
+      "about": "Sobre mí",
+      "menu": "Menú"
+    },
     "whatsapp": "Escribime por WhatsApp",
-    "email": "Mandame un email"
+    "waText": "Hola Francisco, vi gom.ar y quiero hablar de un proyecto.",
+    "seeCases": "Ver casos",
+    "h1": "Diseño sitios así de rápidos para marcas que necesitan clientes.",
+    "cap": "Es lo que tardó esta página en mostrarse en tu dispositivo. Lo midió tu navegador recién, no es un promedio.",
+    "clockSr": "Esta página tardó {s} segundos en mostrarse.",
+    "pause": "Pausar",
+    "play": "Reproducir",
+    "casesLabel": "Casos",
+    "svcTitle": [
+      "Qué puedo hacer",
+      "por tu marca."
+    ],
+    "svc": [
+      {
+        "t": "Sitio web de punta a punta",
+        "p": "Diseño, desarrollo y lanzamiento. Elijo la plataforma según lo que necesitás: WordPress, HubSpot, Tienda Nube o código propio en Next.js.",
+        "l": [
+          "Estrategia y estructura",
+          "Diseño UX/UI",
+          "Desarrollo y publicación"
+        ]
+      },
+      {
+        "t": "Producto y apps",
+        "p": "Rediseño de apps y plataformas junto con tu equipo de producto, hasta el handoff a desarrollo.",
+        "l": [
+          "Flujos y prototipos",
+          "Sistema de diseño",
+          "Handoff a desarrollo"
+        ]
+      },
+      {
+        "t": "Tu marca en todos los canales",
+        "p": "Que la marca se vea igual en el sitio, las redes, los mails y el local.",
+        "l": [
+          "Piezas para redes",
+          "Campañas integradas",
+          "Email y señalética"
+        ]
+      }
+    ],
+    "ai": "Uso IA para ir más rápido, no para decidir por vos.",
+    "aiLead": "La uso todos los días en producción real, con Claude, Higgsfield y generación de imagen y video.",
+    "aiFastT": "Lo que acelera",
+    "aiFast": [
+      "Primeras versiones en menos tiempo",
+      "Más iteraciones en el mismo plazo",
+      "Imagen y video sin una producción aparte"
+    ],
+    "aiMineT": "Lo que controlo yo",
+    "aiMine": [
+      "Cada decisión de diseño y de copy",
+      "La calidad del código que se publica",
+      "Que tu marca se vea como tu marca"
+    ],
+    "photo": "[FOTO FRANCISCO]",
+    "bio": "Soy Francisco Gomar, diseñador y desarrollador en San Isidro. Hoy diseño la web, la app y las redes de Megatlon. Trabajo en español y en inglés, con marcas de acá y de afuera.",
+    "contact": [
+      "Contame qué",
+      "necesitás."
+    ],
+    "reply": "Respondo en menos de 24 h.",
+    "fName": "Nombre",
+    "fEmail": "Email",
+    "fType": "Tipo de proyecto",
+    "fTypes": [
+      "Sitio web",
+      "App o producto",
+      "Redes y campañas",
+      "Otro"
+    ],
+    "fMsg": "Mensaje",
+    "fSend": "Enviar por email",
+    "fNote": "Se abre tu programa de email con el mensaje listo para mandar.",
+    "mailSubject": "Proyecto desde gom.ar"
   },
   "NotFound": {
     "title": "Página no encontrada",
