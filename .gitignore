@@ -42,3 +42,11 @@ next-env.d.ts
 
 # internal notes
 /REFERENCIAS-PORTFOLIOS.md
+
+# quality tooling
+/test-results
+/playwright-report
+/.lighthouseci
+
+# previews y mockups del Bloque 2: material de trabajo local y pesado (videos, fotos originales)
+/docs/previews/

@@ -17,7 +17,7 @@ export type AppLocale = (typeof routing.locales)[number];
 // Idiomas con contenido real. Solo estos se generan en el build, aparecen en
 // el sitemap y en hreflang; el resto devuelve 404. Sumar acá cuando
 // messages/<locale>.json tenga el contenido traducido.
-export const publishedLocales = ["es"] as const satisfies readonly AppLocale[];
+export const publishedLocales = ["es", "en"] as const satisfies readonly AppLocale[];
 
 export type PublishedLocale = (typeof publishedLocales)[number];
 

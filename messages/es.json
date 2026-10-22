@@ -1,69 +1,95 @@
 {
   "Metadata": {
-    "title": "Francisco Gomar | Diseñador UX/UI",
-    "description": "Diseñador gráfico y UX/UI. Transformo ideas en diseño centrado en las personas. Pienso lateral, actúo rápido y diseño para dejar huella.",
-    "siteName": "Francisco Gomar"
+    "title": "Francisco Gomar · Diseño y desarrollo web",
+    "description": "Diseño y desarrollo sitios web y productos digitales de punta a punta: diseño, código y lanzamiento. San Isidro, Buenos Aires.",
+    "siteName": "gom.ar"
   },
-  "Nav": {
-    "brand": "Gom.ar",
-    "about": "Sobre mí",
-    "projects": "Proyectos",
-    "contact": "Contacto",
-    "openMenu": "Abrir menú",
-    "closeMenu": "Cerrar menú"
+  "Layout": {
+    "skip": "Saltar al contenido"
   },
-  "Hero": {
-    "title": "Francisco Gomar",
-    "lead": "Diseñador gráfico y UX/UI. Transformo ideas en experiencias digitales centradas en las personas. Pienso lateral, actúo rápido y diseño para dejar huella.",
-    "cta": "Escribime por WhatsApp"
-  },
-  "About": {
-    "title": "Sobre mí",
-    "p1": "Soy diseñador gráfico con enfoque UX/UI. Trabajo con marcas, emprendedores y productos digitales para crear experiencias claras, usables y con identidad.",
-    "p2": "Me motiva transformar ideas en soluciones visuales simples, funcionales y con propósito."
-  },
-  "Projects": {
-    "title": "Proyectos",
-    "lead": "Algunos proyectos seleccionados que combinan identidad visual, diseño UX/UI y una mirada centrada en las personas.",
-    "viewProject": "Ver en Behance",
-    "viewAll": "Ver todos los proyectos en Behance →",
-    "items": {
-      "quicktradeWeb": {
-        "title": "QUICKTRADE - WEB",
-        "description": "Diseño de sitio de productos financieros para Grupo SBS - Quicktrade."
+  "Home": {
+    "nav": {
+      "cases": "Casos",
+      "services": "Servicios",
+      "about": "Sobre mí",
+      "menu": "Menú"
+    },
+    "whatsapp": "Escribime por WhatsApp",
+    "waText": "Hola Francisco, vi gom.ar y quiero hablar de un proyecto.",
+    "seeCases": "Ver casos",
+    "h1": "Diseño sitios así de rápidos para marcas que necesitan clientes.",
+    "cap": "Es lo que tardó esta página en mostrarse en tu dispositivo. Lo midió tu navegador recién, no es un promedio.",
+    "clockSr": "Esta página tardó {s} segundos en mostrarse.",
+    "pause": "Pausar",
+    "play": "Reproducir",
+    "casesLabel": "Casos",
+    "svcTitle": [
+      "Qué puedo hacer",
+      "por tu marca."
+    ],
+    "svc": [
+      {
+        "t": "Sitio web de punta a punta",
+        "p": "Diseño, desarrollo y lanzamiento. Elijo la plataforma según lo que necesitás: WordPress, HubSpot, Tienda Nube o código propio en Next.js.",
+        "l": [
+          "Estrategia y estructura",
+          "Diseño UX/UI",
+          "Desarrollo y publicación"
+        ]
       },
-      "quicktradeAguinaldo": {
-        "title": "QUICKTRADE - AGUINALDO",
-        "description": "Campaña digital: redes, web y mailing para Grupo SBS - Quicktrade."
+      {
+        "t": "Producto y apps",
+        "p": "Rediseño de apps y plataformas junto con tu equipo de producto, hasta el handoff a desarrollo.",
+        "l": [
+          "Flujos y prototipos",
+          "Sistema de diseño",
+          "Handoff a desarrollo"
+        ]
       },
-      "shantala": {
-        "title": "SHANTALA - EXPO PRESENTES",
-        "description": "Diseño de stand 3D + gráfica para exposición en rubro Wellness."
-      },
-      "ayuda3": {
-        "title": "AYUDA3 - PROYECTO FINAL",
-        "description": "Manual de supervivencia a la vida adulta. Proyecto colaborativo."
-      },
-      "teaTravel": {
-        "title": "TEA TRAVEL - INTIZEN",
-        "description": "Nuevo producto + campaña 360. Proyecto colaborativo."
+      {
+        "t": "Tu marca en todos los canales",
+        "p": "Que la marca se vea igual en el sitio, las redes, los mails y el local.",
+        "l": [
+          "Piezas para redes",
+          "Campañas integradas",
+          "Email y señalética"
+        ]
       }
-    }
-  },
-  "Contact": {
-    "title": "Contacto",
-    "lead": "¿Querés hablar sobre un proyecto, colaboración o simplemente intercambiar ideas? Enviame un mensaje y te respondo personalmente.",
-    "name": "Tu nombre",
-    "email": "Tu email",
-    "message": "Contame en 2 o 3 líneas qué necesitás",
-    "submit": "Enviar mensaje",
-    "thanks1": "Gracias por tu mensaje.",
-    "thanks2": "Te voy a responder personalmente en breve.",
-    "alsoWhatsapp": "También podés escribirme directo por",
-    "whatsapp": "WhatsApp"
-  },
-  "Footer": {
-    "name": "Francisco Gomar"
+    ],
+    "ai": "Uso IA para ir más rápido, no para decidir por vos.",
+    "aiLead": "La uso todos los días en producción real, con Claude, Higgsfield y generación de imagen y video.",
+    "aiFastT": "Lo que acelera",
+    "aiFast": [
+      "Primeras versiones en menos tiempo",
+      "Más iteraciones en el mismo plazo",
+      "Imagen y video sin una producción aparte"
+    ],
+    "aiMineT": "Lo que controlo yo",
+    "aiMine": [
+      "Cada decisión de diseño y de copy",
+      "La calidad del código que se publica",
+      "Que tu marca se vea como tu marca"
+    ],
+    "photo": "[FOTO FRANCISCO]",
+    "bio": "Soy Francisco Gomar, diseñador y desarrollador en San Isidro. Hoy diseño la web, la app y las redes de Megatlon. Trabajo en español y en inglés, con marcas de acá y de afuera.",
+    "contact": [
+      "Contame qué",
+      "necesitás."
+    ],
+    "reply": "Respondo en menos de 24 h.",
+    "fName": "Nombre",
+    "fEmail": "Email",
+    "fType": "Tipo de proyecto",
+    "fTypes": [
+      "Sitio web",
+      "App o producto",
+      "Redes y campañas",
+      "Otro"
+    ],
+    "fMsg": "Mensaje",
+    "fSend": "Enviar por email",
+    "fNote": "Se abre tu programa de email con el mensaje listo para mandar.",
+    "mailSubject": "Proyecto desde gom.ar"
   },
   "NotFound": {
     "title": "Página no encontrada",
