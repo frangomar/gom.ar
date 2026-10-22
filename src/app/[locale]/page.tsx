@@ -56,6 +56,32 @@ function Img({ src, w, h, sizes, style, className }: { src: string; w: number; h
 
 const Fill = () => <span className="fill" aria-hidden="true" />;
 
+// Renders de Blender (design/3d) en AVIF y WebP. El still es el cuadro del medio de la secuencia de giro,
+// así que cuando HomeFx monta la secuencia arriba no hay salto.
+const BLANK = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+const set = (name: string, f: string, d: [string, string]) => `/3d/${name}/still.${f} ${d[0]}, /3d/${name}/still@2x.${f} ${d[1]}`;
+
+// Objeto sobre el título: solo desktop. En mobile ninguna <source> aplica y queda el GIF vacío, sin descarga.
+function Obj({ name }: { name: string }) {
+  return (
+    <picture className="obj" data-seq={name}>
+      <source media="(min-width: 1024px)" type="image/avif" srcSet={set(name, "avif", ["1x", "2x"])} />
+      <source media="(min-width: 1024px)" type="image/webp" srcSet={set(name, "webp", ["1x", "2x"])} />
+      <img src={BLANK} alt="" width={240} height={240} loading="lazy" decoding="async" />
+    </picture>
+  );
+}
+
+function Render({ name, sizes, w, h, className, seq }: { name: string; sizes: string; w: number; h: number; className?: string; seq?: boolean }) {
+  const half = [`${w / 2}w`, `${w}w`] as [string, string];
+  return (
+    <picture className={className} data-seq={seq ? name : undefined}>
+      <source type="image/avif" srcSet={set(name, "avif", half)} sizes={sizes} />
+      <img src={`/3d/${name}/still@2x.webp`} srcSet={set(name, "webp", half)} sizes={sizes} alt="" width={w} height={h} loading="lazy" decoding="async" />
+    </picture>
+  );
+}
+
 const WaIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z" />
@@ -78,7 +104,8 @@ function Wa({ href, text, className = "" }: { href: string; text: string; classN
 }
 
 function CaseMedia({ c }: { c: HomeCase }) {
-  if (c.media === "phones" || c.media === "mac") return <div className="media gl" data-gl={c.media} />;
+  if (c.media === "phone" || c.media === "notebook")
+    return <div className="media mock"><Render name={c.media} sizes="(max-width: 760px) 95vw, 56vw" w={1600} h={1600} seq /></div>;
   if (c.media === "wall") {
     // 4 columnas de piezas reales del feed (portadas exportadas), cada una se mueve en sentido contrario
     return (
@@ -142,9 +169,8 @@ export default async function Home({ params }: Props) {
           <section className="hero">
             <div className="main" id="hmain">
               <div>
-                <div className="num" id="num" data-gl="num" aria-hidden="true">
-                  <p className="flat"><span id="tflat">0,00</span><small>s</small></p>
-                </div>
+                {/* el número se arma con renders por carácter recién cuando se conoce el LCP (HomeFx) */}
+                <div className="num" aria-hidden="true"><span className="digits" id="digits" /></div>
                 <p className="sr" id="tsr" data-tpl={t("clockSr")} />
                 <p className="cap">{t("cap")}</p>
               </div>
@@ -182,6 +208,7 @@ export default async function Home({ params }: Props) {
             return (
               <article className="card" key={c.id} style={{ "--brand": c.brand } as CSSProperties} data-media={c.media}>
                 <div className="txt">
+                  {c.obj && <Obj name={c.obj} />}
                   <Logo c={c} className="brand" />
                   <h2 className="dom roll-in" aria-label={a + b}><Roll text={a} /><Roll text={b} /></h2>
                   <p className="desc">{tx.d}</p>
@@ -195,7 +222,6 @@ export default async function Home({ params }: Props) {
                   )}
                 </div>
                 <CaseMedia c={c} />
-                {c.obj && <div className="obj" data-gl={c.obj} aria-hidden="true" />}
               </article>
             );
           })}
@@ -260,7 +286,7 @@ export default async function Home({ params }: Props) {
       </main>
 
       <footer>
-        <div className="wm3d" data-gl="wordmark" aria-hidden="true"><div className="flat">gom<span className="dim">.</span>ar</div></div>
+        <div className="wm3d" aria-hidden="true"><Render name="wordmark" sizes="100vw" w={1600} h={560} /></div>
         <div className="fbar">
           <span>© gom.ar</span>
           <a className="u" href={LINKEDIN_URL} target="_blank" rel="noopener"><Lbl text="LinkedIn" /></a>

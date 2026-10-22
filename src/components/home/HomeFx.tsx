@@ -1,19 +1,10 @@
 "use client";
 import { useEffect } from "react";
+import R3D from "@/content/3d.json";
 
 export type BandCase = { title: string; brand: string; key: string; meta: string };
-
-// Estado compartido con la escena 3D (src/components/home/scene.ts).
-export type FxState = {
-  hero: number;
-  px: number;
-  py: number;
-  fine: boolean;
-  calm: boolean;
-  lcp: string;
-  onLcp?: () => void;
-  cards: { el: HTMLElement; e: number; k: number; d: number }[];
-};
+type Card = { el: HTMLElement; e: number; k: number; d: number };
+const NAMES: Record<string, string> = { ",": "comma", ".": "dot" };
 
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const EASE = "cubic-bezier(.2,.7,0,1)";
@@ -56,18 +47,36 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
     doc.classList.add("js");
 
     const cards = $$(".card");
-    const G: FxState = { hero: 0, px: 0, py: 0, fine, calm, lcp: "0,00", cards: cards.map((el) => ({ el, e: 0, k: 0, d: 0 })) };
+    const G: { cards: Card[] } = { cards: cards.map((el) => ({ el, e: 0, k: 0, d: 0 })) };
 
-    // ---- tiempo real de carga (LCP) ----
-    const tflat = $("#tflat"), tsr = $("#tsr");
+    // ---- tiempo real de carga (LCP): el número se arma con un render por carácter y aparece recién
+    // cuando el valor existe y todas sus piezas están decodificadas (primer pintado = estado final) ----
+    const digits = $("#digits"), tsr = $("#tsr");
+    let lcpMs = 0, shown = "";
+    const showNum = async () => {
+      if (!lcpMs) return; // sin API de LCP (Safari viejo) no se muestra nada: no hay dato que inventar
+      const txt = (lcpMs / 1000).toLocaleString(doc.lang === "en" ? "en-US" : "es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      if (txt === shown) return;
+      shown = txt;
+      tsr.textContent = (tsr.dataset.tpl ?? "").replace("{s}", txt);
+      const pics = [...txt, "s"].map((ch) => {
+        const n = NAMES[ch] ?? ch, src = (f: string) => `/3d/num/${n}.${f} 1x, /3d/num/${n}@2x.${f} 2x`;
+        const pic = document.createElement("picture");
+        pic.innerHTML = `<source type="image/avif" srcset="${src("avif")}"><img src="/3d/num/${n}@2x.webp" srcset="${src("webp")}" width="${R3D.glyphs.w[n as keyof typeof R3D.glyphs.w]}" height="${R3D.glyphs.h}" alt="">`;
+        return pic;
+      });
+      await Promise.all(pics.map((p) => p.querySelector("img")!.decode().catch(() => {})));
+      if (shown !== txt) return;
+      digits.replaceChildren(...pics);
+      digits.classList.add("on");
+    };
     const po = new PerformanceObserver((l) => {
-      const ms = l.getEntries().at(-1)!.startTime;
-      G.lcp = (ms / 1000).toLocaleString(doc.lang === "en" ? "en-US" : "es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      tflat.textContent = G.lcp;
-      tsr.textContent = (tsr.dataset.tpl ?? "").replace("{s}", G.lcp);
-      G.onLcp?.();
+      lcpMs = l.getEntries().at(-1)!.startTime;
+      if (shown) showNum(); // un candidato tardío corrige el número ya visible
     });
     po.observe({ type: "largest-contentful-paint", buffered: true });
+    const afterLoad = () => ("requestIdleCallback" in window ? requestIdleCallback(showNum, { timeout: 800 }) : setTimeout(showNum, 200));
+    if (document.readyState === "complete") afterLoad(); else addEventListener("load", afterLoad, { once: true, signal: ac.signal });
 
     // ---- scroll: hero que se disuelve, mazo de cards, scrollbar que cambia de color ----
     const end = $(".end"), hmain = $("#hmain"), bandEl = $("#band"), bio = $("#bio"), bioWords = $$("#bio .bw");
@@ -78,7 +87,6 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       raf = 0;
       const vh = innerHeight, top = parseFloat(getComputedStyle(doc).getPropertyValue("--top")) || 84;
       const p = clamp(scrollY / (vh * 0.45));
-      G.hero = p;
       if (!calm) {
         hmain.style.transform = `translateY(${-p * 9}vh) scale(${1 - p * 0.07})`;
         hmain.style.opacity = String(1 - p);
@@ -105,7 +113,6 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
     addEventListener("scroll", queue, on);
     addEventListener("resize", queue, on);
     frame();
-    addEventListener("pointermove", (e) => { G.px = (e.clientX / innerWidth) * 2 - 1; G.py = (e.clientY / innerHeight) * 2 - 1; }, on);
 
     // ---- botones: relleno desde donde entra el cursor, imán y rebote ----
     $$(".b").forEach((b) => {
@@ -200,20 +207,44 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       fab.classList.toggle("show", scrollY > innerHeight * 0.8 && contact.getBoundingClientRect().top > innerHeight * 0.9 && !(d.top < mid && d.bottom > mid));
     }, on);
 
-    // ---- 3D: se carga después de que la página terminó de cargar, en un chunk aparte ----
-    let stop: (() => void) | undefined, dead = false;
-    const boot = () => import("./scene").then((m) => { if (!dead) stop = m.start(G); }).catch(() => {});
-    const later = () => ("requestIdleCallback" in window ? requestIdleCallback(boot, { timeout: 1500 }) : setTimeout(boot, 300));
-    if (document.readyState === "complete") later(); else addEventListener("load", later, { once: true, signal: ac.signal });
+    // ---- renders: giro de ±15° según el puntero sobre la card. La secuencia se baja con el primer hover
+    // o foco de la card; el cuadro del medio es el mismo still, así que montarla no cambia nada visible ----
+    if (fine && !calm) $$("[data-seq]").forEach((pic) => {
+      const name = pic.dataset.seq as keyof typeof R3D.frames, n = R3D.frames[name], mid = (n - 1) / 2;
+      const card = pic.closest<HTMLElement>(".card")!, poster = pic.querySelector("img")!, over = document.createElement("img");
+      over.className = "seqf";
+      over.alt = "";
+      let frames: HTMLImageElement[] | null = null, ready = false, cur = mid, target = mid, step = 0;
+      const load = () => {
+        if (frames || !poster.currentSrc || poster.currentSrc.startsWith("data:")) return;
+        const ext = poster.currentSrc.includes(".avif") ? "avif" : "webp";
+        frames = Array.from({ length: n }, (_, i) => Object.assign(new Image(), { src: `/3d/${name}/f${String(i).padStart(2, "0")}.${ext}` }));
+        Promise.all(frames.map((f) => f.decode())).then(() => {
+          ready = true;
+          over.src = frames![cur].src;
+          pic.append(over);
+        }).catch(() => (frames = null));
+      };
+      const tick = () => {
+        step = 0;
+        if (!ready || cur === target) return;
+        cur += Math.sign(target - cur);
+        over.src = frames![cur].src;
+        step = requestAnimationFrame(tick);
+      };
+      const go = (i: number) => { target = i; if (!step) step = requestAnimationFrame(tick); };
+      card.addEventListener("pointerenter", load, on);
+      card.addEventListener("focusin", load, { signal: ac.signal });
+      card.addEventListener("pointermove", (e) => { const r = card.getBoundingClientRect(); go(Math.round(clamp((e.clientX - r.left) / r.width) * (n - 1))); }, on);
+      card.addEventListener("pointerleave", () => go(mid), on);
+    });
 
     return () => {
-      dead = true;
       ac.abort();
       po.disconnect();
       observers.forEach((o) => o.disconnect());
       timers.forEach(clearInterval);
       cancelAnimationFrame(raf);
-      stop?.();
     };
   }, [band]);
   return null;

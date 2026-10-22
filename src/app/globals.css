@@ -57,8 +57,11 @@
     animation: grain .9s steps(5) infinite; }
   @keyframes grain { 0% { transform: translate(0, 0); } 25% { transform: translate(-4%, 3%); } 50% { transform: translate(3%, -5%); } 75% { transform: translate(-2%, -2%); } 100% { transform: translate(4%, 4%); } }
 
-  /* canvas único del 3D */
-  .gl3d { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+  /* renders de Blender (design/3d): el still y, encima, el cuadro de la secuencia de giro */
+  [data-seq] { position: relative; display: block; }
+  .seqf { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+  /* la sombra de contacto se corta en el borde del render: se desvanece antes de llegar */
+  .obj, .mock picture { -webkit-mask: radial-gradient(closest-side, #000 72%, transparent); mask: radial-gradient(closest-side, #000 72%, transparent); }
 
   /* ---------- nav ---------- */
   .nav { position: fixed; z-index: 80; inset: 0 0 auto; background: var(--ink); display: flex; align-items: center; gap: 2.5rem; height: 76px;
@@ -110,10 +113,12 @@
   .hw { position: relative; height: 170vh; }
   .hero { position: sticky; top: 0; height: 100svh; min-height: 700px; display: grid; grid-template-rows: 76px 1fr auto; grid-template-columns: minmax(0, 1fr); overflow: hidden; }
   .main { grid-row: 2; display: grid; grid-template-columns: 7fr 5fr; gap: 2rem 4rem; align-items: center; padding: 0 var(--g); }
-  .num { position: relative; height: clamp(150px, 15vw + 40px, 290px); }
-  .num .flat { font-size: clamp(6.5rem, 2rem + 13vw, 15rem); font-weight: 860; letter-spacing: -.045em; line-height: .86; color: var(--uv); transition: opacity .6s; }
-  .num .flat small { font-size: .36em; color: var(--red); }
-  .num.gl .flat { visibility: hidden; }
+  .num { position: relative; height: clamp(150px, 15vw + 40px, 290px); container-type: size; }
+  /* una imagen por carácter, todas del mismo alto; el margen negativo descuenta el aire de cada render y la extrusión */
+  .digits { display: flex; align-items: flex-end; height: 100%; opacity: 0; transition: opacity .15s; }
+  .digits.on { opacity: 1; }
+  .digits picture { flex: none; }
+  .digits img { display: block; height: 100cqh; width: auto; max-width: none; margin-right: -14cqh; }
   .cap { margin-top: 1.25rem; max-width: 34ch; color: var(--mute); font-size: 1.0625rem; line-height: 1.45; }
   h1 { font-size: clamp(2rem, 1rem + 2.4vw, 3.4rem); font-weight: 760; letter-spacing: -.035em; line-height: 1.02; text-wrap: balance; }
   .ctas { margin-top: 2.25rem; display: flex; gap: 1.75rem; align-items: center; flex-wrap: wrap; }
@@ -148,12 +153,16 @@
   .acts { margin-top: 1.8rem; display: flex; gap: .9rem; flex-wrap: wrap; }
   .media { position: relative; margin: 14px 14px 14px 0; border-radius: 14px; overflow: hidden; background: var(--ink3); }
   .media.photo img { position: absolute; inset: -6% 0; width: 100%; height: 112%; object-fit: cover; transform: translateY(calc((1 - var(--ent, 1)) * 6%)) scale(calc(1.18 - var(--ent, 1) * .18)); }
-  .media.gl { background: none; }
+  .media.mock { background: none; }
+  .mock picture { position: absolute; inset: 0; }
+  .mock img { width: 100%; height: 100%; object-fit: contain; }
   .media.wall { display: flex; gap: .6rem; }
   .media.wall .col { flex: 1; display: flex; flex-direction: column; gap: .6rem; transform: translateY(var(--y, 0)); }
   .media.wall img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; display: block; }
-  /* objeto 3D que acompaña cada caso: sobre la esquina de la foto */
-  .obj { position: absolute; z-index: 3; right: 3%; bottom: 4%; width: min(24vw, 360px); aspect-ratio: 1; pointer-events: none; }
+  /* objeto del caso sobre el título: solo desktop (en mobile ni se descarga, ver <Obj>) */
+  .obj { width: clamp(150px, 34svh - 70px, 240px); aspect-ratio: 1; margin: 0 0 .5rem -1rem; }
+  .obj img { width: 100%; height: 100%; }
+  @media (max-width: 1023px) { .obj { display: none; } }
 
   /* ---------- SERVICIOS: lista que se recorre + visual fijo (desktop) ---------- */
   .svc { position: relative; z-index: 3; padding: 18vh var(--g) 10vh; }
@@ -227,10 +236,7 @@
   form .b { justify-self: start; }
   form .cap { margin: 0; font-size: .9rem; }
   footer { position: relative; z-index: 3; padding: 2rem 0; overflow: hidden; }
-  .wm3d { position: relative; height: clamp(240px, 34vw, 640px); }
-  .wm3d .flat { position: absolute; inset: 0; display: grid; place-items: center; font-size: clamp(5rem, 1rem + 19vw, 22rem); font-weight: 880; letter-spacing: -.05em; transition: opacity .6s; }
-  .wm3d .flat .dim { color: var(--red); }
-  .wm3d.gl .flat { opacity: 0; visibility: hidden; transition: opacity .6s, visibility 0s .6s; }
+  .wm3d img { display: block; width: 100%; height: auto; }
   .fbar { margin: 1.5rem var(--g) 0; display: flex; gap: 2rem; color: var(--mute); font-size: .95rem; }
   .fbar span { margin-right: auto; }
   .fab { position: fixed; z-index: 85; right: calc(1rem + env(safe-area-inset-right, 0px)); bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); width: 60px; height: 60px; padding: 0; justify-content: center; border-radius: 50%;
@@ -259,8 +265,7 @@
     .nav .lang { margin-left: auto; }
     .hero { min-height: 680px; grid-template-rows: 64px 1fr auto; }
     .main { grid-template-columns: minmax(0, 1fr); align-content: center; gap: 0; }
-    .num { height: 150px; }
-    .num .flat { font-size: 7rem; }
+    .num { height: min(150px, 38vw); }
     h1 { margin-top: 1.5rem; font-size: 2.05rem; }
     .ctas .u { display: none; }
     .band { height: 150px; grid-template-columns: minmax(0, 1fr) auto; gap: .9rem 1rem; align-content: center; }
@@ -278,7 +283,6 @@
     .facts { font-size: .85rem; }
     .acts { margin-top: 1.1rem; }
     .acts .b { height: 46px; font-size: .95rem; padding: 0 1.1rem; }
-    .obj { top: calc(46% - 34vw); bottom: auto; right: 4%; width: 38vw; }
     /* servicios en mobile: cada servicio con su visual arriba, sin nada fijo que tape */
     .svc-grid { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 3rem; }
     .vis { display: none; }
