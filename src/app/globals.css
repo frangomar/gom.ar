@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
+/* Tokens del brief (Parte B) y de PLAN.md §5. Tailwind los expone como
+   utilidades (bg-link, text-ink, text-domain-hero…) y como variables CSS. */
+@theme {
+  --color-*: initial;
+  --color-paper: #f3f4f2;
+  --color-ink: #1a1c20;
+  --color-link: #2440ff;
+  --color-visited: #6b2fd6;
+  --color-gray: #6e737a; /* solo texto grande */
+  --color-gray-text: #676c73; /* secundario chico sobre papel */
+  --color-line: #d5d8dc;
+  --color-paper-dim: #b5bef6; /* papel 70 % sobre link: puntos del dominio */
+  --color-paper-muted: #9c9e9e; /* papel 60 % sobre tinta: secundario */
+
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+
+  --text-domain-hero: clamp(1.75rem, 0.4rem + 6vw, 6rem);
+  --text-domain-hero--line-height: 0.92;
+  --text-h1: clamp(1.75rem, 1.2rem + 2.6vw, 4rem);
+  --text-h1--line-height: 1.02;
+  --text-domain-row: clamp(1.75rem, 0.8rem + 4.2vw, 5rem);
+  --text-domain-row--line-height: 0.95;
+  --text-h2: clamp(1.75rem, 1.3rem + 1.9vw, 3rem);
+  --text-h2--line-height: 1.05;
+  --text-h3: clamp(1.25rem, 1.1rem + 0.7vw, 1.75rem);
+  --text-h3--line-height: 1.15;
+  --text-lead: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --text-lead--line-height: 1.4;
+  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-body--line-height: 1.55;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.4;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --d-micro: 180ms;
+  --d-ui: 260ms;
+  --d-reveal: 360ms;
+  --d-char: 420ms;
+  --stagger-char: 24ms;
+  --gutter: clamp(1rem, 4vw, 4rem);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
+  a {
+    color: var(--color-link);
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
+  }
+
+  /* Foco propio, visible en los tres fondos (papel, link y tinta). */
+  :focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility placeholder {
+  background: #fff3a3;
+  color: var(--color-ink);
+  padding-inline: 0.2em;
 }
