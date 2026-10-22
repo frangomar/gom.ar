@@ -1,8 +1,32 @@
 # gom.ar · Plan del rediseño (Bloque 0)
 
-Estado: **borrador para aprobación de Francisco**. No hay código de la app escrito.
+Estado: aprobado en el Bloque 0. **Desde el Bloque 2, las secciones 3 a 8 son históricas:** el diseño, los tokens, el hero y la arquitectura de la home cambiaron. Lo vigente está en "Estado vigente" (abajo) y en "Decisiones vigentes de Francisco", al principio de `docs/rediseno-gomar.md`.
 Fuentes: `docs/rediseno-gomar.md` (brief, manda), `REFERENCIAS-PORTFOLIOS.md` (investigación, en la raíz, ignorada por git) y el código de `main` en `44c9edc`.
 Fecha: 2026-10-22.
+
+---
+
+## 0. Estado vigente (después del Bloque 2)
+
+**Arquitectura de la home** (`/es` y `/en`, SSG, Next 16 App Router):
+
+| Archivo | Qué hace |
+|---|---|
+| `src/app/[locale]/page.tsx` | Server Component: toda la home en HTML estático, visible sin JS (hero, mazo de casos, servicios, IA, sobre mí, contacto, footer). Las imágenes pasan por `getImageProps` (AVIF/WebP, `srcset`) sin JS de cliente. |
+| `src/components/home/HomeFx.tsx` | Único componente cliente de interacción: rodillo, botones, mazo de cards, bio que se enciende con el scroll, servicios, franja del hero, WhatsApp flotante y color del scrollbar. |
+| `src/components/home/scene.ts` | 3D con three.js 0.180. Se importa con `import()` después de `load`. Un solo canvas fijo y un solo contexto WebGL: cada objeto se dibuja en el rectángulo de su elemento `[data-gl]`. |
+| `src/components/home/ContactForm.tsx` | Arma el email y lo abre en el programa de correo (shortcut hasta B5: Server Action + Resend). |
+| `src/content/home.ts` | Los 7 casos (es y en), solo con datos de las fichas. |
+| `messages/{es,en}.json` → `Home` | Textos de la interfaz. pt, fr y zh son copia de en hasta B6. |
+| `src/app/globals.css` | Tokens (`:root`) y estilos de la home. |
+| `public/home/` | Fotos de marca, pantallas de la app, landings de Quicktrade, 72 piezas de IG, logos y la tipografía (woff) para el texto 3D. |
+
+**Tokens vigentes:** `--ink #070708`, `--ink2 #0e0e11`, `--ink3 #18181c`, `--edge #26262c`, `--paper #ededf0`, `--mute #a6a6b0`, `--uv #7a5cff`, `--red #ff2b4e`. Tipografía: Schibsted Grotesk (variable, `next/font`), y el woff 900 en `public/home/` para el 3D.
+
+**Trampas conocidas:**
+- No usar `--k` ni `--e` como variables de estado: chocan con tokens. El mazo usa `--cov` y `--ent`.
+- No usar nombres de clase que sean utilidades de Tailwind (`inline`, `block`, `hidden`, etc.).
+- Nada más ancho que la pantalla, ni siquiera fijo (el grano va dentro de un contenedor que recorta); si no, el celular aleja el zoom.
 
 ---
 
@@ -55,7 +79,7 @@ Ver el árbol de la sección 3. Las dependencias nuevas son todas `devDependenci
 
 ---
 
-## 3. Árbol de archivos propuesto
+## 3. Árbol de archivos propuesto (histórico, superado en el Bloque 2)
 
 ```
 docs/
@@ -95,7 +119,7 @@ Slugs: `app-megatlon`, `laestacionfutbolpadel`, `fiter-uy`, `drivingnorte`, `meg
 
 ---
 
-## 4. Modelo de contenido
+## 4. Modelo de contenido (histórico, superado en el Bloque 2)
 
 **Formato elegido: módulos TypeScript, no MDX.** Hay tres razones:
 - No suma dependencias.
@@ -148,7 +172,7 @@ Regla: cualquier string que empiece con `[` se renderiza con la clase `.placehol
 
 ---
 
-## 5. Tokens
+## 5. Tokens (histórico, superado en el Bloque 2)
 
 ### Color (contrastes calculados con la fórmula WCAG 2.x, en el script de esta sesión)
 | Combinación | Ratio | Uso permitido |
@@ -192,7 +216,7 @@ Contraste de escala en desktop: el dominio a 96 px contra el texto a 18 px es **
 
 ---
 
-## 6. Plan visual de la home
+## 6. Plan visual de la home (histórico, superado en el Bloque 2)
 
 ### 1440 × 900 (puntero fino)
 ```
@@ -264,7 +288,7 @@ La grilla es de 12 columnas con margen de `clamp(1rem, 4vw, 4rem)`. Todo va alin
 
 ---
 
-## 7. Hero: timeline de un ciclo (T = 3000 ms)
+## 7. Hero: timeline de un ciclo (T = 3000 ms) (histórico, superado en el Bloque 2)
 
 Capas, de abajo hacia arriba:
 - **L0** fondo azul (estático).
@@ -300,7 +324,7 @@ Capas, de abajo hacia arriba:
 
 ---
 
-## 8. Riesgos de performance del hero y cómo se miden
+## 8. Riesgos de performance del hero y cómo se miden (histórico, superado en el Bloque 2)
 
 | # | Riesgo | Mitigación | Cómo se mide |
 |---|---|---|---|

@@ -125,9 +125,13 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 
 ---
 
-## Bloque 2 · Hero · 2026-10-22 · EN CURSO, DIRECCIÓN RECHAZADA
+## Bloque 2 · Hero y home · 2026-10-22 · TERMINADO (en `main`, PR frangomar/gom.ar#5)
 
-**Estado:** sin aprobar. Francisco rechazó las tres direcciones visuales que se le mostraron. **Lo único aprobado es la animación del rodillo por letra del dominio.** No hay nada commiteado: todo está en el working tree de la rama `redesign-b2-hero` (sale de `redesign-b1-base`).
+**Estado final:** la home completa quedó implementada y mergeada a `main` por pedido de Francisco. El bloque pasó por cuatro rondas de diseño, y las tres primeras direcciones se rechazaron. Las decisiones vigentes están resumidas al principio de `docs/rediseno-gomar.md`. Abajo queda el registro de cada ronda, en orden. La primera ronda (justo debajo) cuenta las direcciones rechazadas y ya no describe el estado actual.
+
+**Mockups y videos:** viven en `docs/previews/`, que está fuera de git por peso (161 MB). Solo existen en la máquina de Francisco. El preview compartido de la ronda 4 está en https://claude.ai/artifact/E8a6roLw9aBdRKjCVK8zQ1 (privado).
+
+### Ronda 1 · direcciones rechazadas
 
 ### Reglas nuevas de Francisco (valen para todos los bloques que siguen)
 1. **Preview primero, sí o sí.** Para cualquier cosa visual, primero se le muestran imágenes del diseño propuesto, en 1440 y 375. Se arma un mockup HTML aislado, se captura con Playwright y se manda. Recién con su OK se escribe código de la app.
@@ -268,3 +272,13 @@ Francisco pidió "implementalo en el proyecto, commiteá, pusheá y mergeá a ma
 
 **Medido:** build verde, tipos y lint limpios, Playwright 8/8 (lang, un H1, axe sin violaciones serias en 375 y 1440, redirect, 404 de idiomas no publicados).
 **No medido:** Lighthouse, LCP, TBT y peso. El 3D y las animaciones probablemente rompen varios presupuestos de la Parte C (JS de cliente, tareas largas): pendiente medir y decidir con Francisco.
+
+### Qué necesita el Bloque 3
+1. **Medir la home nueva con números reales:** Lighthouse mobile, LCP, CLS, TBT, peso total y JS de cliente (el chunk de three.js va aparte). Comparar contra la Parte C del brief y decidir con Francisco qué se ajusta. Hay que mirar sobre todo las tareas largas al cargar el 3D y los fps del canvas en mobile.
+2. **Probar en celulares reales** (iOS Safari y Android Chrome): el 3D, el mazo de cards y el select personalizable, que en Safari queda nativo.
+3. Assets que faltan: `[FOTO FRANCISCO]`, el logo de Quicktrade y los vectoriales de La Estación y Driving Norte.
+4. Pendientes de otros bloques que ya se ven en producción:
+   - páginas de caso (B4: hoy cada card linkea solo al sitio en vivo);
+   - formulario con Server Action y Resend (B5: hoy abre el programa de email);
+   - eventos de analytics completos (B5).
+5. `docs/copy-variantes.md` tiene arriba el copy vigente. Si se cambia el H1, actualizarlo ahí.
