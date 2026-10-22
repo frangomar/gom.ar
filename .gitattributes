@@ -4,3 +4,7 @@
 *.woff2 binary
 *.png binary
 *.jpg binary
+*.blend binary
+*.avif binary
+*.webp binary
+*.ttf binary

@@ -50,3 +50,7 @@ next-env.d.ts
 
 # previews y mockups del Bloque 2: material de trabajo local y pesado (videos, fotos originales)
 /docs/previews/
+
+# renders intermedios de Blender (se regeneran con design/3d/build.py)
+design/3d/out/
+design/3d/preview/
