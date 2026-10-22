@@ -28,10 +28,12 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 - Los sitios de clientes se linkean como están. `liveVerified` pasa a significar "responde y muestra el sitio". Solo quedan en `false` la Shop (contraseña) y Quicktrade.
 - El email de contacto es `info@gom.ar`.
 - **Sin precios en el sitio**, nunca. Esto contradice la Parte D del brief ("desde USD") y gana Francisco.
-- Años: Megatlon, Fiter, La Estación y Driving Norte, 2025–hoy. Quicktrade según el CV, jul. 2022 – dic. 2023 (Francisco había dicho 2022–24, queda para confirmar).
+- Años: Megatlon, Fiter, La Estación y Driving Norte, 2025–hoy. Quicktrade, 2022–2024 (lo confirmó Francisco; el CV dice jul. 2022 – dic. 2023).
 - Ownership: megatlon.com y la app desde feb. 2025; Fiter UY y Driving Norte desde ago. 2025; La Estación desde oct. 2026.
 - Dato publicable: megatlon.com tiene ~70.000 visitas/mes (Google Analytics, revisado por Francisco).
 - Francisco tiene permiso para mostrar todo.
+- El formulario no lleva select de presupuesto: nombre, email, tipo de proyecto y mensaje (contra la Parte D del brief).
+- Megatlon Shop no se linkea; se nombra dentro del caso megatlon.com.
 
 ### Contradicciones para decidir
 1. **Investigación contra brief:** Lenis, preloader, cursor custom, GSAP, line reveals y sonido. **Gana el brief**; el detalle está en PLAN.md §9. No pido cambiar nada.

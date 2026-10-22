@@ -3,7 +3,7 @@
 - **Slug:** `megatlon` · **Orden:** 5 · **En el hero:** sí
 - **Título:** megatlon.com
 - **Link en vivo:** https://megatlon.com · `liveVerified: true` (200, `index, follow`, verificado el 2026-10-22)
-- **Megatlon Shop:** https://shop.megatlon.com redirige a `/password/` (Tienda Nube cerrada). **Propuesta: no linkearla** mientras esté cerrada, porque un link a una pantalla de contraseña no prueba nada. [DECIDIR]
+- **Megatlon Shop:** https://shop.megatlon.com redirige a `/password/` (Tienda Nube cerrada). **No se linkea** (decisión de Francisco): se nombra dentro del caso como trabajo construido.
 
 ## Cliente y año
 Grupo Megatlon, cadena de gimnasios · **feb. 2025 – hoy**. Las cifras de sedes y socios se omiten (no hay fuente).

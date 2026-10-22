@@ -4,7 +4,7 @@
 - **Título:** Quicktrade (sin link en vivo: el sitio actual ya no refleja su trabajo) · `liveVerified: false`
 
 ## Cliente y año
-SBS Trading S.A. / Quicktrade (fintech) · **jul. 2022 – dic. 2023** según el CV. Francisco dijo "2022-24". [CONFIRMAR: ¿cuál va?]
+SBS Trading S.A. / Quicktrade (fintech) · **2022–2024** (lo confirmó Francisco)
 
 ## Rol (del CV)
 - **Francisco**, Graphic Designer (Mid-Senior):

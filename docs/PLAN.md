@@ -225,7 +225,7 @@ Contraste de escala en desktop: el dominio a 96 px contra el texto a 18 px es **
 │ Sobre mí  [FOTO FRANCISCO 4 col]  3 líneas (8 col)                                                 │
 └────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ┌ tinta ────────────────────────────────────────────────────────────────────────────────────────────┐
-│ H2 contacto (papel)                          Formulario (nombre, email, tipo, presupuesto, msg)   │
+│ H2 contacto (papel)                          Formulario (nombre, email, tipo de proyecto, msg)   │
 │ [Escribime por WhatsApp] (botón papel)       Respondo en menos de 24 h                            │
 │ email · LinkedIn · Behance (papel subrayado)                                                       │
 │ footer: © gom.ar · selector de idioma                                                              │
@@ -347,7 +347,7 @@ Se toma de la investigación:
 2. **Megatlon Shop no es WordPress:** es **Tienda Nube** y hoy está **protegida con contraseña** (`shop.megatlon.com → /password/`, `x-robots-tag: nofollow`).
 3. **`fiter.com/UY` distingue mayúsculas:** `fiter.com/uy` redirige a `/AR`. El link tiene que ser exactamente `/UY`.
 4. **Email de contacto:** **`info@gom.ar`**, decidido por Francisco el 2026-10-22. Reemplaza a `frangomar8@gmail.com` en `site.ts` y el JSON-LD.
-7. **Sin precios en el sitio**, decidido por Francisco: los servicios no llevan "desde USD" (contra la Parte D del brief). El select de rango de presupuesto del formulario queda **[DECIDIR]**.
+7. **Sin precios en el sitio**, decidido por Francisco: los servicios no llevan "desde USD" (contra la Parte D del brief). El formulario **no lleva select de rango de presupuesto**: quedan nombre, email, tipo de proyecto y mensaje.
 8. **`liveVerified`**: Francisco decidió linkear los sitios como están, aunque tengan los problemas detectados. El flag pasa a significar "el link responde y muestra el sitio". Solo queda en `false` la Shop (pantalla de contraseña) y Quicktrade (sin link).
 5. **Handle de Instagram:** verificado. `megatlon.com` linkea `instagram.com/megatlon`.
 6. **Ramas:** git no permite `redesign` y `redesign/bN` a la vez. Se usa `redesign` + `redesign-bN-nombre`.
@@ -365,7 +365,7 @@ Francisco decidió linkearlos como están. Los problemas quedan registrados, per
 | Fiter UY | https://fiter.com/UY | "Entrenameinto" en el menú; `/uy` en minúscula redirige a `/AR` | true |
 | Driving Norte | https://drivingnorte.com.ar | `noindex, nofollow`; lunes 11:45 contra 12:00 | true |
 | megatlon.com | https://megatlon.com | OK | true |
-| Megatlon Shop | https://shop.megatlon.com | redirige a `/password/` (Tienda Nube cerrada) | **false** (propuesta) |
+| Megatlon Shop | https://shop.megatlon.com | redirige a `/password/` (Tienda Nube cerrada) | **false** (decidido: no se linkea) |
 | Instagram | https://www.instagram.com/megatlon | OK | true |
 | Quicktrade | — | sin link | false |
 
@@ -404,10 +404,8 @@ Peso total: unos 34 MB de fuentes JPG en git. `next/image` genera el AVIF y el W
 | 1–3 piezas de redes de Terrazas del Gutiérrez | `src/content/secundarios/terrazas-01.jpg` 1080×1350 |
 
 ### Datos que faltan
-1. ¿El formulario lleva un select de rango de presupuesto? (Tus precios no se publican.)
 2. Los 3 servicios. Propuesta: sitio web de punta a punta, producto UX/UI, e identidad digital y campañas.
 3. `RESEND_API_KEY` + `gom.ar` verificado en Resend, cargados en Vercel (sin eso funciona el fallback mailto).
-4. Quicktrade: ¿jul. 2022 – dic. 2023 (CV) o 2022–24?
 5. Problema, decisiones clave y uso de IA de cada caso (los [COMPLETAR] de las fichas).
 6. Link de Google Play.
 7. Rol de Amalgama y quién hace la fotografía y el video en redes.
