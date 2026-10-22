@@ -283,7 +283,7 @@ export default async function Home({ params }: Props) {
             </div>
             <ContactForm
               email={CONTACT_EMAIL}
-              labels={{ name: t("fName"), email: t("fEmail"), type: t("fType"), msg: t("fMsg"), send: t("fSend"), sending: t("fSending"), ok: t("fOk"), error: t("fError") }}
+              labels={{ name: t("fName"), email: t("fEmail"), type: t("fType"), msg: t("fMsg"), send: t("fSend"), sending: t("fSending"), ok: t("fOk"), error: t("fError"), limit: t("fLimit") }}
               types={t.raw("fTypes") as string[]}
             />
           </div>
