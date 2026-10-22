@@ -27,19 +27,25 @@ export default function ContactForm({ email, types, labels }: Props) {
   useEffect(() => {
     const el = box.current;
     if (!SITE_KEY || !el) return;
-    const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
+    let started = false;
+    const load = () => {
+      if (started) return;
+      started = true;
       io.disconnect();
-      const render = () => { widget.current = window.turnstile!.render(el, { sitekey: SITE_KEY, theme: "dark", appearance: "interaction-only" }); };
+      const render = () => { widget.current = window.turnstile!.render(el, { sitekey: SITE_KEY, theme: "dark", appearance: "always" }); };
       if (window.turnstile) return render();
       const s = document.createElement("script");
       s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
       s.async = true;
       s.onload = render;
       document.head.appendChild(s);
-    }, { rootMargin: "600px" });
+    };
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) load(); }, { rootMargin: "600px" });
     io.observe(el);
-    return () => io.disconnect();
+    // Respaldo: si el observer no dispara, carga apenas la persona entra a un campo.
+    const form = el.closest("form");
+    form?.addEventListener("focusin", load, { once: true });
+    return () => { io.disconnect(); form?.removeEventListener("focusin", load); };
   }, []);
 
   // onSubmit en vez de action={}: React resetea el form tras una action y se perdería el mensaje si falla.
@@ -64,7 +70,7 @@ export default function ContactForm({ email, types, labels }: Props) {
       <label htmlFor="f-msg">{labels.msg}<textarea id="f-msg" name="msg" maxLength={5000} required /></label>
       {/* honeypot: fuera de pantalla y fuera del orden de Tab */}
       <input name="company" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: "absolute", left: "-9999px" }} />
-      <div ref={box} />
+      <div ref={box} style={{ minHeight: 65 }} />
       <button className="b" type="submit" disabled={pending}>
         <span className="fill" aria-hidden="true" />
         <span className="lbl" aria-hidden="true">{[...send].map((c, i) => <span className="c" style={{ ["--i" as string]: i }} key={i}>{c}</span>)}</span>
