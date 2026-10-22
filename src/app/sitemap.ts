@@ -3,8 +3,7 @@ import { publishedLocales } from "@/i18n/routing";
 import { languageAlternates } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
 
-// Rutas indexables, sin prefijo de idioma. Las propuestas para clientes
-// (noindex) no van acá.
+// Rutas indexables, sin prefijo de idioma.
 const PATHS = [""];
 
 const absolute = (path: string) => `${SITE_URL}${path}`;

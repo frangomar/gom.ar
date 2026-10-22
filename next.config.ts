@@ -14,12 +14,6 @@ const nextConfig: NextConfig = {
         destination: `/${routing.defaultLocale}`,
         statusCode: 301,
       },
-      // URLs del Pages Router que cambiaron con el prefijo de idioma.
-      {
-        source: "/presupuesto",
-        destination: `/${routing.defaultLocale}/presupuesto`,
-        statusCode: 301,
-      },
     ];
   },
 };
