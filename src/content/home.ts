@@ -2,8 +2,10 @@ import type { PublishedLocale } from "@/i18n/routing";
 
 // Casos de la home, en el orden del brief (Parte D). Solo datos de las fichas: nada inventado.
 // shortcut: sin páginas de caso todavía (B4); cada card linkea solo al sitio en vivo.
-export type Media = "phones" | "photo" | "wall" | "mac";
-export type Obj3D = "paddle" | "golf" | "plate" | "ig" | null;
+// "phone" y "notebook": render de Blender como visual del caso (design/3d); "photo": foto de marca; "wall": muro de piezas
+export type Media = "phone" | "photo" | "wall" | "notebook";
+// objeto renderizado arriba del título, solo en desktop (≥ 1024 px)
+export type Obj3D = "paddle" | "golf" | "plate" | "dumbbell" | null;
 
 export type HomeCase = {
   id: string;
@@ -28,7 +30,7 @@ export const CASES: HomeCase[] = [
     title: ["App Megatlon", " · iOS y Android"],
     brand: "#f26b21",
     logo: MEGATLON,
-    media: "phones",
+    media: "phone",
     obj: null,
     live: "https://apps.apple.com/ar/app/megatlon/id1531151799",
     inHero: true,
@@ -59,7 +61,7 @@ export const CASES: HomeCase[] = [
     logo: { src: L + "fiter.svg", ar: "495.9/185.7" },
     media: "photo",
     img: "/home/fiter-funcional.jpg",
-    obj: null,
+    obj: "dumbbell",
     live: "https://fiter.com/UY",
     inHero: true,
     text: {
@@ -103,7 +105,7 @@ export const CASES: HomeCase[] = [
     brand: "#f26b21",
     logo: MEGATLON,
     media: "wall",
-    obj: "ig",
+    obj: null,
     live: "https://www.instagram.com/megatlon",
     inHero: false,
     text: {
@@ -116,7 +118,7 @@ export const CASES: HomeCase[] = [
     title: ["Landings de", " Quicktrade"],
     brand: "#2f7bff",
     word: "Quicktrade",
-    media: "mac",
+    media: "notebook",
     obj: null,
     inHero: true,
     text: {

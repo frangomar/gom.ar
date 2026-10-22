@@ -282,3 +282,105 @@ Francisco pidió "implementalo en el proyecto, commiteá, pusheá y mergeá a ma
    - formulario con Server Action y Resend (B5: hoy abre el programa de email);
    - eventos de analytics completos (B5).
 5. `docs/copy-variantes.md` tiene arriba el copy vigente. Si se cambia el H1, actualizarlo ahí.
+
+## 3D de producto y carga sin saltos · 2026-10-22 · EN MAIN por pedido de Francisco
+
+Tarea de Francisco: rehacer los objetos 3D con realismo de producto y que el número del hero no salte de 2D a 3D.
+
+### Auditoría previa (lo que había)
+- Todo era three.js 0.180 modelado por código, en `scene.ts`: un canvas fijo, sin GLB, HDRI ni KTX2. Se bajaba también en mobile.
+- **Pesos transferidos:**
+  - three.js: 193 KB gzip (4 chunks)
+  - fuente 3D: 30 KB
+  - pantallas: 2,02 MB (3 PNG de 600×1314 y 2 JPG)
+- **Por qué saltaba el número.** Medido con Fast 4G (9/1,5 Mbps, 60 ms), CPU 4x, 1440×900 y el server de producción local:
+  - 1204 ms: el LCP es el número 2D, que muestra "0,00".
+  - 1826 ms: cambia al valor real.
+  - De ahí en adelante: tres tareas largas (932 ms al parsear three.js, 1436 ms al armar todos los objetos y 505 ms al compilar shaders).
+  - 4541 ms: se oculta el 2D sin fundido y entra el 3D.
+
+### Decisiones de Francisco
+- Realismo de producto en lugar de gelatina.
+- Calibrado sobre `#070708` y no sobre `#F3F4F2`, que es de la paleta vieja.
+- Asignación de objetos:
+  - smartphone → app
+  - notebook → Quicktrade
+  - paleta → La Estación
+  - golf → Driving Norte
+  - disco bumper de goma → megatlon.com
+  - mancuerna → Fiter
+  - redes queda sin objeto (sale el logo de IG)
+- Disco y paleta sobre fotos de referencia que pasó él: bumper negro con "20 KG" impreso en blanco a los dos lados, y paleta blanca en lágrima con puente en Y. Sin marcas.
+- El número aparece recién cuando se conoce el LCP.
+- Pidió documentar, commitear, pushear y mergear a `main`.
+
+### Qué se hizo
+- **`design/3d/build.py`:** modela todo por código en Blender 4.5 y renderiza en Cycles.
+  - Base: escala real, bisel en todas las aristas, roughness con variación, microrelieve, HDRI `studio.exr` de Blender, luz key, rim y fill, y sombra de contacto con shadow catcher.
+  - `--seq 25` renderiza el giro de −15° a +15°; el cuadro del medio es el still.
+  - `--mid` renderiza solo el cuadro del medio a más resolución.
+  - Los `.blend` de cada objeto están en `design/3d/blend/`.
+- **Número del hero:** un render por carácter (0–9, coma, punto y "s"), con la misma cámara ortográfica y la misma luz. HomeFx los arma con el valor real y los muestra cuando están todos decodificados. Fundido de 150 ms. El texto sigue en el DOM para lectores de pantalla (`#tsr`).
+- **`design/3d/export.mjs`** (sharp): exporta AVIF + WebP en 1x y 2x a `public/3d/`, escribe `src/content/3d.json` y **falla si un objeto se pasa del presupuesto**.
+- **`src/app/[locale]/page.tsx`:**
+  - `<Obj>` (`<picture>` con `media="(min-width: 1024px)"`): en mobile no se descarga nada.
+  - `<Render>` para los mockups y el wordmark del footer.
+- **`HomeFx`:**
+  - Sin three.js.
+  - La secuencia se baja con el primer hover o foco de la card, solo con puntero fino y sin reduced motion.
+  - El puntero elige el cuadro y al salir vuelve al centro de a un cuadro.
+- three.js, `@types/three`, `scene.ts` y `sg-900.woff` salieron del proyecto. sharp quedó como devDependency (ya venía con Next).
+
+### Pesos (AVIF transferido)
+
+| Objeto | Still 2x | Secuencia (25 cuadros) |
+|---|---|---|
+| Paleta | 7,2 KB | 173,8 KB |
+| Disco | 6,0 KB | 137,5 KB |
+| Golf | 3,9 KB | 88,8 KB |
+| Mancuerna | 5,7 KB | 129,6 KB |
+| Smartphone (1600 px) | 27,5 KB | 268,6 KB (cuadros de 800 px) |
+| Notebook (1600 px) | 27,7 KB | 246,7 KB (cuadros de 800 px) |
+| Número (13 caracteres, se bajan solo los del valor) | 75,9 KB en total | — |
+| Wordmark | 16,6 KB | — |
+
+### Lighthouse mobile, antes y después (localhost, devtools throttling)
+
+| | Antes (1 corrida) | Después (3 corridas por URL, /es) |
+|---|---|---|
+| Performance | 62 | 87 |
+| Accesibilidad | 100 | 100 |
+| Buenas prácticas | 96 | 96 |
+| SEO | 100 | 100 |
+| LCP | 2,6 s | 2,6 s |
+| TBT | 5,4 s | 270 ms |
+| CLS | 0 | 0 |
+| Peso total | 2.497 KB | 345 KB |
+
+- **Carga, con la misma traza que la auditoría:**
+  - el LCP pasa a ser el H1, a los 900 ms;
+  - el número aparece completo a los 2041 ms;
+  - no hay ningún frame con el número en 2D.
+- **Grabación:**
+  - `docs/capturas/b3-3d/filmstrip-fast4g-cpu4x.jpg` (12 capturas del trace);
+  - el trace completo para abrir en el panel Performance está en `docs/previews/b3-3d/trace-fast4g-cpu4x.json`, fuera de git (12 MB).
+- **Capturas:** `docs/capturas/b3-3d/`, en 1440 y 375.
+- Playwright 8/8, tipos y lint limpios.
+- **Mobile:** se verificó que no se baja ningún objeto de `/3d/` salvo los mockups, el número y el wordmark.
+
+### Pendientes
+- **LCP 2,6 s, fuera del presupuesto (< 1,8 s).** Ahora es el H1, con 2,5 s de render delay bajo la simulación de Lighthouse. Hay una tarea larga de unos 600 ms al hidratar (CPU 4x) que no es del 3D. Es lo primero a atacar en el Bloque 3.
+- **Bajo la simulación lenta, el H1 cambia el corte de líneas a los ~1,6 s** (se ve en la tira). No suma CLS, pero se nota.
+- **Lo que queda sin verificar:**
+  - Safari sin API de LCP: el número no se muestra, a propósito (no hay dato que inventar). Sin JS tampoco.
+  - Los cuadros de la secuencia de los mockups son de 800 px: en pantallas 2x se ven un poco más blandos que el still mientras giran.
+  - La paleta es el objeto con menos detalle: la cara es blanca lisa y le falta el borde gris que tiene la referencia.
+  - No se probó en celulares reales.
+- **Para regenerar:**
+  ```
+  blender -b -P design/3d/build.py -- --only paddle,plate,golf,dumbbell --seq 25 --samples 96 --out design/3d/out
+  blender -b -P design/3d/build.py -- --only phone,notebook --seq 25 --res 800 --samples 96 --out design/3d/out
+  blender -b -P design/3d/build.py -- --only phone,notebook --seq 25 --mid --res 1600 --samples 128 --out design/3d/out
+  blender -b -P design/3d/build.py -- --only glyphs,wordmark --samples 128 --out design/3d/out
+  node design/3d/export.mjs
+  ```
