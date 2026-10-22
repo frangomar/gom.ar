@@ -86,9 +86,10 @@
       "Other"
     ],
     "fMsg": "Message",
-    "fSend": "Send by email",
-    "fNote": "Your email app opens with the message ready to send.",
-    "mailSubject": "Project from gom.ar"
+    "fSend": "Send message",
+    "fSending": "Sending…",
+    "fOk": "Got it, your message is in. I reply within 24 hours.",
+    "fError": "It didn't go through. Try again or write to"
   },
   "NotFound": {
     "title": "Page not found",

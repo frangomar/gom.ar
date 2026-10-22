@@ -86,9 +86,10 @@
       "Otro"
     ],
     "fMsg": "Mensaje",
-    "fSend": "Enviar por email",
-    "fNote": "Se abre tu programa de email con el mensaje listo para mandar.",
-    "mailSubject": "Proyecto desde gom.ar"
+    "fSend": "Enviar consulta",
+    "fSending": "Enviando…",
+    "fOk": "Listo, me llegó tu mensaje. Te respondo en menos de 24 h.",
+    "fError": "No se pudo enviar. Probá de nuevo o escribime a"
   },
   "NotFound": {
     "title": "Página no encontrada",
