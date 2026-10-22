@@ -89,7 +89,8 @@
     "fSend": "Send message",
     "fSending": "Sending…",
     "fOk": "Got it, your message is in. I reply within 24 hours.",
-    "fError": "It didn't go through. Try again or write to"
+    "fError": "It didn't go through. Try again or write to",
+    "fLimit": "Too many messages from your connection. Wait a few minutes and try again."
   },
   "NotFound": {
     "title": "Page not found",

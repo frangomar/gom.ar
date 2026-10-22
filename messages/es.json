@@ -89,7 +89,8 @@
     "fSend": "Enviar consulta",
     "fSending": "Enviando…",
     "fOk": "Listo, me llegó tu mensaje. Te respondo en menos de 24 h.",
-    "fError": "No se pudo enviar. Probá de nuevo o escribime a"
+    "fError": "No se pudo enviar. Probá de nuevo o escribime a",
+    "fLimit": "Recibí varios mensajes seguidos desde tu conexión. Esperá unos minutos y probá de nuevo."
   },
   "NotFound": {
     "title": "Página no encontrada",
