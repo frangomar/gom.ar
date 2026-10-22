@@ -47,3 +47,6 @@ next-env.d.ts
 /test-results
 /playwright-report
 /.lighthouseci
+
+# previews y mockups del Bloque 2: material de trabajo local y pesado (videos, fotos originales)
+/docs/previews/
