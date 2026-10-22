@@ -210,7 +210,13 @@ export default async function Home({ params }: Props) {
                 <div className="txt">
                   {c.obj && <Obj name={c.obj} />}
                   <Logo c={c} className="brand" />
-                  <h2 className="dom roll-in" aria-label={a + b}><Roll text={a} /><Roll text={b} /></h2>
+                  {c.live ? (
+                    <h2 className="dom roll-in">
+                      <TrackedLink event="live_site_click" href={c.live} target="_blank" rel="noopener" aria-label={a + b}><Roll text={a} /><Roll text={b} /></TrackedLink>
+                    </h2>
+                  ) : (
+                    <h2 className="dom roll-in" aria-label={a + b}><Roll text={a} /><Roll text={b} /></h2>
+                  )}
                   <p className="desc">{tx.d}</p>
                   <p className="facts">{tx.f}</p>
                   {c.live && (

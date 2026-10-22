@@ -100,7 +100,9 @@
   @keyframes line { 0% { transform-origin: right; transform: scaleX(1); } 45% { transform-origin: right; transform: scaleX(0); } 46% { transform-origin: left; transform: scaleX(0); } 100% { transform-origin: left; transform: scaleX(1); } }
 
   /* logos recoloreados con máscara */
-  .logo { display: inline-block; background: currentColor; -webkit-mask: var(--src) left center / contain no-repeat; mask: var(--src) left center / contain no-repeat; aspect-ratio: var(--ar); height: 1em; }
+  .logo { display: inline-block; background: currentColor; -webkit-mask: var(--src) left center / contain no-repeat; mask: var(--src) left center / contain no-repeat; aspect-ratio: var(--ar); height: 1em;
+    /* capa propia: si no, el celular re-rasteriza la máscara en cada frame del scroll (cards que escalan, hero que se apaga) y el logo parpadea */
+    transform: translateZ(0); backface-visibility: hidden; }
   .word { font-weight: 850; letter-spacing: -.03em; line-height: 1; }
 
   /* rodillo por letra */
