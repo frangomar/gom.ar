@@ -207,37 +207,70 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       fab.classList.toggle("show", scrollY > innerHeight * 0.8 && contact.getBoundingClientRect().top > innerHeight * 0.9 && !(d.top < mid && d.bottom > mid));
     }, on);
 
-    // ---- renders: giro de ±15° según el puntero sobre la card. La secuencia se baja con el primer hover
-    // o foco de la card; el cuadro del medio es el mismo still, así que montarla no cambia nada visible ----
-    if (fine && !calm) $$("[data-seq]").forEach((pic) => {
-      const name = pic.dataset.seq as keyof typeof R3D.frames, n = R3D.frames[name], mid = (n - 1) / 2;
-      const card = pic.closest<HTMLElement>(".card")!, poster = pic.querySelector("img")!, over = document.createElement("img");
-      over.className = "seqf";
-      over.alt = "";
-      let frames: HTMLImageElement[] | null = null, ready = false, cur = mid, target = mid, step = 0;
-      const load = () => {
-        if (frames || !poster.currentSrc || poster.currentSrc.startsWith("data:")) return;
-        const ext = poster.currentSrc.includes(".avif") ? "avif" : "webp";
-        frames = Array.from({ length: n }, (_, i) => Object.assign(new Image(), { src: `/3d/${name}/f${String(i).padStart(2, "0")}.${ext}` }));
-        Promise.all(frames.map((f) => f.decode())).then(() => {
-          ready = true;
-          over.src = frames![cur].src;
-          pic.append(over);
-        }).catch(() => (frames = null));
+    // ---- renders que siguen al puntero en toda la ventana, como el 3D anterior: cada objeto visible se inclina
+    // con inercia (solo transform) y los que tienen secuencia además giran de verdad ±15°. La secuencia se baja
+    // en idle cuando su card se acerca a la pantalla; el cuadro del medio es el mismo still, así que montarla no se nota ----
+    let follow = 0;
+    if (fine && !calm) {
+      type Seq = { name: keyof typeof R3D.frames; n: number; frames?: HTMLImageElement[]; ready: boolean; cur: number; over: HTMLImageElement; poster: HTMLImageElement };
+      type Fol = { el: HTMLElement; seq?: Seq; on: boolean; x: number; y: number };
+      const fol: Fol[] = [...$$("[data-seq]"), digits, $(".wm3d")].map((el) => {
+        const name = el.dataset.seq as keyof typeof R3D.frames | undefined;
+        if (!name) return { el, on: false, x: 0, y: 0 };
+        const over = Object.assign(document.createElement("img"), { className: "seqf", alt: "" });
+        return { el, on: false, x: 0, y: 0, seq: { name, n: R3D.frames[name], ready: false, cur: -1, over, poster: el.querySelector("img")! } };
+      });
+      let tx = 0, ty = 0;
+      const load = (s: Seq, el: HTMLElement) => {
+        const src = s.poster.currentSrc;
+        if (s.frames || !src || src.startsWith("data:")) return;
+        const ext = src.includes(".avif") ? "avif" : "webp";
+        s.frames = Array.from({ length: s.n }, (_, i) => Object.assign(new Image(), { src: `/3d/${s.name}/f${String(i).padStart(2, "0")}.${ext}` }));
+        Promise.all(s.frames.map((f) => f.decode())).then(() => {
+          s.ready = true;
+          el.append(s.over);
+          kick();
+        }).catch(() => (s.frames = undefined));
       };
-      const tick = () => {
-        step = 0;
-        if (!ready || cur === target) return;
-        cur += Math.sign(target - cur);
-        over.src = frames![cur].src;
-        step = requestAnimationFrame(tick);
+      const loop = () => {
+        follow = 0;
+        let moving = false;
+        for (const f of fol) {
+          if (!f.on) continue;
+          f.x += (tx - f.x) * 0.08;
+          f.y += (ty - f.y) * 0.08;
+          if (Math.abs(tx - f.x) + Math.abs(ty - f.y) > 0.002) moving = true;
+          const s = f.seq;
+          if (!s) {
+            f.el.style.transform = `perspective(1000px) rotateY(${(f.x * 9).toFixed(2)}deg) rotateX(${(-f.y * 7).toFixed(2)}deg)`;
+            continue;
+          }
+          // el giro lo dan los cuadros; el transform suma inclinación y un poco de desplazamiento
+          f.el.style.transform = `translate(${(f.x * 10).toFixed(1)}px, ${(f.y * 8).toFixed(1)}px) perspective(1000px) rotateX(${(-f.y * 6).toFixed(2)}deg)`;
+          const i = Math.round(((f.x + 1) / 2) * (s.n - 1));
+          if (s.ready && i !== s.cur) {
+            s.cur = i;
+            s.over.src = s.frames![i].src;
+          }
+        }
+        if (moving) follow = requestAnimationFrame(loop);
       };
-      const go = (i: number) => { target = i; if (!step) step = requestAnimationFrame(tick); };
-      card.addEventListener("pointerenter", load, on);
-      card.addEventListener("focusin", load, { signal: ac.signal });
-      card.addEventListener("pointermove", (e) => { const r = card.getBoundingClientRect(); go(Math.round(clamp((e.clientX - r.left) / r.width) * (n - 1))); }, on);
-      card.addEventListener("pointerleave", () => go(mid), on);
-    });
+      const kick = () => { if (!follow) follow = requestAnimationFrame(loop); };
+      const near = new IntersectionObserver((es) => es.forEach((e) => {
+        const f = fol.find((x) => x.el === e.target)!;
+        f.on = e.isIntersecting;
+        if (f.on && f.seq) {
+          const s = f.seq;
+          if ("requestIdleCallback" in window) requestIdleCallback(() => load(s, f.el), { timeout: 1500 });
+          else setTimeout(() => load(s, f.el), 300);
+        }
+        kick();
+      }), { rootMargin: "50% 0px" });
+      fol.forEach((f) => near.observe(f.el));
+      observers.push(near);
+      addEventListener("pointermove", (e) => { tx = (e.clientX / innerWidth) * 2 - 1; ty = (e.clientY / innerHeight) * 2 - 1; kick(); }, on);
+      doc.addEventListener("pointerleave", () => { tx = ty = 0; kick(); }, on);
+    }
 
     return () => {
       ac.abort();
@@ -245,6 +278,7 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       observers.forEach((o) => o.disconnect());
       timers.forEach(clearInterval);
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(follow);
     };
   }, [band]);
   return null;
