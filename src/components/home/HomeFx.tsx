@@ -210,8 +210,11 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
     // ---- renders que siguen al puntero en toda la ventana, como el 3D anterior: cada objeto visible se inclina
     // con inercia (solo transform) y los que tienen secuencia además giran de verdad ±15°. La secuencia se baja
     // en idle cuando su card se acerca a la pantalla; el cuadro del medio es el mismo still, así que montarla no se nota ----
+    // En celulares la inclinación del teléfono reemplaza al mouse. iOS solo manda estos eventos si se pide permiso con un
+    // aviso del sistema: no se pide (decisión de Francisco: no interrumpir antes del CTA), así que en iPhone queda quieto.
     let follow = 0;
-    if (fine && !calm) {
+    const tilt = !fine && "DeviceOrientationEvent" in window;
+    if ((fine || tilt) && !calm) {
       type Seq = { name: keyof typeof R3D.frames; n: number; frames?: HTMLImageElement[]; ready: boolean; cur: number; over: HTMLImageElement; poster: HTMLImageElement };
       type Fol = { el: HTMLElement; seq?: Seq; on: boolean; x: number; y: number };
       const fol: Fol[] = [...$$("[data-seq]"), digits, $(".wm3d")].map((el) => {
@@ -241,7 +244,7 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
           f.y += (ty - f.y) * 0.08;
           if (Math.abs(tx - f.x) + Math.abs(ty - f.y) > 0.002) moving = true;
           const s = f.seq;
-          if (!s) {
+          if (!s?.ready) { // sin cuadros (mobile, o mientras bajan) el giro también lo da el transform
             f.el.style.transform = `perspective(1000px) rotateY(${(f.x * 9).toFixed(2)}deg) rotateX(${(-f.y * 7).toFixed(2)}deg)`;
             continue;
           }
@@ -259,7 +262,7 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       const near = new IntersectionObserver((es) => es.forEach((e) => {
         const f = fol.find((x) => x.el === e.target)!;
         f.on = e.isIntersecting;
-        if (f.on && f.seq) {
+        if (f.on && f.seq && fine) { // en mobile no se bajan secuencias: solo inclinación
           const s = f.seq;
           if ("requestIdleCallback" in window) requestIdleCallback(() => load(s, f.el), { timeout: 1500 });
           else setTimeout(() => load(s, f.el), 300);
@@ -268,8 +271,18 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       }), { rootMargin: "50% 0px" });
       fol.forEach((f) => near.observe(f.el));
       observers.push(near);
-      addEventListener("pointermove", (e) => { tx = (e.clientX / innerWidth) * 2 - 1; ty = (e.clientY / innerHeight) * 2 - 1; kick(); }, on);
+      if (fine) addEventListener("pointermove", (e) => { tx = (e.clientX / innerWidth) * 2 - 1; ty = (e.clientY / innerHeight) * 2 - 1; kick(); }, on);
       doc.addEventListener("pointerleave", () => { tx = ty = 0; kick(); }, on);
+      // inclinación: ±25° a cada lado llega al tope; el "derecho" es la postura en que se sostiene el celular y se recentra solo
+      // shortcut: ejes pensados para el celular vertical; en horizontal se cruzan, corregir si se ve usado así
+      let rest: number | null = null;
+      if (tilt) addEventListener("deviceorientation", (e) => {
+        if (e.beta == null || e.gamma == null) return;
+        rest = rest == null ? e.beta : rest + (e.beta - rest) * 0.02;
+        tx = clamp(e.gamma / 25, -1, 1);
+        ty = clamp((e.beta - rest) / 25, -1, 1);
+        kick();
+      }, on);
     }
 
     return () => {
