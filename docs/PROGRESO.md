@@ -122,3 +122,149 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 - Copy: las 3 variantes del H1 y de los CTA (es y en) van en `docs/copy-variantes.md`.
 - Capturas del hero: `cover.jpg` y `hero-scroll.jpg` de las 4 webs ya están en `src/content/casos/*/img/`.
 - Las rutas `lab/hero-a` y `lab/hero-b` necesitan `robots: noindex` y quedar fuera de `sitemap.ts` (hoy `PATHS = [""]`, así que no entran solas).
+
+---
+
+## Bloque 2 · Hero · 2026-10-22 · EN CURSO, DIRECCIÓN RECHAZADA
+
+**Estado:** sin aprobar. Francisco rechazó las tres direcciones visuales que se le mostraron. **Lo único aprobado es la animación del rodillo por letra del dominio.** No hay nada commiteado: todo está en el working tree de la rama `redesign-b2-hero` (sale de `redesign-b1-base`).
+
+### Reglas nuevas de Francisco (valen para todos los bloques que siguen)
+1. **Preview primero, sí o sí.** Para cualquier cosa visual, primero se le muestran imágenes del diseño propuesto, en 1440 y 375. Se arma un mockup HTML aislado, se captura con Playwright y se manda. Recién con su OK se escribe código de la app.
+2. **Nada de capturas crudas de sitios de clientes**, ni en el hero ni "tiradas por ahí". En el hero van **logos**. El trabajo de cada marca se muestra solo cuando alguien quiere verlo, y de una manera creativa y dirigida, nunca como una grilla o una pila de screenshots.
+3. **Quiere algo moderno, de 2026.** Lo que vio le pareció genérico, precario, confuso, de baja calidad visual y "de 2009". Prefiere el sitio negro viejo antes que lo que se le mostró.
+4. **Innovar, no quedarse en lo primero que él menciona.** Si nombra una referencia ("un archivo donde las piezas pasan una detrás de la otra"), es un ejemplo y no una instrucción. **El concepto "archivo/carpetas" está descartado: "ya lo vi", es común.**
+5. **Cuando pide "sí o no", se responde solo "sí" o "no".**
+6. **Logos:** usar los que se bajaron de los sitios (`docs/previews/b2/logos/`). No tiene los vectoriales ahora. El de La Estación es un PNG blanco de 206×42 y se ve pixelado en grande.
+
+### Lo que se mostró y por qué se rechazó
+| Intento | Qué era | Veredicto de Francisco |
+|---|---|---|
+| **Hero A** "barra de direcciones" (el concepto del brief) | Fondo `#2440FF` a sangre, H1 papel, captura cruda del sitio con wipe + scroll interno, dominio gigante con rodillo. Capturas en `docs/capturas/b2/` | "Pantallazo de error de Windows", "un asco el diseño", "parece que tiraste cosas random", "no parece ni un sitio". La animación del texto está bien. |
+| **Hero B** "tipografía-pantalla" (boceto del brief) | "gom.ar" gigante como máscara SVG con capturas pasando por dentro | Rechazado junto con el A, sin comentario específico. |
+| **Hero C** "oscuro + luz de marca" (lo eligió de 3 opciones en ASCII) | Fondo `#0b0c0f` con grano, glow radial del color de la marca activa, logo de la marca, nav en pill con vidrio, puntito de color arriba del H1, datos en pills, fila de logos. Mockup en `docs/previews/b2/hero-c.html` y PNG en esa carpeta | "Va un poco mejor, sigue muy genérico." Le parecen **AI slop**: la nav en pill con vidrio, el puntito de color tipo eyebrow arriba del título y poner todo en pills. |
+| **Concepto "archivo"** (carpetas por marca, piezas pasando una detrás de otra) | Solo se propuso por texto, no llegó a preview | Descartado: "no te limites al archivo, ya lo vi, es común". |
+
+### Diagnóstico propio (para no repetirlo)
+- El brief de la Parte B (azul a sangre + papel + capturas) produjo algo plano y sin sistema: elementos flotando sueltos, sin grilla, sin navegación, sin profundidad, y la captura cruda de un sitio ajeno rebajando el trabajo.
+- El hero C reemplazó una plantilla por otra: glow, glass, pills y eyebrow son justo los tics que las skills de diseño (taste, impeccable) listan como marcas de diseño generado por IA.
+- **Falta una idea propia del sujeto.** Taste-skill lo formula así: "En esta página, [algo que pertenece solo a gom.ar/Francisco] se convierte en [el recurso]". Ninguno de los tres intentos pasa el test del competidor: otro portfolio podría usarlos igual.
+
+### Prohibido de ahora en más (suma a la lista de la Parte B)
+- Nav flotante en pill, glass o backdrop-blur decorativo.
+- Eyebrow o kicker arriba del H1 (puntito de color + label, chips, "Nuevo ·").
+- Datos en pills o chips.
+- Glows y blobs de gradiente como fondo.
+- Capturas crudas de sitios como imagen principal.
+- El concepto archivo/carpetas/rolodex.
+- Fondo azul `#2440FF` a sangre (el hero del brief).
+
+### Skills instaladas (en `~/.claude/skills/`, con el OK de Francisco)
+- `impeccable` (pbakaus/impeccable): su launcher baja un binario en la primera corrida; **no se ejecutó**, solo se leen SKILL.md y referencias.
+- `design-taste-frontend` (leonxlnx/taste-skill): las escenas de scroll usan GSAP + Lenis y **chocan con el brief**; se usan sus reglas y su método, no sus scripts de escena.
+- De emilkowalski/skills: `emil-design-eng`, `animate`, `animation-performance`, `animation-vocabulary`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `break-ui`, `prototype`.
+- Playwright MCP (plugin oficial): se le mostró la tarjeta de instalación; lo activa Francisco. Playwright como dependencia ya está en el repo.
+- Leer `craft-floor.md` de impeccable y las house rules de taste antes de la próxima propuesta visual.
+
+### Qué se puede reusar del código (está en el working tree, sin commitear)
+- `src/components/home/HeroCycle.tsx`: el ciclo del rodillo por letra, ya resuelto y medido. Incluye la pausa (botón, IntersectionObserver, `visibilitychange`, foco en el link), reduced motion con "siguiente caso", la versión sin JS, la precarga después de `load` con `decode()` y el parallax con lerp. **2,9 KB gzip.** La captura y la cortina habría que sacarlas o reemplazarlas por lo que muestre el nuevo diseño.
+- `src/lib/domain.ts` (`splitTitle`, `DIM_CHARS`) y `src/content/casos/index.ts` (`HERO_CASES`).
+- `tests/hero.spec.ts`: sin JS, reduced motion, pausa, frame a mitad de transición, axe, y métricas con CPU 4× (long tasks, bytes de imágenes antes de `load`, LCP, conteo de paints).
+- Rutas `src/app/[locale]/lab/hero-a|hero-b` (noindex, fuera del sitemap) y `docs/copy-variantes.md`. El H1 de 90 caracteres es demasiado largo: taste pide titulares de 2 líneas como máximo (~32 caracteres).
+- Las imágenes `src/content/casos/*/img/hero.jpg` (recortes de capturas) probablemente sobran, porque Francisco no quiere capturas en el hero.
+
+### Aprendizajes técnicos medidos
+- **Rodillo por letra con stagger = repaint del viewport en cada frame.** Cada letra que empieza o termina su animación cambia de capa. Con `will-change: transform` en las letras, puesto un frame antes y sacado al final (clase `.hero-rolling`), bajó de 86 a 0 paints por transición. Quedan unos 43 paints de inicialización en un solo frame, 2 en el cambio de imagen y 2 al final.
+- `<Image>` de Next es un componente cliente: sumaba ~5 KB de JS. Con `getImageProps` + `<img loading="eager" fetchPriority="high">` renderizado en el servidor, el chunk del hero bajó de 7,1 a 2,9 KB gzip. `getImageProps` devuelve `loading="lazy"` por defecto: hay que pisarlo.
+- Next 16: `priority` está deprecado, se usa `preload`; `images.qualities` tiene que listar cada calidad que se use (se agregó `[60, 75]` en `next.config.ts`).
+- El ancho de "laestacionfutbolpadel" en Schibsted Grotesk 800 con tracking -0,035em es de 10,31 em. El tamaño se fija con `font-size: min(calc(100cqi / 10.5), 9rem)`.
+- **Violación abierta del presupuesto:** con CPU 4× hay una tarea larga de 190–230 ms antes de `load` en **todas** las páginas, incluida la mínima de B1. Es la evaluación del runtime de React/Next y no la causa el hero. No tiene arreglo barato; hay que decidirlo.
+
+### Métricas (hero A, ya descartado; sirven de referencia)
+- Lighthouse mobile, devtools throttling, 3 corridas: LCP 1,54–1,58 s · TBT 108–112 ms · CLS 0,003 · 301 KB · Performance 98, A11y 100, BP 96. SEO 58 por noindex, a propósito.
+- Hero B: LCP 1,53–1,56 s · TBT 114–161 ms · CLS 0 · Performance 97–99.
+- Imágenes antes de `load` en 375: 34,7 KB (A) y 89,6 KB (B). Presupuesto: 150 KB.
+- Playwright: 14/14 pasan.
+
+### Qué necesita la próxima sesión
+1. Leer esta sección completa y las memorias `visual-preview-first` y `gomar-design-direction`.
+2. Proponer una **idea nueva y propia** para el hero y para "cómo se ve el trabajo de una marca", pasando el test del competidor. Mostrarla **solo en imágenes** (mockup HTML → capturas de Playwright en 1440 y 375) y esperar el OK.
+3. Mantener el rodillo por letra del dominio, que es lo único aprobado.
+4. Decidir con Francisco qué hacer con la Parte B del brief: paleta, tipografía y concepto del hero quedaron invalidados por sus decisiones de esta sesión.
+5. Recién con el diseño aprobado: implementar, medir, commitear y abrir el PR contra `redesign`.
+
+### Bloque 2, segunda ronda (2026-10-22) · EN CURSO, SIN APROBAR
+
+**Qué se mostró** (mockups en `docs/previews/b2r/`, servidos con `python -m http.server 5591` desde `docs/previews`):
+- `1-piel`, `2-colab`, `3-crono`: tres heros nuevos. Francisco eligió **la estructura del 3 (cronómetro)**: el LCP real de la página medido en vivo, H1, CTA y franja con el rodillo de marcas.
+- `4-home`: home completa con esa estructura. Rechazada: "obsesión por lo editorial", poco color, cortes entre secciones.
+- `5-inmersiva`: la versión actual. Un solo plano continuo: el fondo se interpola entre el color de una marca y la siguiente con el scroll, sin cortes; cada caso es un capítulo fijo (sticky) con fotos reales de la marca que entran ligadas al scroll; servicios en recorrido horizontal; IA y "Sobre mí" con palabras que se encienden; contacto con el rodillo. Videos: `recorrido-1440.webm` y `recorrido-375.webm`.
+
+**Decisiones de Francisco (contra el brief, ganan ellas):**
+- Quiere **todos los bloques animados** y una experiencia **inmersiva y continua**. Esto pisa "fade-up prohibido" y "sin movimiento fuera del hero" de la Parte C. Se resolvió **sin librerías y sin scroll-jacking**: scroll nativo + CSS scroll-driven animations (`animation-timeline: view()` y `view-timeline`), con `@supports` y `prefers-reduced-motion` dejando todo estático.
+- Fotos de marca **bajadas de los sitios de los clientes**, no capturas. Para Megatlon, **solo fotos de sedes Black+ (Alcorta, La Imprenta, Añelo) y Black (Belgrano, Núñez, Gonnet, Martínez, Olivos, Pilar)**, en `docs/previews/b2r/brand/megatlon-black/`.
+- Quicktrade entra en el ciclo del hero.
+- Leer `docs/documentacion teorica/` (Figma Resource Library + skill `ux-design-direction`). Se aplicó: storytelling por capítulos (contexto → qué hice → resultado), tendencias 2026 (scroll, paleta saturada, tipografía protagonista), un solo CTA dominante siempre visible (Von Restorff, nav fija con WhatsApp), Peak-End (cierre fuerte en contacto).
+
+**Riesgos abiertos (no medidos todavía):**
+- El fondo que cambia de color repinta el viewport en cada frame de scroll. En producción va con capas de color superpuestas y `opacity` (compositor), no con `background-color`.
+- `animation-timeline` no está en Firefox estable: ahí queda estático (verificar soporte actual antes de B3).
+- Peso: las fotos del mockup suman ~14 MB sin optimizar. En la app van por `next/image` (AVIF) y lazy fuera del primer viewport.
+- No hay logo de Quicktrade (va el nombre en texto) ni vectoriales de La Estación y Driving Norte.
+- `megatlon.com` tiene un video de 18 MB (`Feed-sin-precio-generica-con-pileta.mp4`): no se usó por peso.
+
+### Bloque 2, tercera ronda (2026-10-22) · EN CURSO, SIN APROBAR
+
+**Mockup:** `docs/previews/b2r/6-techno.html` (videos `6-techno-1440.webm` y `6-techno-375.webm`; hovers en `6-hover-{rave,laser,acid}.png`).
+
+**Feedback de Francisco sobre `5-inmersiva` y cómo se resolvió:**
+- Identidad propia, no la de las marcas: **base negra + neón de gom.ar** (le gusta el techno oscuro tipo Argy y la estética de Fred again..). Las marcas quedan como guiño: su logo y los puntos de su dominio en su color. Contradice la Parte B del brief y la regla "fondo negro con un único acento neón": se usan **dos neones** y se deja elegir entre 3 paletas (rave, láser, ácido) en el preview. La "ácido" se parece al sitio viejo (#92ff6b): avisado.
+- Fiter nunca usa negro sobre amarillo: no hay más bloques amarillos.
+- **3D:** el número del tiempo de carga es 3D (capas extruidas con CSS, sin WebGL) y sigue al cursor; también el wordmark del footer, la foto de "Sobre mí" y las cards de servicios.
+- **Botones con mucha respuesta:** imán hacia el cursor, relleno que nace donde entra el mouse, rodillo de letras (el mismo del dominio), glow neón y rebote al apretar. Links con subrayado que se va y vuelve.
+- **Scrollbar, selección, caret y foco** personalizados con el neón.
+- **Transiciones:** se sacó la barrita de progreso. Las escenas se apilan (cada una se desliza sobre la anterior, que se achica y se apaga), así no hay saltos ni cortes.
+- **Una imagen por caso** (foto de la marca, pasada primero por el filtro neón y después a color real). La app muestra sus pantallas en 3D, recortadas sin el fondo blanco. Quicktrade muestra sus landings y su mobile scrolleando dentro de pantallas en 3D. Redes mantiene el muro.
+- Se sacó la nota "el feed tiene trabajo de otras personas" (pedido de Francisco; el brief pedía una nota de rol).
+- La franja del hero tiene altura fija y el tamaño del dominio se calcula con el más largo.
+- Servicios en mobile: deslizamiento nativo con el dedo (scroll-snap), no ligado al scroll vertical.
+- Bio y textos con más animación: la bio entra palabra por palabra.
+
+**Pendiente de decidir con Francisco:** paleta neón (rave / láser / ácido), cursor propio (el brief lo prohíbe; no se hizo).
+
+### Bloque 2, cuarta ronda (2026-10-22) · EN CURSO, SIN APROBAR
+
+**Mockup:** `docs/previews/b2r/7-render.html` (videos `7-render-1440.webm` y `7-render-375.webm`). Copia publicable para el celular en `docs/previews/publish/`, publicada como artifact privado: https://claude.ai/artifact/E8a6roLw9aBdRKjCVK8zQ1
+
+**Francisco aprobó la dirección de `6-techno` ("muchísimo mejor") y pidió:**
+- Paleta **láser** (rojo `#ff2b4e` + violeta UV `#7a5cff`), **sin gradientes**. El scrollbar cambia de color (sólido) a medida que se baja.
+- 3D **tipo render high-res**: se pasó de capas CSS a **three.js 0.180** (materiales físicos, entorno de estudio propio con softbox y tiras láser, tipografía real convertida a geometría). Número del hero en laca roja con laterales cromados; wordmark gom.ar cromado gigante en el footer.
+- App y Quicktrade como **mockups de iPhone y MacBook en 3D**: giran con el scroll, quedan de frente al llegar y después siguen al mouse. La sombra va debajo, no arriba.
+- Proyectos como **mazo de cards** (le gusta), con transiciones sin cortes. Hero y resto de secciones se disuelven, sin bordes de "tarjeta encima".
+- "Qué puedo hacer por tu marca" reforzada: lista que se recorre con un visual fijo que cambia según el servicio.
+- Ver en mobile: por eso el artifact.
+
+**Riesgos:** three.js (~600 KB sin gzip en módulos) y 4 contextos WebGL. El brief pide cero WebGL en el hero salvo medición con fallback: hay fallback (número plano) pero **no está medido**. En producción, el 3D se carga después de `load` y solo en pantallas que lo soporten.
+
+### Bloque 2, implementación (2026-10-22) · EN MAIN por pedido de Francisco
+
+Francisco pidió "implementalo en el proyecto, commiteá, pusheá y mergeá a main" (contra la regla del brief de mergear a main recién en B7: gana su pedido).
+
+**Qué quedó en la app (`/es` y `/en`, SSG):**
+- `src/app/[locale]/page.tsx`: toda la home en HTML estático (visible sin JS): hero con el tiempo de carga real, franja de marcas, mazo de 7 casos, servicios, IA, sobre mí, contacto y footer.
+- `src/components/home/HomeFx.tsx`: un solo componente cliente con toda la interacción (rodillo, botones con imán/relleno/rebote, mazo, bio que se enciende con el scroll, servicios, WhatsApp flotante, scrollbar que cambia de color).
+- `src/components/home/scene.ts`: 3D con three.js 0.180, **en un chunk aparte que se carga después de `load`**. Un solo canvas y un solo contexto WebGL para toda la página (cada objeto se dibuja en el rectángulo de su elemento). Estética "gelatina" (cáscara translúcida brillante + núcleo que brilla) con luz de estudio clara, como la referencia de Francisco. Objetos: número del hero, 3 iPhones (app), MacBook + iPhone + fajo de billetes de fantasía (Quicktrade), paleta de pádel (La Estación), pelota de golf (Driving Norte), disco de 20 kg (megatlon.com), logo de Instagram (redes), wordmark gom.ar (footer).
+- `src/components/home/ContactForm.tsx`: arma el email y lo abre en el programa de correo (shortcut hasta B5: Server Action + Resend). El select usa `appearance: base-select` donde el navegador lo soporta.
+- `src/content/home.ts`: datos de los casos en es y en, solo de las fichas.
+- Assets en `public/home/` (5,8 MB): fotos de marca, pantallas de la app, landings de Quicktrade, 72 piezas de IG, logos y la tipografía para el 3D.
+- Se borraron las rutas `lab/`, el hero viejo, `lib/domain.ts`, `content/casos/index.ts`, los recortes `hero.jpg` y `tests/hero.spec.ts`. `docs/previews/` queda fuera de git (161 MB de material de trabajo).
+
+**Decisiones:**
+- Sin botón "Ver caso": las páginas de caso no existen todavía (B4); un botón a ningún lado no va. Cada card linkea al sitio en vivo.
+- Bug del botón blanco en hover: la variable del mazo se llamaba `--k`, igual que el color negro. Ahora es `--cov` (y `--ent` para la entrada).
+- Mobile roto desde servicios: el grano (capa más ancha que la pantalla) hacía que el celular alejara el zoom. Ahora vive dentro de un contenedor fijo que recorta. Servicios en mobile: cada servicio con su visual arriba, sin nada fijo.
+- La clase `inline` chocaba con la utilidad de Tailwind: se renombró a `vin`.
+- Menos rojo: el rojo queda en el CTA de WhatsApp y detalles; el resto pasa a violeta.
+
+**Medido:** build verde, tipos y lint limpios, Playwright 8/8 (lang, un H1, axe sin violaciones serias en 375 y 1440, redirect, 404 de idiomas no publicados).
+**No medido:** Lighthouse, LCP, TBT y peso. El 3D y las animaciones probablemente rompen varios presupuestos de la Parte C (JS de cliente, tareas largas): pendiente medir y decidir con Francisco.
