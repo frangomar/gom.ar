@@ -21,7 +21,6 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 - Los links sobre tinta van en papel subrayado, porque Link sobre Tinta da 2,64:1.
 - El rodillo del dominio no lleva rebote ni rotación aleatoria. La investigación lo sugiere (Mat Voyce), pero el concepto pide un sistema y no una ilustración.
 - El trabajo secundario es un bloque compacto. Ayuda3 y Tea Travel (académicos) salen del sitio.
-- `/presupuesto` (ruta vieja, ya borrada) va con un 301 a `/es` en B1.
 
 ### Decisiones de Francisco (2026-10-22)
 - Aprobados los 8 puntos del resumen del Bloque 0.
@@ -76,3 +75,50 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 - Correr `npm ci` (node_modules roto).
 - `site.ts`: `CONTACT_EMAIL = 'info@gom.ar'`.
 - No necesita assets todavía.
+
+---
+
+## Bloque 1 · Base técnica · 2026-10-22
+
+**Estado:** terminado. Build verde, `/es` y `/en` sirven una página mínima (SSG), Playwright y Lighthouse CI pasan con los presupuestos como assertions.
+**Rama:** `redesign-b1-base`, que sale de `redesign-b0-plan`.
+
+### Decisiones tomadas
+- No hubo migración: el App Router ya estaba en `main` (PR #1). El bloque fue limpieza, tokens, tipografía y tooling.
+- `/en` se publica ya (`publishedLocales = ['es','en']`), adelantado de B3, porque el criterio de cierre de B1 pide `/en` sirviendo.
+- **Sin 301 de `/presupuesto`** (Francisco: "borrar todo lo de presupuesto"). La ruta vieja da 404.
+- Tokens en `@theme` de Tailwind 4 con `--color-*: initial`: solo existen los colores del brief, así no se cuela un gris de Tailwind.
+- `next/font` con Schibsted Grotesk variable, latin + latin-ext, `display: swap`. El navegador baja un solo woff2 (47 KB) en /es y /en.
+- Skip link en el layout; foco propio con `outline` de 3 px en `currentColor`, que se ve sobre papel, link y tinta.
+- `TrackEvent` pasa a `src/lib/track.ts` con los 6 eventos del brief.
+- `messages/*.json` reescritos sin clichés y con solo las claves que se usan. pt, fr y zh son copia de en hasta B6 (no se publican).
+- JSON-LD se mueve a la home (antes estaba en el layout y salía en el 404).
+- Lighthouse CI usa `throttlingMethod: devtools`. Con `simulate` (Lantern), el LCP en localhost da 1,8–2,25 s aunque el LCP observado sea 75–150 ms: el modelo mete en el grafo todo el JS que terminó antes del primer paint. Devtools aplica la red 4G lenta y la CPU 4× de verdad.
+- Lighthouse usa el Chrome del sistema: el Chromium de Playwright falla con `spawn UNKNOWN` en esta máquina.
+- `npm run analyze` se prende con `npm_lifecycle_event` en vez de `ANALYZE=true`, que no anda en los scripts de npm en Windows.
+- Sin workflow de GitHub Actions para LHCI todavía: corre local. Se suma si hace falta en B7.
+- Verificado: Next 16.4.2 es la última estable (`npm view next version`) y React 19.3.1 exporta `ViewTransition` y `addTransitionType` sin flag. La guía de view transitions que trae Next 16.4 no pide `experimental.viewTransition`. Queda para B4.
+
+### Métricas medidas (build de producción, localhost, Lighthouse mobile con devtools throttling, 3 corridas por URL)
+| URL | LCP | FCP | TBT | CLS | Peso | Perf / A11y / BP / SEO |
+|---|---|---|---|---|---|---|
+| /es | 1457–1483 ms | igual al LCP | 119–124 ms | 0 | 207 KB | 99 / 100 / 96 / 100 |
+| /en | 1462–1476 ms | igual al LCP | 116–120 ms | 0 | 207 KB | 99 / 100 / 96 / 100 |
+
+- Best Practices 96: solo por el 404 de `/_vercel/insights` y `/_vercel/speed-insights` en localhost (en Vercel existen).
+- JS de cliente (gzip, medido con fetch + zlib): runtime React/Next 130 KB (`4bd1b696` 62,6 + `794` 65,8 + webpack 1,7 + main-app 0,2); polyfills 38,7 KB `nomodule` (no se baja en navegadores modernos); **JS propio 9,3 KB** (layout 3,3 + page 1,5 + not-found 4,5, incluye next-intl, Vercel Analytics y TrackedLink). Presupuesto: ≤ 35 KB.
+- Playwright: 8/8 (lang correcto, un H1, axe sin violaciones serias ni críticas, `/` → `/es`, pt/fr/zh dan 404) en 375 y 1440.
+- axe verificó el contraste de las combinaciones que hay hoy en la página (papel sobre link, link sobre papel). El resto de la tabla de PLAN.md §5 sigue verificada solo por script.
+
+### Riesgos detectados
+- **TBT ya está en ~120 ms con una página trivial** (presupuesto: 150). Casi todo es la evaluación del runtime de React/Next con CPU 4×. El hero de B2 tiene unos 30 ms de margen: el JS del hero tiene que arrancar después de `load` y no hidratar nada pesado arriba del fold.
+- `node_modules` se instaló incompleto dos veces en esta máquina (faltaban archivos de `rxjs` y `lighthouse` sin error de npm). Si algo falla con `Cannot find module`, borrar `node_modules` y correr `npm ci`.
+
+### Pendientes
+- Medir Lighthouse sobre la preview de Vercel (la preview manda `X-Robots-Tag: noindex`, así que SEO va a bajar ahí; el número que importa es performance).
+- Long tasks > 50 ms en los primeros 5 s: Lighthouse no lo asierta directo. Se mide en B2 con un `longtask` observer en Playwright.
+
+### Qué necesita el Bloque 2
+- Copy: las 3 variantes del H1 y de los CTA (es y en) van en `docs/copy-variantes.md`.
+- Capturas del hero: `cover.jpg` y `hero-scroll.jpg` de las 4 webs ya están en `src/content/casos/*/img/`.
+- Las rutas `lab/hero-a` y `lab/hero-b` necesitan `robots: noindex` y quedar fuera de `sitemap.ts` (hoy `PATHS = [""]`, así que no entran solas).
