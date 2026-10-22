@@ -400,6 +400,18 @@ Tarea de Francisco: rehacer los objetos 3D con realismo de producto y que el nú
   - clips en `docs/capturas/b3-3d/follow-*.webp`.
 - **Sin verificar:** fps reales en una máquina lenta.
 
+### Ajuste: en el celular se mueven con la inclinación (2026-10-22)
+- **Decisión de Francisco:** opción 1. En Android la inclinación del teléfono reemplaza al mouse. En iPhone no se pide el permiso de movimiento, para que no salga un aviso del sistema antes del CTA, y por eso ahí queda quieto.
+- **Cómo funciona:**
+  - Se escucha `deviceorientation` en pantallas táctiles. iOS no manda el evento sin permiso, así que no hace falta detectarlo.
+  - Con ±25° de inclinación se llega al tope.
+  - La postura en que se sostiene el celular se toma como "derecho" y se recentra sola.
+  - En mobile solo hay inclinación por `transform`: no se baja ninguna secuencia.
+  - Respeta reduced motion.
+- **Verificado:** en emulación de Pixel 7 con eventos simulados, el número y el mockup cambian su transform y no se baja ningún cuadro de secuencia. Capturas: `docs/capturas/b3-3d/tilt-*.{webp,jpg}`.
+- **Sin probar:**
+  - en un Android real;
+  - con el celular en horizontal, donde los ejes se cruzan (dejé un `shortcut:` en el código).
 ### Foto de Francisco en "Sobre mí" (2026-10-22)
 - **Origen:** foto que pasó Francisco, generada con Higgsfield. La recorté a 880×1100 (4:5) para sacar la marca de agua.
 - **Dónde quedó:** en `public/home/francisco.jpg`. Reemplaza el placeholder `[FOTO FRANCISCO]` (se borró la clave `photo` de los cinco idiomas).
