@@ -11,7 +11,7 @@ export type HomeCase = {
   id: string;
   title: [string, string]; // se parte antes del TLD para el rodillo
   brand: string; // color de marca, solo como guiño
-  logo?: { src: string; ar: string };
+  logo?: { src: string; w: number }; // PNG blanco de 96 px de alto
   word?: string; // marca sin logo vectorial
   media: Media;
   img?: string;
@@ -22,7 +22,7 @@ export type HomeCase = {
 };
 
 const L = "/home/logos/";
-const MEGATLON = { src: L + "megatlon.svg", ar: "4/1" };
+const MEGATLON = { src: L + "megatlon-w.png", w: 384 };
 
 export const CASES: HomeCase[] = [
   {
@@ -43,7 +43,7 @@ export const CASES: HomeCase[] = [
     id: "estacion",
     title: ["laestacionfutbolpadel", ".com.ar"],
     brand: "#4d7cff",
-    logo: { src: L + "estacion.png", ar: "206/42" },
+    logo: { src: L + "estacion-w.png", w: 471 },
     media: "photo",
     img: "/home/estacion-noche.jpg",
     obj: "paddle",
@@ -58,7 +58,7 @@ export const CASES: HomeCase[] = [
     id: "fiter",
     title: ["fiter", ".com/UY"],
     brand: "#ffda00",
-    logo: { src: L + "fiter.svg", ar: "495.9/185.7" },
+    logo: { src: L + "fiter-w.png", w: 256 },
     media: "photo",
     img: "/home/fiter-funcional.jpg",
     obj: "dumbbell",
@@ -73,7 +73,7 @@ export const CASES: HomeCase[] = [
     id: "dn",
     title: ["drivingnorte", ".com.ar"],
     brand: "#35b46b",
-    logo: { src: L + "dn.png", ar: "356/125" },
+    logo: { src: L + "dn-w.png", w: 273 },
     media: "photo",
     img: "/home/dn-campo.jpg",
     obj: "golf",

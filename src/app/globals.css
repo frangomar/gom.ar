@@ -99,10 +99,8 @@
   .u:hover::after { animation: line .7s var(--e); }
   @keyframes line { 0% { transform-origin: right; transform: scaleX(1); } 45% { transform-origin: right; transform: scaleX(0); } 46% { transform-origin: left; transform: scaleX(0); } 100% { transform-origin: left; transform: scaleX(1); } }
 
-  /* logos recoloreados con máscara */
-  .logo { display: inline-block; background: currentColor; -webkit-mask: var(--src) left center / contain no-repeat; mask: var(--src) left center / contain no-repeat; aspect-ratio: var(--ar); height: 1em;
-    /* capa propia: si no, el celular re-rasteriza la máscara en cada frame del scroll (cards que escalan, hero que se apaga) y el logo parpadea */
-    transform: translateZ(0); backface-visibility: hidden; }
+  /* logos como PNG blanco: la máscara recoloreada parpadeaba al scrollear en el celular */
+  .logo { display: inline-block; height: 1em; width: auto; }
   .word { font-weight: 850; letter-spacing: -.03em; line-height: 1; }
 
   /* rodillo por letra */
@@ -129,8 +127,8 @@
   .band .dim, .dom .dim { color: var(--brand); transition: color .5s; }
   .band .meta { margin-top: .4rem; color: var(--mute); font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .logos { display: flex; gap: 2.25rem; align-items: center; min-width: 0; }
-  .logos li { opacity: .55; color: var(--paper); transition: opacity .4s, color .4s, transform .5s var(--spring); }
-  .logos .on { opacity: 1; color: var(--c); transform: translateY(-3px); }
+  .logos li { opacity: .55; color: var(--paper); transition: opacity .4s, transform .5s var(--spring); }
+  .logos .on { opacity: 1; transform: translateY(-3px); }
   .logos .logo { height: 22px; display: block; }
   .logos .word { font-size: 1.2rem; }
   .pause { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; box-shadow: inset 0 0 0 1.5px var(--edge); color: var(--paper); transition: box-shadow .3s, color .3s, transform .5s var(--spring); }
@@ -147,8 +145,8 @@
   .card::after { content: ""; position: absolute; inset: 0; background: #000; opacity: calc(var(--cov, 0) * .65); pointer-events: none; z-index: 5; }
   .end { height: 0; }
   .txt { position: relative; z-index: 2; align-self: end; padding: clamp(1.75rem, 3.5vw, 3.5rem); min-width: 0; }
-  .txt .brand { height: 26px; display: block; margin-bottom: 1.6rem; color: var(--brand); }
-  .txt .word { display: block; font-size: 1.5rem; margin-bottom: 1.4rem; color: var(--brand); }
+  .txt .brand { height: 26px; display: block; margin-bottom: 1.6rem; }
+  .txt .word { display: block; font-size: 1.5rem; margin-bottom: 1.4rem; }
   .dom { font-size: clamp(2.1rem, 1rem + 3vw, 4.2rem); font-weight: 830; letter-spacing: -.04em; line-height: 1; }
   .desc { margin-top: 1.3rem; max-width: 40ch; font-size: 1.125rem; line-height: 1.45; }
   .facts { margin-top: .8rem; color: var(--mute); font-size: .95rem; }
