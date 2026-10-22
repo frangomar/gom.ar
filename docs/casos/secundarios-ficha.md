@@ -1,12 +1,11 @@
 # Trabajo secundario — ficha (bloque compacto en la home, sin página propia)
 
-Un bloque de una línea por proyecto, con una imagen chica. Sin página propia: no tienen resultado verificable ni link en vivo que justifique una página. Ayuda3 y Tea Travel (proyectos académicos y colaborativos que figuran hoy en el sitio) **salen**: no suman para clientes de ticket alto.
+Una línea por proyecto con una imagen chica. Ayuda3 y Tea Travel (académicos) salen del sitio.
 
-## Shantala
-- Identidad de marca, packaging y stand para Expo Rural (Behance: "Shantala SA Stand Expo Presente"). Año: [COMPLETAR AÑO]
-- Rol: [CONFIRMAR ROL] · Asset: `src/content/secundarios/shantala.png` 2000 × 1500
+## Shantala S.A.
+- Freelance, **mar. 2019 – jul. 2022** (CV): identidad de marca, folletos B2B, packaging, stand para Expo Rural y mantenimiento del sitio web.
+- Assets: `src/content/secundarios/shantala-render-01…05.jpg` (render 3D del stand, 1920×1080) y `shantala-stand-01…04.jpg` (gráfica del stand, 2400 de ancho)
 
 ## Terrazas del Gutiérrez – Meliá Collection
-- Contenido para redes, freelance, real estate de lujo. Año: [COMPLETAR AÑO]
-- Rol: [CONFIRMAR ROL] · Asset: `src/content/secundarios/terrazas.png` 1080 × 1350
-- [CONFIRMAR PERMISO para nombrar a Meliá Collection]
+- Freelance, **dic. 2025 – ago. 2026** (CV): contenido para redes de un proyecto de real estate de lujo.
+- Assets: [COMPLETAR 1–3 piezas de redes, 1080×1350]. En Descargas hay fotos de arquitectura y renders (`Terrazas del Gutierrez-*.jpg`, `VIEW_06/09_*`) que **no parecen piezas tuyas**, así que no las usé. [CONFIRMAR si alguna es tuya]

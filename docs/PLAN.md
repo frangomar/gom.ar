@@ -218,7 +218,7 @@ Contraste de escala en desktop: el dominio a 96 px contra el texto a 18 px es **
 │ fiter.com/UY · drivingnorte.com.ar · megatlon.com · instagram.com/megatlon · Quicktrade (filas)    │
 │ También: Shantala · Terrazas del Gutiérrez (bloque compacto, 1 línea cada uno)                     │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Servicios  (grilla 4/8: título izq., 3 servicios en filas con alcance + "desde USD [COMPLETAR]")   │
+│ Servicios  (grilla 4/8: título izq., 3 servicios en filas con alcance, SIN precios)                  │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
 │ Cómo trabajo con IA (2 columnas: "Qué acelera" | "Qué controlo yo")                                │
 ├────────────────────────────────────────────────────────────────────────────────────────────────────┤
@@ -346,7 +346,9 @@ Se toma de la investigación:
 1. **Pages Router:** ya está en App Router (sección 1).
 2. **Megatlon Shop no es WordPress:** es **Tienda Nube** y hoy está **protegida con contraseña** (`shop.megatlon.com → /password/`, `x-robots-tag: nofollow`).
 3. **`fiter.com/UY` distingue mayúsculas:** `fiter.com/uy` redirige a `/AR`. El link tiene que ser exactamente `/UY`.
-4. **Email de contacto:** el brief dice `frangomar8@gmail.com`; la cuenta de Francisco es `info@gom.ar`. **[DECIDIR]**
+4. **Email de contacto:** **`info@gom.ar`**, decidido por Francisco el 2026-10-22. Reemplaza a `frangomar8@gmail.com` en `site.ts` y el JSON-LD.
+7. **Sin precios en el sitio**, decidido por Francisco: los servicios no llevan "desde USD" (contra la Parte D del brief). El select de rango de presupuesto del formulario queda **[DECIDIR]**.
+8. **`liveVerified`**: Francisco decidió linkear los sitios como están, aunque tengan los problemas detectados. El flag pasa a significar "el link responde y muestra el sitio". Solo queda en `false` la Shop (pantalla de contraseña) y Quicktrade (sin link).
 5. **Handle de Instagram:** verificado. `megatlon.com` linkea `instagram.com/megatlon`.
 6. **Ramas:** git no permite `redesign` y `redesign/bN` a la vez. Se usa `redesign` + `redesign-bN-nombre`.
 
@@ -354,19 +356,18 @@ Se toma de la investigación:
 
 ## 10. Verificación de los sitios de clientes (2026-10-22, curl)
 
-| Caso | URL | Resultado | `liveVerified` |
+Francisco decidió linkearlos como están. Los problemas quedan registrados, pero no bloquean el link.
+
+| Caso | URL | Estado detectado | `liveVerified` |
 |---|---|---|---|
-| La Estación | `https://www.laestacionfutbolpadel.com.ar` | 200; `robots.txt` = `Disallow: /`; `<meta name="robots" content="noindex, nofollow">` | **false** |
-| Fiter UY | `https://fiter.com/UY` | 200 (HubSpot); el menú sigue diciendo **"Entrenameinto"** | **false** |
-| Driving Norte | `https://drivingnorte.com.ar` | 200 (WordPress); `noindex, nofollow`; "11:45" y "Lunes: 12:00 a 22:00 hs" conviven | **false** |
-| megatlon.com | `https://megatlon.com` | 200; `index, follow`; robots sin bloqueo | **true** |
-| Megatlon Shop | `https://shop.megatlon.com` | redirige a `/password/` (Tienda Nube cerrada) | **false** |
-| Instagram | `instagram.com/megatlon` | handle confirmado desde megatlon.com; no hice fetch a Instagram | **true** (para revisar en B4) |
-| App | tiendas | no encontré links a App Store ni Google Play en megatlon.com | [COMPLETAR LINKS TIENDAS] |
-
-**Impacto:** hoy solo se renderizaría "Ver online" en megatlon.com. Los cuatro problemas los puede arreglar el equipo de Megatlon en minutos (Francisco tiene acceso a esos sitios). Es el pendiente de mayor impacto en credibilidad.
-
----
+| App | https://apps.apple.com/ar/app/megatlon/id1531151799 | ficha activa, v5.0.1 (2026-10-09); rating 1,9/5 (no se muestra) | true |
+| La Estación | https://www.laestacionfutbolpadel.com.ar | `robots.txt Disallow: /` + `noindex, nofollow` | true |
+| Fiter UY | https://fiter.com/UY | "Entrenameinto" en el menú; `/uy` en minúscula redirige a `/AR` | true |
+| Driving Norte | https://drivingnorte.com.ar | `noindex, nofollow`; lunes 11:45 contra 12:00 | true |
+| megatlon.com | https://megatlon.com | OK | true |
+| Megatlon Shop | https://shop.megatlon.com | redirige a `/password/` (Tienda Nube cerrada) | **false** (propuesta) |
+| Instagram | https://www.instagram.com/megatlon | OK | true |
+| Quicktrade | — | sin link | false |
 
 ## 11. Plan por bloque (ajustado)
 - **B1:** `npm ci`; sacar framer-motion y el boilerplate; tokens + `next/font`; skip link; layout; `track.ts`; tooling (Playwright, LHCI con los presupuestos como assertions, axe, analyzer). Se verifica la versión estable de Next y el soporte de View Transitions en React 19.3.
@@ -379,59 +380,34 @@ Se toma de la investigación:
 
 ---
 
-## 12. Assets y datos faltantes
+## 12. Assets y datos
 
-Mandá las capturas en **PNG sin comprimir**. El peso del archivo fuente no importa: `next/image` genera el AVIF y el WebP. Las dimensiones sí son exactas, en píxeles. Las rutas son las del repo.
-
-### Capturas por caso web (`laestacionfutbolpadel`, `fiter-uy`, `drivingnorte`, `megatlon`)
-| Archivo | Tamaño | Qué es |
+### Ya están en el repo (`src/content/`, armados el 2026-10-22)
+| Caso | Archivos | Origen |
 |---|---|---|
-| `src/content/casos/{slug}/img/cover.png` | 2880 × 1800 | primera pantalla en desktop (1440 × 900 @2x), sin barras del navegador ni banners de cookies |
-| `src/content/casos/{slug}/img/hero-scroll.png` | 1440 × 2880 | página completa desde arriba, 2 pantallas de alto @1x (scroll interno del hero) |
-| `src/content/casos/{slug}/img/mobile.png` | 1170 × 2532 | primera pantalla en mobile (iPhone @3x) |
-| `src/content/casos/{slug}/img/detalle-01.png` … `detalle-03.png` | 2880 × 1800 | secciones que ilustran las decisiones clave |
-| `src/content/casos/megatlon/img/shop-cover.png` | 2880 × 1800 | Megatlon Shop (hoy está detrás de la contraseña) |
+| Las 4 webs | `cover.jpg` 2880×1800 · `hero-scroll.jpg` 1440×≤2880 · `mobile.jpg` 1170×2532 · `detalle-0N.jpg` 2880×1800 · `full.jpg` | capturas de Playwright de los sitios en vivo (en megatlon.com con las cookies no esenciales rechazadas) |
+| App | `store-01…04.jpg` 1242×2688 | capturas oficiales de App Store |
+| Instagram | 72 portadas de posts a 1080 px + `posts.json` | perfil @megatlon, los meses que pidió Francisco |
+| Quicktrade | `cover.jpg`, `landing-01…09.jpg` (1920 px), `mobile-01…10.jpg` (780 px), `campana-mep-00…09.jpg` (2400 px) | `Pictures/gom.ar/posts-imgs` |
+| Shantala | `secundarios/shantala-render-01…05.jpg`, `shantala-stand-01…04.jpg` | `Pictures/gom.ar/posts-imgs` |
 
-### App Megatlon (`app-megatlon`)
-| Archivo | Tamaño |
+Peso total: unos 34 MB de fuentes JPG en git. `next/image` genera el AVIF y el WebP. Se puede mover a Git LFS si molesta.
+
+### Faltan
+| Qué | Archivo y tamaño |
 |---|---|
-| `src/content/casos/app-megatlon/img/cover.png` | 2880 × 1800 (composición de pantallas sobre fondo liso) |
-| `src/content/casos/app-megatlon/img/hero-scroll.png` | 1179 × 2556 (una pantalla alta para el ciclo del hero) |
-| `src/content/casos/app-megatlon/img/pantalla-01.png` … `pantalla-06.png` | 1179 × 2556 (iPhone @3x), antes y después si existe |
-| `src/content/casos/app-megatlon/img/plan-ia-01.png` | 1179 × 2556 (pantalla de planes generados con IA) |
+| Foto de Francisco (solo existe `Pictures/me.jpg` de 200×200, no sirve) | `src/content/about/francisco.jpg` 1600×2000 |
+| Loops de reels (de IG solo se pueden bajar las portadas) | `public/casos/instagram-megatlon/{campana}-loop-01.mp4` 1080×1350, ≤ 8 s |
+| Piezas de BlackMega, CyberMega y Mundial (no aparecen en los meses elegidos) | `src/content/casos/instagram-megatlon/img/{campana}-01.jpg` 1080×1350 |
+| Pantallas de la app con los planes con IA + Figma | `src/content/casos/app-megatlon/img/plan-ia-01.png` 1179×2556 |
+| Captura de Megatlon Shop (detrás de la contraseña) | `src/content/casos/megatlon/img/shop-cover.png` 2880×1800 |
+| 1–3 piezas de redes de Terrazas del Gutiérrez | `src/content/secundarios/terrazas-01.jpg` 1080×1350 |
 
-### Redes (`instagram-megatlon`), agrupadas por campaña: `hotmega`, `blackmega`, `cybermega`, `mundial`, `feed`
-| Archivo | Tamaño |
-|---|---|
-| `src/content/casos/instagram-megatlon/img/{campana}-01.png` … | 1080 × 1350 (post 4:5) |
-| `src/content/casos/instagram-megatlon/img/{campana}-story-01.png` … | 1080 × 1920 |
-| `public/casos/instagram-megatlon/{campana}-loop-01.mp4` | 1080 × 1350, ≤ 8 s, sin audio (yo lo bajo a 720 px y ≤ 1 MB, H.264 + poster) |
-| `src/content/casos/instagram-megatlon/img/{campana}-senaletica-01.png` | 2000 × 1500 (foto o mockup de la señalética) |
-
-### Quicktrade (`quicktrade`)
-| Archivo | Tamaño |
-|---|---|
-| `src/content/casos/quicktrade/img/cover.png` | 2880 × 1800 |
-| `src/content/casos/quicktrade/img/landing-01.png` … `landing-04.png` | 1440 × alto real (página completa @1x) |
-| `src/content/casos/quicktrade/img/app-01.png` … `app-04.png` | 1170 × 2532 |
-
-### Otros
-| Archivo | Tamaño |
-|---|---|
-| `src/content/about/francisco.jpg` | 1600 × 2000 (4:5), luz natural, fondo neutro |
-| `src/content/secundarios/shantala.png` | 2000 × 1500 (stand o packaging) |
-| `src/content/secundarios/terrazas.png` | 1080 × 1350 (una pieza de redes) |
-| Figmas | links con permiso de lectura: app, Quicktrade y los que tengas |
-
-### Datos
-1. Los 3 servicios, con su alcance y el "desde USD" de cada uno.
-2. Los rangos de presupuesto del formulario.
-3. El email de destino del formulario y el visible: `frangomar8@gmail.com` o `info@gom.ar`.
-4. `RESEND_API_KEY` + el dominio `gom.ar` verificado en Resend (DNS), cargados en Vercel. Sin eso funciona el fallback mailto.
-5. El año (o el rango) de cada caso.
-6. El rol exacto tuyo y el del equipo en cada caso (ver las fichas): Amalgama en la app, la agencia o el equipo en redes.
-7. El alcance de redes: formatos, desde cuándo y qué piezas son 100 % tuyas.
-8. Cifras de sedes y socios de Megatlon, con fuente, o se omiten.
-9. Links de la app en App Store y Google Play.
-10. Cualquier número real de resultado: PageSpeed antes y después, plazos, indexación, Analytics de los clientes.
-11. Confirmación de que se puede mostrar Quicktrade (SBS) y los freelance.
+### Datos que faltan
+1. ¿El formulario lleva un select de rango de presupuesto? (Tus precios no se publican.)
+2. Los 3 servicios. Propuesta: sitio web de punta a punta, producto UX/UI, e identidad digital y campañas.
+3. `RESEND_API_KEY` + `gom.ar` verificado en Resend, cargados en Vercel (sin eso funciona el fallback mailto).
+4. Quicktrade: ¿jul. 2022 – dic. 2023 (CV) o 2022–24?
+5. Problema, decisiones clave y uso de IA de cada caso (los [COMPLETAR] de las fichas).
+6. Link de Google Play.
+7. Rol de Amalgama y quién hace la fotografía y el video en redes.

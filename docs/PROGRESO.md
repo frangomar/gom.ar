@@ -6,7 +6,7 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 
 ## Bloque 0 · Auditoría y plan · 2026-10-22
 
-**Estado:** terminado, **esperando la aprobación de Francisco**. No se escribió código de la app.
+**Estado:** plan **aprobado por Francisco** (puntos 1–8, 2026-10-22). Se juntaron los assets. No se escribió código de la app.
 **Rama:** `redesign-b0-plan`, que sale de `redesign`, que sale de `main` en `44c9edc`.
 
 ### Decisiones tomadas
@@ -22,6 +22,16 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 - El rodillo del dominio no lleva rebote ni rotación aleatoria. La investigación lo sugiere (Mat Voyce), pero el concepto pide un sistema y no una ilustración.
 - El trabajo secundario es un bloque compacto. Ayuda3 y Tea Travel (académicos) salen del sitio.
 - `/presupuesto` (ruta vieja, ya borrada) va con un 301 a `/es` en B1.
+
+### Decisiones de Francisco (2026-10-22)
+- Aprobados los 8 puntos del resumen del Bloque 0.
+- Los sitios de clientes se linkean como están. `liveVerified` pasa a significar "responde y muestra el sitio". Solo quedan en `false` la Shop (contraseña) y Quicktrade.
+- El email de contacto es `info@gom.ar`.
+- **Sin precios en el sitio**, nunca. Esto contradice la Parte D del brief ("desde USD") y gana Francisco.
+- Años: Megatlon, Fiter, La Estación y Driving Norte, 2025–hoy. Quicktrade según el CV, jul. 2022 – dic. 2023 (Francisco había dicho 2022–24, queda para confirmar).
+- Ownership: megatlon.com y la app desde feb. 2025; Fiter UY y Driving Norte desde ago. 2025; La Estación desde oct. 2026.
+- Dato publicable: megatlon.com tiene ~70.000 visitas/mes (Google Analytics, revisado por Francisco).
+- Francisco tiene permiso para mostrar todo.
 
 ### Contradicciones para decidir
 1. **Investigación contra brief:** Lenis, preloader, cursor custom, GSAP, line reveals y sonido. **Gana el brief**; el detalle está en PLAN.md §9. No pido cambiar nada.
@@ -47,14 +57,21 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 | instagram.com/megatlon | true | el handle está linkeado desde megatlon.com (no hice fetch a IG) |
 | App (tiendas) | false | faltan los links |
 
+### Assets armados (2026-10-22)
+- Capturas de las 4 webs con Playwright: desktop @2x, mobile @3x, detalles y página completa.
+- App: las 4 capturas oficiales de App Store.
+- Instagram: 72 portadas de oct.–nov. 2025, may. 2026 y jul.–oct. 2026, bajadas desde la sesión de Francisco en Chrome. La API de IG respondió 429, así que salieron de la grilla del perfil. La fecha se calculó a partir del ID de cada post.
+- Quicktrade y Shantala, desde `Pictures/gom.ar/posts-imgs`.
+- El detalle y lo que falta están en PLAN.md §12.
+
 ### Pendientes
-- Francisco aprueba PLAN.md (o lo corrige).
-- Assets y datos: PLAN.md §12.
-- Arreglar los sitios de clientes (fuera de este repo).
+- Assets y datos que faltan: PLAN.md §12.
+- No mostrar el rating de App Store (1,9/5).
+- En Descargas hay un "Compromiso de Confidencialidad - SBS Trading" (2024-11-06). Francisco confirmó que tiene permiso para todo; queda registrado.
 - No verificado: la versión estable de Next por fuera de npm (`npm view next version` = 16.4.2), qué exporta React 19.3 para `<ViewTransition>` y el soporte actual de `animation-timeline` por navegador.
 
 ### Qué necesita el Bloque 1
 - PLAN.md aprobado.
 - Correr `npm ci` (node_modules roto).
-- Decidir el email de contacto (afecta a `site.ts` y al JSON-LD).
+- `site.ts`: `CONTACT_EMAIL = 'info@gom.ar'`.
 - No necesita assets todavía.
