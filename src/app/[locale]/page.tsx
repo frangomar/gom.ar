@@ -90,7 +90,7 @@ const WaIcon = () => (
 
 function Logo({ c, className }: { c: HomeCase; className: string }) {
   if (c.word) return <span className={`word ${className}`}>{c.word}</span>;
-  return <i className={`logo ${className}`} style={{ "--src": `url(${c.logo!.src})`, "--ar": c.logo!.ar } as CSSProperties} aria-hidden="true" />;
+  return <img className={`logo ${className}`} src={c.logo!.src} width={c.logo!.w} height={96} alt="" decoding="async" />;
 }
 
 function Wa({ href, text, className = "" }: { href: string; text: string; className?: string }) {
@@ -189,7 +189,7 @@ export default async function Home({ params }: Props) {
               </div>
               <ul className="logos" id="logos">
                 {logoKeys.map((c, i) => (
-                  <li key={c.id} data-k={c.logo?.src ?? c.word} className={i === 0 ? "on" : undefined} style={{ "--c": c.brand } as CSSProperties}>
+                  <li key={c.id} data-k={c.logo?.src ?? c.word} className={i === 0 ? "on" : undefined}>
                     <Logo c={c} className="" />
                   </li>
                 ))}
