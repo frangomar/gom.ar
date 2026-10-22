@@ -49,9 +49,9 @@ function Lbl({ text }: { text: string }) {
 }
 
 // Imagen optimizada por Next (AVIF/WebP, srcset) renderizada como <img> común, diferida.
-function Img({ src, w, h, sizes, style, className }: { src: string; w: number; h: number; sizes: string; style?: CSSProperties; className?: string }) {
-  const { props } = getImageProps({ src, alt: "", width: w, height: h, sizes, quality: 60 });
-  return <img {...props} alt="" loading="lazy" decoding="async" style={style} className={className} />;
+function Img({ src, w, h, sizes, style, className, alt = "" }: { src: string; w: number; h: number; sizes: string; style?: CSSProperties; className?: string; alt?: string }) {
+  const { props } = getImageProps({ src, alt, width: w, height: h, sizes, quality: 60 });
+  return <img {...props} alt={alt} loading="lazy" decoding="async" style={style} className={className} />;
 }
 
 const Fill = () => <span className="fill" aria-hidden="true" />;
@@ -260,7 +260,7 @@ export default async function Home({ params }: Props) {
 
         <section className="s" id="sobre-mi">
           <div className="about">
-            <div className="face" id="face"><span className="placeholder">{t("photo")}</span></div>
+            <div className="face" id="face"><Img src="/home/francisco.jpg" w={880} h={1100} sizes="(max-width: 760px) 280px, 38vw" alt="Francisco Gomar" /></div>
             <p className="bio" id="bio">{words(t("bio"), "bw")}</p>
           </div>
         </section>

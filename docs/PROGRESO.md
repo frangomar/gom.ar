@@ -399,3 +399,10 @@ Tarea de Francisco: rehacer los objetos 3D con realismo de producto y que el nú
   - la paleta muestra el cuadro 23 de 25 con el puntero a la derecha;
   - clips en `docs/capturas/b3-3d/follow-*.webp`.
 - **Sin verificar:** fps reales en una máquina lenta.
+
+### Foto de Francisco en "Sobre mí" (2026-10-22)
+- **Origen:** foto que pasó Francisco, generada con Higgsfield. La recorté a 880×1100 (4:5) para sacar la marca de agua.
+- **Dónde quedó:** en `public/home/francisco.jpg`. Reemplaza el placeholder `[FOTO FRANCISCO]` (se borró la clave `photo` de los cinco idiomas).
+- **Cómo se sirve:** pasa por `next/image` (AVIF/WebP, lazy) con alt "Francisco Gomar".
+- **Capturas:** `docs/capturas/b3-3d/sobre-mi-*.jpg`.
+- **A revisar:** el fondo es blanco y en el sitio negro se lee como un bloque claro grande.
