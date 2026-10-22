@@ -39,7 +39,7 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
    - el repo ya está en App Router;
    - Megatlon Shop es Tienda Nube y está cerrada con contraseña;
    - `fiter.com/UY` distingue mayúsculas;
-   - el email de contacto no está definido (gmail o info@gom.ar).
+   - Parte D "desde USD": Francisco decidió no publicar precios.
 3. **Tamaño del dominio del hero:** `laestacionfutbolpadel.com.ar` (28 caracteres) limita el dominio a unos 29 px en 375 y 96 px en 1440, aun partiéndolo en dos líneas. El contraste de escala lo hace el peso más que el tamaño. Se prueba en B2.
 
 ### Métricas medidas
@@ -49,13 +49,13 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 ### Verificación de los sitios de clientes (curl, 2026-10-22)
 | Caso | liveVerified | Motivo |
 |---|---|---|
-| laestacionfutbolpadel.com.ar | false | `robots.txt Disallow: /` + `noindex, nofollow` |
-| fiter.com/UY | false | "Entrenameinto" en el menú |
-| drivingnorte.com.ar | false | `noindex, nofollow`; lunes 11:45 contra 12:00 |
+| laestacionfutbolpadel.com.ar | true (se linkea como está) | `robots.txt Disallow: /` + `noindex, nofollow` |
+| fiter.com/UY | true (se linkea como está) | "Entrenameinto" en el menú |
+| drivingnorte.com.ar | true (se linkea como está) | `noindex, nofollow`; lunes 11:45 contra 12:00 |
 | megatlon.com | true | 200, index, follow |
 | shop.megatlon.com | false | redirige a `/password/` |
 | instagram.com/megatlon | true | el handle está linkeado desde megatlon.com (no hice fetch a IG) |
-| App (tiendas) | false | faltan los links |
+| App (App Store) | true | id1531151799; falta Google Play |
 
 ### Assets armados (2026-10-22)
 - Capturas de las 4 webs con Playwright: desktop @2x, mobile @3x, detalles y página completa.
@@ -71,7 +71,6 @@ Leelo al empezar cada bloque y actualizalo al terminarlo. Es la única memoria e
 - No verificado: la versión estable de Next por fuera de npm (`npm view next version` = 16.4.2), qué exporta React 19.3 para `<ViewTransition>` y el soporte actual de `animation-timeline` por navegador.
 
 ### Qué necesita el Bloque 1
-- PLAN.md aprobado.
 - Correr `npm ci` (node_modules roto).
 - `site.ts`: `CONTACT_EMAIL = 'info@gom.ar'`.
 - No necesita assets todavía.
