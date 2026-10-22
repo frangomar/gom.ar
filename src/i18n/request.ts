@@ -1,0 +1,22 @@
+import * as rootParams from "next/root-params";
+import { notFound } from "next/navigation";
+import { hasLocale } from "next-intl";
+import { getRequestConfig } from "next-intl/server";
+import { publishedLocales } from "./routing";
+
+export default getRequestConfig(async ({ locale }) => {
+  if (!locale) {
+    const param = await rootParams.locale();
+    if (hasLocale(publishedLocales, param)) {
+      locale = param;
+    } else {
+      notFound();
+    }
+  }
+
+  return {
+    locale,
+    timeZone: "America/Argentina/Buenos_Aires",
+    messages: (await import(`../../messages/${locale}.json`)).default,
+  };
+});
