@@ -412,6 +412,12 @@ Tarea de Francisco: rehacer los objetos 3D con realismo de producto y que el nú
 - **Sin probar:**
   - en un Android real;
   - con el celular en horizontal, donde los ejes se cruzan (dejé un `shortcut:` en el código).
+### Foto de Francisco en "Sobre mí" (2026-10-22)
+- **Origen:** foto que pasó Francisco, generada con Higgsfield. La recorté a 880×1100 (4:5) para sacar la marca de agua.
+- **Dónde quedó:** en `public/home/francisco.jpg`. Reemplaza el placeholder `[FOTO FRANCISCO]` (se borró la clave `photo` de los cinco idiomas).
+- **Cómo se sirve:** pasa por `next/image` (AVIF/WebP, lazy) con alt "Francisco Gomar".
+- **Capturas:** `docs/capturas/b3-3d/sobre-mi-*.jpg`.
+- **A revisar:** el fondo es blanco y en el sitio negro se lee como un bloque claro grande.
 
 ## SEO e indexación · 2026-10-22 · rama `seo-indexacion`
 
