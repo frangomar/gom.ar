@@ -144,6 +144,9 @@
     transform: translateY(calc(var(--cov, 0) * -20px)) scale(calc(1 - var(--cov, 0) * .05)); }
   .card::after { content: ""; position: absolute; inset: 0; background: #000; opacity: calc(var(--cov, 0) * .65); pointer-events: none; z-index: 5; }
   .end { height: 0; }
+  /* Lo que está fuera de pantalla no se maqueta al cargar: el primer layout bajaba de ~670 ms a una fracción y el H1 se pinta antes. */
+  .card, section.s, footer { content-visibility: auto; contain-intrinsic-size: auto 100svh; }
+  .svc { content-visibility: auto; contain-intrinsic-size: auto 300svh; }
   .txt { position: relative; z-index: 2; align-self: end; padding: clamp(1.75rem, 3.5vw, 3.5rem); min-width: 0; }
   .txt .brand { height: 26px; display: block; margin-bottom: 1.6rem; }
   .txt .word { display: block; font-size: 1.5rem; margin-bottom: 1.4rem; }

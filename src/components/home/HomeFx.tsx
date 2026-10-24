@@ -45,6 +45,10 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
     const timers: number[] = [];
     const observers: IntersectionObserver[] = [];
     doc.classList.add("js");
+    // Lo no crítico se arma en etapas de idle después de `load`: cada una es una tarea corta y no frena el primer pintado.
+    const stages: (() => void)[] = [];
+    const idle = (f: () => void) => ("requestIdleCallback" in window ? requestIdleCallback(f, { timeout: 1000 }) : setTimeout(f, 60));
+    const run = () => { stages.shift()?.(); if (stages.length) idle(run); };
 
     const cards = $$(".card");
     const G: { cards: Card[] } = { cards: cards.map((el) => ({ el, e: 0, k: 0, d: 0 })) };
@@ -110,12 +114,14 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       doc.style.setProperty("--sb", `rgb(${UV.map((v, i) => Math.round(v + (RED[i] - v) * f * 0.6)).join(",")})`);
     }
     const queue = () => { if (!raf) raf = requestAnimationFrame(frame); };
-    addEventListener("scroll", queue, on);
-    addEventListener("resize", queue, on);
-    frame();
+    stages.push(() => {
+      addEventListener("scroll", queue, on);
+      addEventListener("resize", queue, on);
+      frame();
+    });
 
     // ---- botones: relleno desde donde entra el cursor, imán y rebote ----
-    $$(".b").forEach((b) => {
+    stages.push(() => $$(".b").forEach((b) => {
       b.addEventListener("pointerenter", (e) => {
         const r = b.getBoundingClientRect();
         b.style.setProperty("--x", `${e.clientX - r.left}px`);
@@ -131,23 +137,33 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
         b.addEventListener("pointerleave", () => { b.style.setProperty("--mx", "0px"); b.style.setProperty("--my", "0px"); }, on);
       }
       b.addEventListener("pointerdown", () => { b.classList.remove("burst"); void b.offsetWidth; b.classList.add("burst"); }, on);
-    });
+    }));
     const face = $("#face");
-    if (fine && !calm) {
+    if (fine && !calm) stages.push(() => {
       face.addEventListener("pointermove", (e) => {
         const r = face.getBoundingClientRect();
         face.style.setProperty("--ry", `${((e.clientX - r.left) / r.width - 0.5) * 16}deg`);
         face.style.setProperty("--rx", `${-((e.clientY - r.top) / r.height - 0.5) * 16}deg`);
       }, on);
       face.addEventListener("pointerleave", () => { face.style.setProperty("--rx", "0deg"); face.style.setProperty("--ry", "0deg"); }, on);
-    }
+    });
 
     // ---- el dominio de cada caso entra en el ancho del texto ----
-    const fitDom = () => $$(".card .dom").forEach((h) => {
+    // Medir un título fuerza el layout de su card: se hace cuando la card se acerca, no para las 7 al cargar
+    // (si no, content-visibility no sirve de nada).
+    const fitted = new Set<HTMLElement>();
+    const fitDom = () => fitted.forEach((h) => {
       h.style.fontSize = "";
       const widest = Math.max(...[...h.querySelectorAll<HTMLElement>(".roll")].map((r) => r.scrollWidth)), avail = h.clientWidth;
       if (widest > avail) h.style.fontSize = `${(parseFloat(getComputedStyle(h).fontSize) * avail) / widest * 0.97}px`;
     });
+    const fio = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      fio.unobserve(e.target);
+      fitted.add(e.target.querySelector<HTMLElement>(".dom")!);
+      fitDom();
+    }), { rootMargin: "100% 0px" });
+    observers.push(fio);
     const domain = $(".band .domain .roll"), meta = $("#meta"), logos = $$("#logos li");
     const fitBand = () => {
       const probe = document.createElement("span");
@@ -157,8 +173,11 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       probe.remove();
       bandEl.style.setProperty("--bfs", `${Math.min(44, (bandEl.firstElementChild!.clientWidth * 100) / w)}px`);
     };
-    document.fonts.ready.then(() => { fitDom(); fitBand(); });
-    addEventListener("resize", () => { fitDom(); fitBand(); }, on);
+    stages.push(() => {
+      cards.forEach((c) => c.querySelector(".dom") && fio.observe(c));
+      document.fonts.ready.then(() => { fitDom(); fitBand(); });
+      addEventListener("resize", () => { fitDom(); fitBand(); }, on);
+    });
 
     // ---- textos que entran al verse ----
     const go = (els: HTMLElement[], step: number) => els.forEach((c, k) =>
@@ -169,7 +188,7 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       if (calm) return;
       go([...e.target.querySelectorAll<HTMLElement>(".c")], 22);
     }), { threshold: 0.3 });
-    $$(".roll-in").forEach((el) => io.observe(el));
+    stages.push(() => $$(".roll-in").forEach((el) => io.observe(el)));
     observers.push(io);
 
     // ---- servicios: el ítem del centro de la pantalla manda el visual ----
@@ -179,7 +198,7 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
       items.forEach((it) => it.classList.toggle("on", it === e.target));
       vis.forEach((v, i) => v.classList.toggle("on", i === Number((e.target as HTMLElement).dataset.v)));
     }), { rootMargin: "-45% 0px -45% 0px" });
-    items.forEach((it) => sio.observe(it));
+    stages.push(() => items.forEach((it) => sio.observe(it)));
     observers.push(sio);
 
     // ---- franja del hero: rota entre marcas con el rodillo; se pausa con el botón o al salir del hero ----
@@ -202,10 +221,10 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
 
     // ---- WhatsApp flotante: fuera del hero, de las cards y del contacto ----
     const fab = $(".fab"), contact = $(".contact"), deck = $("#casos");
-    addEventListener("scroll", () => {
+    stages.push(() => addEventListener("scroll", () => {
       const d = deck.getBoundingClientRect(), mid = innerHeight * 0.5;
       fab.classList.toggle("show", scrollY > innerHeight * 0.8 && contact.getBoundingClientRect().top > innerHeight * 0.9 && !(d.top < mid && d.bottom > mid));
-    }, on);
+    }, on));
 
     // ---- renders que siguen al puntero en toda la ventana, como el 3D anterior: cada objeto visible se inclina
     // con inercia (solo transform) y los que tienen secuencia además giran de verdad ±15°. La secuencia se baja
@@ -214,7 +233,7 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
     // aviso del sistema: no se pide (decisión de Francisco: no interrumpir antes del CTA), así que en iPhone queda quieto.
     let follow = 0;
     const tilt = !fine && "DeviceOrientationEvent" in window;
-    if ((fine || tilt) && !calm) {
+    if ((fine || tilt) && !calm) stages.push(() => {
       type Seq = { name: keyof typeof R3D.frames; n: number; frames?: HTMLImageElement[]; ready: boolean; cur: number; over: HTMLImageElement; poster: HTMLImageElement };
       type Fol = { el: HTMLElement; seq?: Seq; on: boolean; x: number; y: number };
       const fol: Fol[] = [...$$("[data-seq]"), digits, $(".wm3d")].map((el) => {
@@ -283,9 +302,12 @@ export default function HomeFx({ band }: { band: BandCase[] }) {
         ty = clamp((e.beta - rest) / 25, -1, 1);
         kick();
       }, on);
-    }
+    });
+
+    if (document.readyState === "complete") idle(run); else addEventListener("load", () => idle(run), { once: true, signal: ac.signal });
 
     return () => {
+      stages.length = 0;
       ac.abort();
       po.disconnect();
       observers.forEach((o) => o.disconnect());
