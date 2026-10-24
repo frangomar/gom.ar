@@ -418,3 +418,39 @@ Tarea de Francisco: rehacer los objetos 3D con realismo de producto y que el nú
 - **Cómo se sirve:** pasa por `next/image` (AVIF/WebP, lazy) con alt "Francisco Gomar".
 - **Capturas:** `docs/capturas/b3-3d/sobre-mi-*.jpg`.
 - **A revisar:** el fondo es blanco y en el sitio negro se lee como un bloque claro grande.
+
+## Performance: LCP y TBT · 2026-10-24 · EN MAIN por pedido de Francisco
+
+Objetivo: llevar el LCP a < 1,8 s y el TBT a < 150 ms (ver "Pendientes" del 3D).
+
+### Diagnóstico (trace de Lighthouse mobile, localhost, devtools throttling)
+- El LCP era el H1, con ~2,5 s de *render delay* y TTFB de 78 ms: no era red sino el hilo principal.
+- Una sola tarea del documento de ~930 ms (Layout 670 + estilos 190) bloqueaba el primer pintado: 1.545 objetos maquetados de entrada, incluidas las 7 cards y las secciones de más abajo.
+- El CSS (23 KB) era render-blocking (≈ 730 ms estimados por Lighthouse).
+- El TBT de ~270–500 ms: hidratación de React (chunk `794`, ~190 ms por tarea) + la tarea de `HomeFx` + un re-layout de ~165 ms al llegar la fuente.
+
+### Qué se hizo
+- `content-visibility: auto` en `.card`, `section.s` y `footer` (`.svc` con `contain-intrinsic-size` de 300svh): no se maqueta lo que está fuera de pantalla.
+- `experimental.inlineCss: true`: el CSS va dentro del HTML y no hay pedido que bloquee el pintado. Fue lo que más bajó el LCP.
+- `HomeFx` en etapas de `requestIdleCallback` después de `load` (scroll, botones, medidas, observers, seguimiento del puntero); lo crítico (LCP del número, rodillo y pausa del hero) sigue inmediato.
+- `fitDom` ya no mide los títulos de las 7 cards al cargar: medir con `scrollWidth` forzaba el layout de las cards que `content-visibility` salteaba. Ahora cada card se mide cuando se acerca a la pantalla (IntersectionObserver, 100 % de margen).
+- `Analytics` y `SpeedInsights` se cargan después de `load` (`src/components/Telemetry.tsx`).
+
+### Medido (Lighthouse mobile, 3 corridas por serie, build de producción local, /es)
+
+| | Antes | Después |
+|---|---|---|
+| Performance | 79–83 | 88–98 (mediana ~96) |
+| LCP | 2,57–2,63 s | 1,13–1,35 s |
+| TBT | 390–510 ms | 150–480 ms (mediana ~170 ms) |
+| CLS | 0 | 0,002 |
+| Peso | 470 KB | 345–355 KB |
+
+- Playwright 8/8, tipos y lint limpios. Capturas a 1440 del mazo, servicios y contacto: sin diferencias visibles.
+
+### Lo que NO entra todavía
+- **TBT < 150 ms: no se cumple de forma estable.** Varía entre 149 y 481 según si la primera tarea de layout (~350–430 ms con CPU 4x) cae antes o después del FCP. Lo que queda es el piso de hidratación de React (~185 ms en una tarea) y el primer layout del hero (~180 ms solo el hero).
+- No se probó: Lighthouse sobre el deploy de Vercel (solo localhost) ni celulares reales.
+- Probado sin efecto, no se tocó: `text-wrap: balance` del H1, el grano animado y el `position: sticky` (no bajan el layout inicial). La fuente no se cambió.
+- `inlineCss` es experimental en Next: si en una actualización se rompe, volver a quitarlo cuesta ~1 s de LCP.
+- **CLS 0,002** (antes 0): lo mueve probablemente el ajuste de fuente de los títulos de cards; sin investigar, muy por debajo del límite de 0,05.

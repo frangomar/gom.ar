@@ -4,8 +4,7 @@ import { notFound } from "next/navigation";
 import { Schibsted_Grotesk } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import Telemetry from "@/components/Telemetry";
 import { publishedLocales } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site";
 import "../globals.css";
@@ -57,8 +56,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         {/* messages={null}: los componentes cliente reciben los textos por
             props, así no se manda el catálogo de mensajes al navegador. */}
         <NextIntlClientProvider messages={null}>{children}</NextIntlClientProvider>
-        <Analytics />
-        <SpeedInsights />
+        <Telemetry />
       </body>
     </html>
   );

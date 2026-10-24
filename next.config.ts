@@ -11,6 +11,8 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // El CSS (~23 KB) va dentro del HTML: sin pedido que bloquee el primer pintado.
+  experimental: { inlineCss: true },
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [60, 75],
